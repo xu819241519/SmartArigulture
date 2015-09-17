@@ -34,6 +34,10 @@ public class Guide_4 extends Fragment {
 		return view;
 	}
 	
+	/**
+	 * 设置适配器
+	 * @param fAdapter 适配器的对象
+	 */
 	public void SetAdapter(FragmentAdapter fAdapter){
 		this.fAdapter = fAdapter;
 	}

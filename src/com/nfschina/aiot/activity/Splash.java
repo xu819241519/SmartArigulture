@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import com.nfschina.aiot.R;
+import com.nfschina.aiot.constant.ConstantPrivoder;
 import com.nfschina.aiot.db.SharePerencesDBHelper;
 
 
@@ -57,7 +58,7 @@ public class Splash extends Activity {
 		
 		SharePerencesDBHelper spDBHelper;
 		spDBHelper = new SharePerencesDBHelper(this);
-		mFirstIn = spDBHelper.getBoolean("isFirstIn", true);
+		mFirstIn = spDBHelper.getBoolean(ConstantPrivoder.getIS_FIRST_IN(), true);
 
 		if (mFirstIn) {
 			mHander.sendEmptyMessageDelayed(GO_GUIDE, SPLASH_DISPLAY_TIME);

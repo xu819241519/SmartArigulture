@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.nfschina.aiot.activity.Login;
+import com.nfschina.aiot.constant.ConstantPrivoder;
 import com.nfschina.aiot.db.SharePerencesDBHelper;
 import com.nfschina.aiot.fragment.Guide_4;
 
@@ -64,7 +65,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
      */
     public void setGuided() {
     	SharePerencesDBHelper spDbHelper = new SharePerencesDBHelper(mActivity);
-    	spDbHelper.putBoolean("isFirstIn", false);
+    	spDbHelper.putBoolean(ConstantPrivoder.getIS_FIRST_IN(), false);
     }
 
 	@Override

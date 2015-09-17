@@ -1,14 +1,26 @@
 package com.nfschina.aiot.activity;
 
+import java.sql.SQLClientInfoException;
+import java.sql.SQLData;
+import java.util.Set;
+
 import com.nfschina.aiot.R;
+import com.nfschina.aiot.R.id;
+import com.nfschina.aiot.constant.ConstantPrivoder;
+import com.nfschina.aiot.db.SharePerencesDBHelper;
+
+import android.R.bool;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Login extends Activity {
+public class Login extends Activity implements OnClickListener {
 
 	// 用户名输入的EditText
 	private EditText mUserNameEditText;
@@ -40,6 +52,9 @@ public class Login extends Activity {
 		setContentView(R.layout.login);
 
 		initUIControls();
+		checkAutoLogin();
+		setListener();
+
 	}
 
 	/**
@@ -52,13 +67,73 @@ public class Login extends Activity {
 		mAutoLoginCheckBox = (CheckBox) findViewById(R.id.cb_auto_login);
 		mLoginButton = (Button) findViewById(R.id.bt_login);
 		mRegisterButton = (Button) findViewById(R.id.bt_register);
-		initValues();
+
+		initEditViews();
 	}
 
 	/**
 	 * 初始化UI相关变量
 	 */
-	public void initValues() {
-		
+	public void initEditViews() {
+		SharePerencesDBHelper spDbHelper = new SharePerencesDBHelper(this);
+		mRemember = spDbHelper.getBoolean(ConstantPrivoder.getIS_REMEMBER_PWD(), false);
+		mAutoLogin = spDbHelper.getBoolean(ConstantPrivoder.getIS_AUTO_LOGIN(), false);
+		if (mRemember) {
+			mUserName = spDbHelper.getString(ConstantPrivoder.getUSER_NAME(), null);
+			mPassword = spDbHelper.getString(ConstantPrivoder.getPWD(), null);
+			if (mPassword != null && mUserName != null) {
+				mUserNameEditText.setText(mUserName);
+				mPasswordEditText.setText(mPassword);
+			} else {
+				spDbHelper.putBoolean(ConstantPrivoder.getIS_REMEMBER_PWD(), false);
+				spDbHelper.putBoolean(ConstantPrivoder.getIS_AUTO_LOGIN(), false);
+				spDbHelper.putString(ConstantPrivoder.getUSER_NAME(), null);
+				spDbHelper.putString(ConstantPrivoder.getPWD(), null);
+				mRemember = false;
+				mAutoLogin = false;
+			}
+		}
+	}
+
+	/**
+	 * 检查自动登录
+	 */
+	public void checkAutoLogin() {
+		if (mAutoLogin) {
+
+		}
+	}
+
+	/**
+	 * 设置监听器
+	 */
+	public void setListener() {
+		mLoginButton.setOnClickListener(this);
+		mRegisterButton.setOnClickListener(this);
+		mRemberCheckBox.setOnClickListener(this);
+		mAutoLoginCheckBox.setOnClickListener(this);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+		case R.id.bt_login:
+			Toast.makeText(this, "R.id.bt_login", 3000).show();
+			break;
+		case R.id.bt_register:
+			Toast.makeText(this, "R.id.bt_register", 3000).show();
+			break;
+		case R.id.cb_auto_login:
+			Toast.makeText(this, "R.id.cb_auto_login", 3000).show();
+			break;
+		case R.id.cb_rember_pswd:
+			Toast.makeText(this, "R.id.cb_rember_pswd", 3000).show();
+			break;
+		default:
+			Toast.makeText(this, "null", 3000).show();
+			break;
+		}
 	}
 }
