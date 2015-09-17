@@ -1,12 +1,14 @@
 package com.nfschina.aiot.adapter;
 
 import java.util.List;
+
+import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.content.Intent;
 
 import com.nfschina.aiot.activity.Login;
-import com.nfschina.aiot.constant.ConstantPrivoder;
-import com.nfschina.aiot.db.SharePerencesDBHelper;
+import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.db.SharePerencesHelper;
 import com.nfschina.aiot.fragment.Guide_4;
 
 import android.content.SharedPreferences;
@@ -64,8 +66,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
      * 设置已经引导过了，下次启动不用再次引导
      */
     public void setGuided() {
-    	SharePerencesDBHelper spDbHelper = new SharePerencesDBHelper(mActivity);
-    	spDbHelper.putBoolean(ConstantPrivoder.getIS_FIRST_IN(), false);
+    	SharePerencesHelper.putBoolean(mActivity,Constant.IS_FIRST_IN, false);
     }
 
 	@Override

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import com.nfschina.aiot.R;
-import com.nfschina.aiot.constant.ConstantPrivoder;
-import com.nfschina.aiot.db.SharePerencesDBHelper;
+import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.db.SharePerencesHelper;
 
 
 public class Splash extends Activity {
@@ -55,10 +55,8 @@ public class Splash extends Activity {
 	 * 初始化启动，发送启动消息
 	 */
 	public void init() {
-		
-		SharePerencesDBHelper spDBHelper;
-		spDBHelper = new SharePerencesDBHelper(this);
-		mFirstIn = spDBHelper.getBoolean(ConstantPrivoder.getIS_FIRST_IN(), true);
+	
+		mFirstIn = SharePerencesHelper.getBoolean(this,Constant.IS_FIRST_IN, true);
 
 		if (mFirstIn) {
 			mHander.sendEmptyMessageDelayed(GO_GUIDE, SPLASH_DISPLAY_TIME);

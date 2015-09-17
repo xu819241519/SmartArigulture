@@ -6,8 +6,8 @@ import java.util.Set;
 
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.R.id;
-import com.nfschina.aiot.constant.ConstantPrivoder;
-import com.nfschina.aiot.db.SharePerencesDBHelper;
+import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.db.SharePerencesHelper;
 
 import android.R.bool;
 import android.app.Activity;
@@ -75,20 +75,19 @@ public class Login extends Activity implements OnClickListener {
 	 * 初始化UI相关变量
 	 */
 	public void initEditViews() {
-		SharePerencesDBHelper spDbHelper = new SharePerencesDBHelper(this);
-		mRemember = spDbHelper.getBoolean(ConstantPrivoder.getIS_REMEMBER_PWD(), false);
-		mAutoLogin = spDbHelper.getBoolean(ConstantPrivoder.getIS_AUTO_LOGIN(), false);
+		mRemember = SharePerencesHelper.getBoolean(this,Constant.IS_REMEMBER_PWD, false);
+		mAutoLogin = SharePerencesHelper.getBoolean(this,Constant.IS_AUTO_LOGIN, false);
 		if (mRemember) {
-			mUserName = spDbHelper.getString(ConstantPrivoder.getUSER_NAME(), null);
-			mPassword = spDbHelper.getString(ConstantPrivoder.getPWD(), null);
+			mUserName = SharePerencesHelper.getString(this,Constant.USER_NAME, null);
+			mPassword = SharePerencesHelper.getString(this,Constant.PWD, null);
 			if (mPassword != null && mUserName != null) {
 				mUserNameEditText.setText(mUserName);
 				mPasswordEditText.setText(mPassword);
 			} else {
-				spDbHelper.putBoolean(ConstantPrivoder.getIS_REMEMBER_PWD(), false);
-				spDbHelper.putBoolean(ConstantPrivoder.getIS_AUTO_LOGIN(), false);
-				spDbHelper.putString(ConstantPrivoder.getUSER_NAME(), null);
-				spDbHelper.putString(ConstantPrivoder.getPWD(), null);
+				SharePerencesHelper.putBoolean(this,Constant.IS_REMEMBER_PWD, false);
+				SharePerencesHelper.putBoolean(this,Constant.IS_AUTO_LOGIN, false);
+				SharePerencesHelper.putString(this,Constant.USER_NAME, null);
+				SharePerencesHelper.putString(this,Constant.PWD, null);
 				mRemember = false;
 				mAutoLogin = false;
 			}
