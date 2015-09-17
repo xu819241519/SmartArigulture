@@ -3,10 +3,8 @@ package com.nfschina.aiot.fragment;
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.adapter.FragmentAdapter;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

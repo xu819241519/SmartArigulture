@@ -1,15 +1,8 @@
 package com.nfschina.aiot.activity;
 
-import java.sql.SQLClientInfoException;
-import java.sql.SQLData;
-import java.util.Set;
-
 import com.nfschina.aiot.R;
-import com.nfschina.aiot.R.id;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.SharePerencesHelper;
-
-import android.R.bool;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener {

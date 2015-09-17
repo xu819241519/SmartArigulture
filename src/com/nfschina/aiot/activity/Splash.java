@@ -31,7 +31,7 @@ public class Splash extends Activity {
 			switch (msg.what) {
 			//进入登录页面
 			case GO_Login:
-				goHome();
+				goLogin();
 				break;
 			//进入引导页面
 			case GO_GUIDE:
@@ -68,7 +68,7 @@ public class Splash extends Activity {
 	/*
 	 * 进入登录页面
 	 */
-	private void goHome() {
+	private void goLogin() {
 		Intent intent = new Intent(Splash.this, Login.class);
 		startActivity(intent);
 		this.finish();
@@ -95,3 +95,4 @@ public class Splash extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 }
+

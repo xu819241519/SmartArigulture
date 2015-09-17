@@ -1,18 +1,11 @@
 package com.nfschina.aiot.adapter;
 
 import java.util.List;
-
-import android.app.backup.SharedPreferencesBackupHelper;
-import android.content.Context;
 import android.content.Intent;
-
 import com.nfschina.aiot.activity.Login;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.SharePerencesHelper;
 import com.nfschina.aiot.fragment.Guide_4;
-
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;

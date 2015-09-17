@@ -3,9 +3,6 @@
  */
 package com.nfschina.aiot.db;
 
-import java.net.ContentHandler;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
