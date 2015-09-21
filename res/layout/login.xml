@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="方德农业大棚"
+        android:text="@string/project_name"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -42,7 +42,7 @@
                 android:id="@+id/image_username"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/username" />
+                android:src="@drawable/icon_people" />
 
             <EditText
                 android:id="@+id/edit_username"
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:ems="20"
-                android:hint="用户名" />
+                android:hint="@string/hint_username" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +64,7 @@
                 android:id="@+id/image_password"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/pswd" />
+                android:src="@drawable/icon_lock" />
 
             <EditText
                 android:id="@+id/edit_password"
@@ -73,7 +73,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:ems="20"
-                android:hint="密码"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword" />
         </LinearLayout>
 
@@ -90,7 +90,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:button="@drawable/login_check_selector"
-                android:text="记住密码" />
+                android:text="@string/rember_password" />
 
             <CheckBox
                 android:id="@+id/cb_auto_login"
@@ -99,7 +99,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:button="@drawable/login_check_selector"
-                android:text="自动登录" />
+                android:text="@string/auto_login" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,7 +115,7 @@
                 android:background="@drawable/login_btn_selector"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="登录"
+                android:text="@string/login"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -128,7 +128,7 @@
                 android:background="@drawable/login_btn_selector"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="注册"
+                android:text="@string/register"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />

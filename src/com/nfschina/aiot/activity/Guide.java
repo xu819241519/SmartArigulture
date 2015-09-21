@@ -8,7 +8,6 @@ import com.nfschina.aiot.fragment.Guide_1;
 import com.nfschina.aiot.fragment.Guide_2;
 import com.nfschina.aiot.fragment.Guide_3;
 import com.nfschina.aiot.fragment.Guide_4;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
