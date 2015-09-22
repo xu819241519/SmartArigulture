@@ -8,8 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:gravity="center"
-        android:background="@drawable/title" >
+        android:background="@drawable/title"
+        android:gravity="center" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,12 +26,53 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp" >
-    </LinearLayout>
+        android:layout_height="150dp">
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/home_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </android.support.v4.view.ViewPager>
 
-    <include layout="@layout/home_items"></include>"
+        <LinearLayout
+            android:id="@+id/home_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2.0dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:padding="15.0dip"
+                android:src="@drawable/dot" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:padding="15.0dip"
+                android:src="@drawable/dot" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:padding="15.0dip"
+                android:src="@drawable/dot" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/home_items" >
+    </include>
 
 </LinearLayout>

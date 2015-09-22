@@ -27,6 +27,7 @@
         <activity android:name="com.nfschina.aiot.activity.Login" >
         </activity>
         <activity android:name="com.nfschina.aiot.activity.Home"></activity>
+        <activity android:name="com.nfschina.aiot.activity.Register"></activity>
     </application>
 
 </manifest>

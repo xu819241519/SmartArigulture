@@ -7,6 +7,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/btn_real_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/home_btn_selector"
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="实时监控" />
+            android:text="@string/home_btn1" />
     </LinearLayout>
 
     <LinearLayout
@@ -33,6 +34,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
+            android:id="@+id/btn_remote_control"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,10 +52,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="远程控制" />
+                android:text="@string/home_btn2" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_threshold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -71,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="阀值设置" />
+                android:text="@string/home_btn3" />
         </LinearLayout>
     </LinearLayout>
 
@@ -82,6 +85,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
+            android:id="@+id/btn_alarm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -99,10 +103,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="报警信息" />
+                android:text="@string/home_btn4" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_history"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -120,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="历史数据" />
+                android:text="@string/home_btn5" />
         </LinearLayout>
     </LinearLayout>
 
@@ -131,6 +136,7 @@
         android:orientation="horizontal" >
 
         <LinearLayout
+            android:id="@+id/btn_arigulture_news"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -148,10 +154,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="农业新闻" />
+                android:text="@string/home_btn6" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_others"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -169,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="其他信息" />
+                android:text="@string/home_btn7" />
         </LinearLayout>
     </LinearLayout>
 

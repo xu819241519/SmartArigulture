@@ -57,7 +57,7 @@ public class Guide extends FragmentActivity implements OnPageChangeListener {
 		
 		mAdapter = new FragmentAdapter(getSupportFragmentManager(),mFragments, this);
 
-		mpager = (ViewPager) findViewById(R.id.viewpager);
+		mpager = (ViewPager) findViewById(R.id.guide_viewpager);
 		mpager.setAdapter(mAdapter);
 		mpager.setOnPageChangeListener(Guide.this);
 

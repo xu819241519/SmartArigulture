@@ -4,6 +4,7 @@ import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.SharePerencesHelper;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +20,7 @@ public class Login extends Activity implements OnClickListener {
 	// 密码输入的EditText
 	private EditText mPasswordEditText;
 	// 记住密码CheckBox
-	private CheckBox mRemberCheckBox;
+	private CheckBox mRememberCheckBox;
 	// 自动登录CheckBox
 	private CheckBox mAutoLoginCheckBox;
 	// 登录按钮
@@ -35,6 +36,7 @@ public class Login extends Activity implements OnClickListener {
 	// 是否自动登录
 	private boolean mAutoLogin;
 
+
 	public Login() {
 	}
 
@@ -44,18 +46,17 @@ public class Login extends Activity implements OnClickListener {
 		setContentView(R.layout.login);
 
 		initUIControls();
-		checkAutoLogin();
 		setListener();
 
 	}
 
 	/**
-	 * 初始化UI
+	 * initialize the UI controls
 	 */
 	public void initUIControls() {
 		mUserNameEditText = (EditText) findViewById(R.id.edit_username);
 		mPasswordEditText = (EditText) findViewById(R.id.edit_password);
-		mRemberCheckBox = (CheckBox) findViewById(R.id.cb_rember_pswd);
+		mRememberCheckBox = (CheckBox) findViewById(R.id.cb_rember_pswd);
 		mAutoLoginCheckBox = (CheckBox) findViewById(R.id.cb_auto_login);
 		mLoginButton = (Button) findViewById(R.id.bt_login);
 		mRegisterButton = (Button) findViewById(R.id.bt_register);
@@ -64,22 +65,22 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * 初始化UI相关变量
+	 * initialize controls of the view
 	 */
 	public void initEditViews() {
-		mRemember = SharePerencesHelper.getBoolean(this,Constant.IS_REMEMBER_PWD, false);
-		mAutoLogin = SharePerencesHelper.getBoolean(this,Constant.IS_AUTO_LOGIN, false);
+		mRemember = SharePerencesHelper.getBoolean(this, Constant.IS_REMEMBER_PWD, false);
+		mAutoLogin = SharePerencesHelper.getBoolean(this, Constant.IS_AUTO_LOGIN, false);
 		if (mRemember) {
-			mUserName = SharePerencesHelper.getString(this,Constant.USER_NAME, null);
-			mPassword = SharePerencesHelper.getString(this,Constant.PWD, null);
+			mUserName = SharePerencesHelper.getString(this, Constant.USER_NAME, null);
+			mPassword = SharePerencesHelper.getString(this, Constant.PWD, null);
 			if (mPassword != null && mUserName != null) {
 				mUserNameEditText.setText(mUserName);
 				mPasswordEditText.setText(mPassword);
 			} else {
-				SharePerencesHelper.putBoolean(this,Constant.IS_REMEMBER_PWD, false);
-				SharePerencesHelper.putBoolean(this,Constant.IS_AUTO_LOGIN, false);
-				SharePerencesHelper.putString(this,Constant.USER_NAME, null);
-				SharePerencesHelper.putString(this,Constant.PWD, null);
+				SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, false);
+				SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
+				SharePerencesHelper.putString(this, Constant.USER_NAME, null);
+				SharePerencesHelper.putString(this, Constant.PWD, null);
 				mRemember = false;
 				mAutoLogin = false;
 			}
@@ -87,44 +88,103 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * 检查自动登录
-	 */
-	public void checkAutoLogin() {
-		if (mAutoLogin) {
-
-		}
-	}
-
-	/**
-	 * 设置监听器
+	 * set the listener of the controls
 	 */
 	public void setListener() {
 		mLoginButton.setOnClickListener(this);
 		mRegisterButton.setOnClickListener(this);
-		mRemberCheckBox.setOnClickListener(this);
+		mRememberCheckBox.setOnClickListener(this);
 		mAutoLoginCheckBox.setOnClickListener(this);
 
 	}
 
+	/**
+	 * get the data for login
+	 * 
+	 * @return return true if success,or false
+	 */
+	private boolean GetLoginData() {
+		mUserName = mUserNameEditText.getText().toString();
+		mPassword = mPasswordEditText.getText().toString();
+		if ("".equals(mUserName.trim()) || mUserName.equals(null) || "".equals(mPassword.trim())
+				|| mPassword.equals(null)) {
+			Toast.makeText(this, Constant.FILL_NAME_PASSWORD, Toast.LENGTH_SHORT).show();
+			return false;
+		} else
+			return true;
+	}
+
+	/**
+	 * perform the login action
+	 */
+	public void PerformLogin() {
+
+		if (mRemember) {
+			SharePerencesHelper.putString(this, Constant.USER_NAME, mUserName);
+			SharePerencesHelper.putString(this, Constant.PWD, mPassword);
+		}
+		if(mAutoLogin){
+			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, true);
+		}
+		Intent intent = new Intent(Login.this, Home.class);
+		startActivity(intent);
+		this.finish();
+	}
+
+	/**
+	 * the clicking listener of the view
+	 * 
+	 * @param v
+	 *            the view which to be listened
+	 */
 	@Override
 	public void onClick(View v) {
 
+		Intent intent = new Intent();
 		switch (v.getId()) {
+
 		case R.id.bt_login:
-			Toast.makeText(this, "R.id.bt_login", 3000).show();
+			if (GetLoginData()) {
+				PerformLogin();
+			}
 			break;
 		case R.id.bt_register:
-			Toast.makeText(this, "R.id.bt_register", 3000).show();
+			intent.setClass(Login.this, Register.class);
+			startActivityForResult(intent, Constant.REG_CODE);
 			break;
 		case R.id.cb_auto_login:
-			Toast.makeText(this, "R.id.cb_auto_login", 3000).show();
+			if (mAutoLoginCheckBox.isChecked() == true) {
+				mRememberCheckBox.setChecked(true);
+				mRemember = true;
+				mAutoLogin = true;
+			} else {
+				mAutoLogin = false;
+			}
 			break;
 		case R.id.cb_rember_pswd:
-			Toast.makeText(this, "R.id.cb_rember_pswd", 3000).show();
+			if (mRememberCheckBox.isChecked() == true) {
+				mRemember = true;
+			} else {
+				if (mAutoLoginCheckBox.isChecked() == true) {
+					mAutoLogin = false;
+					mAutoLoginCheckBox.setChecked(false);
+				}
+				mRemember = false;
+			}
 			break;
 		default:
-			Toast.makeText(this, "null", 3000).show();
+			Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
 			break;
 		}
 	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Constant.REG_SUCCESS) {
+			String username = data.getStringExtra("username");
+			mUserNameEditText.setText(username);
+		}
+	}
+	
+
 }
