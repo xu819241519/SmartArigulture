@@ -41,6 +41,16 @@ public class Constant {
 	//the count of home buttons
 	public static int HOME_BTN_COUNT = 7;
 	//the count of home pics
-	public static int HOME_PICS = 3;
+	private static int HOME_PICS = 3;
+	
+	public static int getHomePicCount() {
+		return HOME_PICS;
+	}
+	public static void setHomePicCount(int hOME_PICS) {
+		HOME_PICS = hOME_PICS;
+	}
+	
+	
+	
 
 }

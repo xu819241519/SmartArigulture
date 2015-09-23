@@ -43,7 +43,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="2.0dp"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="invisible" >
 
             <ImageView
                 android:layout_width="wrap_content"
