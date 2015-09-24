@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/gray_dark"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/greenhouse_history_carbondioxide"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/history_greenhouse_items_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="二氧化碳浓度"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal" />
+
+            <RadioButton
+                android:id="@+id/greenhouse_history_sunshine"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/history_greenhouse_items_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="光照强度"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal" />
+
+            <RadioButton
+                android:id="@+id/greenhouse_history_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/history_greenhouse_items_selector"
+                android:button="@null"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="湿度"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal" />
+
+            <RadioButton
+                android:id="@+id/greenhouse_history_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@drawable/history_greenhouse_items_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="温度"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_normal" />
+        </RadioGroup>
+    </LinearLayout>
+
+</LinearLayout>
