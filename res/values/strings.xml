@@ -5,6 +5,8 @@
     <string name="hello_world">Hello world!</string>
 	<string name="action_settings">Settings</string>
 	<string name="project_name">方德农业大棚</string>
+	<string name="allgreenhouse">所有大棚</string>
+	<string name="back">返回</string>
 	
 	<!-- login -->
 	<string name="hint_username">用户名</string>
@@ -15,11 +17,15 @@
 	<string name="register">注册</string>
 	
 	<!-- home -->
-	<string name="home_btn1">实时监控</string>
-	<string name="home_btn2">远程控制</string>
-	<string name="home_btn3">阀值设置</string>
-	<string name="home_btn4">报警信息</string>
-	<string name="home_btn5">历史数据</string>
-	<string name="home_btn6">农业新闻</string>
-	<string name="home_btn7">其他信息</string>
+	<string name="home_btn1">历史记录</string>
+	<string name="home_btn2">监控中心</string>
+	<string name="home_btn3">农业新闻</string>
+	<string name="home_btn4">其他设置</string>
+	
+	<!-- history -->
+	<string name="history_coredata">温室信息记录</string>
+	<string name="history_instructions">控制记录</string>
+	<string name="history_alarm">报警记录</string>
+	<string name="history_title">历史记录</string>
+	
 </resources>

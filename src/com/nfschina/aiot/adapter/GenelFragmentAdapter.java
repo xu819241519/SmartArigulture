@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  *
  */
 
-public class FragmentPicAdapter extends FragmentPagerAdapter {
+public class GenelFragmentAdapter extends FragmentPagerAdapter {
 
 	 //fragment的列表
     private List<Fragment> mFragments;
@@ -20,7 +20,7 @@ public class FragmentPicAdapter extends FragmentPagerAdapter {
      * @param fManager :fragmentmanager的对象
      * @param fragments :fragment的列表
      */
-    public FragmentPicAdapter(android.support.v4.app.FragmentManager fManager,List<Fragment> fragments) {
+    public GenelFragmentAdapter(android.support.v4.app.FragmentManager fManager,List<Fragment> fragments) {
         super(fManager);
     	this.mFragments = fragments;
     }

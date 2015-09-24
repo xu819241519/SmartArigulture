@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/big_space"
         android:layout_weight="1"
         android:src="@drawable/ic_launcher" />
 
@@ -19,15 +19,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/project_name"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text_larger" />
 
     <LinearLayout
         android:id="@+id/login_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginBottom="@dimen/very_big_space"
+        android:layout_marginLeft="@dimen/normal_space"
+        android:layout_marginRight="@dimen/normal_space"
         android:layout_weight="5"
         android:background="#E6E6E6"
         android:orientation="vertical" >
@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/big_space"
             android:orientation="horizontal" >
 
             <ImageView
@@ -48,8 +48,8 @@
                 android:id="@+id/edit_username"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="@dimen/big_space"
+                android:layout_marginRight="@dimen/big_space"
                 android:ems="20"
                 android:singleLine="true"
                 android:hint="@string/hint_username" />
@@ -58,7 +58,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/normal_space"
             android:orientation="horizontal" >
 
             <ImageView
@@ -71,8 +71,8 @@
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="@dimen/normal_space"
+                android:layout_marginRight="@dimen/normal_space"
                 android:ems="20"
                 android:singleLine="true"
                 android:hint="@string/hint_password"
@@ -82,14 +82,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/little_space"
             android:orientation="horizontal" >
 
             <CheckBox
                 android:id="@+id/cb_rember_pswd"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:layout_weight="1"
                 android:button="@drawable/login_check_selector"
                 android:text="@string/rember_password" />
@@ -98,7 +98,7 @@
                 android:id="@+id/cb_auto_login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/normal_space"
                 android:layout_weight="1"
                 android:button="@drawable/login_check_selector"
                 android:text="@string/auto_login" />
@@ -107,7 +107,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/big_space"
             android:orientation="vertical" >
 
             <Button
@@ -118,21 +118,21 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/login"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_larger"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/bt_register"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/big_space"
                 android:background="@drawable/login_btn_selector"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/register"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_larger"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

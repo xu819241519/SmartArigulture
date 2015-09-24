@@ -8,12 +8,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import com.nfschina.aiot.R;
-import com.nfschina.aiot.adapter.FragmentPicAdapter;
+import com.nfschina.aiot.adapter.GenelFragmentAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.fragment.Pic_Advert1;
 import com.nfschina.aiot.fragment.Pic_Advert2;
 import com.nfschina.aiot.fragment.Pic_Advert3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,7 +44,7 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 	// the view filled with pics
 	private List<Fragment> mFragmentsList;
 	// the adapter of pics
-	private FragmentPicAdapter mPicAdapter;
+	private GenelFragmentAdapter mPicAdapter;
 	// the imageview of dots
 	//private ImageView[] mDots;
 	// the current page of the imageview
@@ -89,20 +90,17 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 	 */
 	private void InitUIControls() {
 		mBtnItem = new LinearLayout[Constant.HOME_BTN_COUNT];
-		mBtnItem[0] = (LinearLayout) findViewById(R.id.btn_real_time);
-		mBtnItem[1] = (LinearLayout) findViewById(R.id.btn_remote_control);
-		mBtnItem[2] = (LinearLayout) findViewById(R.id.btn_threshold);
-		mBtnItem[3] = (LinearLayout) findViewById(R.id.btn_alarm);
-		mBtnItem[4] = (LinearLayout) findViewById(R.id.btn_history);
-		mBtnItem[5] = (LinearLayout) findViewById(R.id.btn_arigulture_news);
-		mBtnItem[6] = (LinearLayout) findViewById(R.id.btn_others);
+		mBtnItem[0] = (LinearLayout) findViewById(R.id.btn_history);
+		mBtnItem[1] = (LinearLayout) findViewById(R.id.btn_monitor_center);
+		mBtnItem[2] = (LinearLayout) findViewById(R.id.btn_news);
+		mBtnItem[3] = (LinearLayout) findViewById(R.id.btn_other);
 
 		mViewPager = (ViewPager) findViewById(R.id.home_viewpager);
 		mFragmentsList = new ArrayList<Fragment>();
 		mFragmentsList.add(new Pic_Advert1());
 		mFragmentsList.add(new Pic_Advert2());
 		mFragmentsList.add(new Pic_Advert3());
-		mPicAdapter = new FragmentPicAdapter(getSupportFragmentManager(), mFragmentsList);
+		mPicAdapter = new GenelFragmentAdapter(getSupportFragmentManager(), mFragmentsList);
 		mViewPager.setAdapter(mPicAdapter);
 		mViewPager.setOnPageChangeListener(this);
 
@@ -121,20 +119,15 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_real_time:
-
-			break;
-		case R.id.btn_remote_control:
-			break;
-		case R.id.btn_threshold:
-			break;
-		case R.id.btn_alarm:
-			break;
 		case R.id.btn_history:
+			Intent intent = new Intent(Home.this,AllGreenActivity.class);
+			startActivity(intent);
 			break;
-		case R.id.btn_others:
+		case R.id.btn_monitor_center:
 			break;
-		case R.id.btn_arigulture_news:
+		case R.id.btn_news:
+			break;
+		case R.id.btn_other:
 			break;
 		default:
 			Toast.makeText(this, Constant.UNDEF, Toast.LENGTH_SHORT).show();

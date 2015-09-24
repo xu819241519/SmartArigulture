@@ -28,6 +28,8 @@
         </activity>
         <activity android:name="com.nfschina.aiot.activity.Home"></activity>
         <activity android:name="com.nfschina.aiot.activity.Register"></activity>
+        <activity android:name="com.nfschina.aiot.activity.AllGreenActivity"></activity>
+        <activity android:name="com.nfschina.aiot.activity.History"></activity>
     </application>
 
 </manifest>

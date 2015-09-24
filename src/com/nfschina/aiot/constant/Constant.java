@@ -39,7 +39,7 @@ public class Constant {
 
 	// relate to counts
 	//the count of home buttons
-	public static int HOME_BTN_COUNT = 7;
+	public static int HOME_BTN_COUNT = 4;
 	//the count of home pics
 	private static int HOME_PICS = 3;
 	
@@ -50,6 +50,10 @@ public class Constant {
 		HOME_PICS = hOME_PICS;
 	}
 	
+	
+	
+	//temp data
+	public static String [] GreenHouseName = new String []{"ÎÂÊÒ´óÅï1","ÎÂÊÒ´óÅï2","ÎÂÊÒ´óÅï3","ÎÂÊÒ´óÅï4","ÎÂÊÒ´óÅï5"};
 	
 	
 
