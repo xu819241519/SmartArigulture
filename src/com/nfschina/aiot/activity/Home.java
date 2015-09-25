@@ -118,21 +118,24 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 
 	@Override
 	public void onClick(View v) {
+		Intent intent = null;
 		switch (v.getId()) {
 		case R.id.btn_history:
-			Intent intent = new Intent(Home.this,AllGreenActivity.class);
-			startActivity(intent);
+			intent = new Intent(Home.this, AllGreenActivity.class);
 			break;
 		case R.id.btn_monitor_center:
 			break;
 		case R.id.btn_news:
+			intent = new Intent(Home.this, News.class);
 			break;
 		case R.id.btn_other:
 			break;
 		default:
 			Toast.makeText(this, Constant.UNDEF, Toast.LENGTH_SHORT).show();
-			;
 			break;
+		}
+		if (intent != null) {
+			startActivity(intent);
 		}
 	}
 

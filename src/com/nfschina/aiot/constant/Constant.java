@@ -36,25 +36,37 @@ public class Constant {
 	public static String UNDEF = "未定义的行为";
 	// confirm exit
 	public static String CONFIRM_EXIT = "再按一次退出应用";
+	// end of the list
+	public static String END_OF_LIST = "列表结尾";
 
 	// relate to counts
-	//the count of home buttons
+	// the count of home buttons
 	public static int HOME_BTN_COUNT = 4;
-	//the count of home pics
+	// the count of home pics
 	private static int HOME_PICS = 3;
-	
+
 	public static int getHomePicCount() {
 		return HOME_PICS;
 	}
+
 	public static void setHomePicCount(int hOME_PICS) {
 		HOME_PICS = hOME_PICS;
 	}
-	
-	
-	
-	//temp data
-	public static String [] GreenHouseName = new String []{"温室大棚1","温室大棚2","温室大棚3","温室大棚4","温室大棚5"};
-	
-	
+
+	// fragment tags
+	public static String NEWS_CONTENT = "news_content";
+	public static String NEWS_LIST = "news_list";
+
+	// temp data
+	public static String[] GreenHouseName = new String[] { "温室大棚1", "温室大棚2", "温室大棚3", "温室大棚4", "温室大棚5", "温室大棚5",
+			"温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5",
+			"温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5",
+			"温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5" };
+	// test data
+	public static String[] TestListItem = { "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance",
+			"Ackawi", "Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
+			"Allgauer Emmentaler", "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
+			"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
+			"Allgauer Emmentaler" };
 
 }

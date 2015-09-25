@@ -64,8 +64,9 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 		mAdapter = new GenelFragmentAdapter(getSupportFragmentManager(), mFragmentList);
 		
 
-		mViewPager.setCurrentItem(1);
+		
 		mViewPager.setAdapter(mAdapter);
+		mViewPager.setCurrentItem(1);
 		mCurrentItem = 0;
 
 	}
