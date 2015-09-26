@@ -67,5 +67,15 @@
                 android:textSize="@dimen/text_normal" />
         </RadioGroup>
     </LinearLayout>
+    <LinearLayout 
+        android:id="@+id/greenhouse_history_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></lecho.lib.hellocharts.view.LineChartView>
+    </LinearLayout>
 
 </LinearLayout>

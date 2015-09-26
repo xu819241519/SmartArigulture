@@ -1,7 +1,6 @@
 package com.nfschina.aiot.fragment;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.activity.News;
@@ -9,6 +8,7 @@ import com.nfschina.aiot.adapter.NewsAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
 
+import android.graphics.AvoidXfermode.Mode;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -46,18 +46,28 @@ public class NewsList extends Fragment {
 	private void initUIControls() {
 		mPullRefleshListView = (PullToRefreshListView) mView.findViewById(R.id.news_list);
 
-		mPullRefleshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+		mPullRefleshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
+		mPullRefleshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
 
 			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 				new GetDataTask().execute();
 			}
-		});
 
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
+						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
+				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+
+				new GetDataTask().execute();
+			}
+			
+		});
 
 		mPullRefleshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
 

@@ -68,7 +68,7 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			mCurrentPage += 1;
-			if (mCurrentPage >= Constant.getHomePicCount())
+			if (mCurrentPage >= Constant.HOME_PICS)
 				mCurrentPage = 0;
 			 mViewPager.setCurrentItem(mCurrentPage);
 			 //setCurrentDot(mCurrentPage);

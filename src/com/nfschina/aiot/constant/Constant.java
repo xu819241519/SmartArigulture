@@ -43,15 +43,13 @@ public class Constant {
 	// the count of home buttons
 	public static int HOME_BTN_COUNT = 4;
 	// the count of home pics
-	private static int HOME_PICS = 3;
-
-	public static int getHomePicCount() {
-		return HOME_PICS;
-	}
-
-	public static void setHomePicCount(int hOME_PICS) {
-		HOME_PICS = hOME_PICS;
-	}
+	public static int HOME_PICS = 3;
+	
+	//identify the status
+	public static int TEMPERATURE = 0;
+	public static int CARBONDIOXIDE = 1;
+	public static int HUMIDITY = 2;
+	public static int SUNSHINE = 3;
 
 	// fragment tags
 	public static String NEWS_CONTENT = "news_content";
