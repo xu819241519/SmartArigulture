@@ -33,6 +33,12 @@ public class InstructionsAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new Holder();
 			convertView = LinearLayout.inflate(parent.getContext(), R.layout.instructions_history_item, null);
+			if (position % 2 == 0) {
+				convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+			} else {
+				convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+			}
+
 			holder.setID((TextView) convertView.findViewById(R.id.instructions_history_id));
 			holder.setSendTime((TextView) convertView.findViewById(R.id.instructions_history_sendtime));
 			holder.setPerformTime((TextView) convertView.findViewById(R.id.instructions_history_performtime));

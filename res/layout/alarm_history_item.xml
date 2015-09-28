@@ -12,6 +12,13 @@
         android:textSize="@dimen/text_small" >
     </TextView>
 
+    <LinearLayout
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/divider"
+        android:orientation="vertical" >
+    </LinearLayout>
+
     <TextView
         android:id="@+id/alarm_history_time"
         android:layout_width="0dp"
@@ -19,6 +26,13 @@
         android:layout_weight="1"
         android:textSize="@dimen/text_small" >
     </TextView>
+
+    <LinearLayout
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/divider"
+        android:orientation="vertical" >
+    </LinearLayout>
 
     <TextView
         android:id="@+id/alarm_history_level"
@@ -28,6 +42,13 @@
         android:textSize="@dimen/text_small" >
     </TextView>
 
+    <LinearLayout
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/divider"
+        android:orientation="vertical" >
+    </LinearLayout>
+
     <TextView
         android:id="@+id/alarm_history_greenhouse"
         android:layout_width="0dp"
@@ -36,6 +57,13 @@
         android:textSize="@dimen/text_small" >
     </TextView>
 
+    <LinearLayout
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/divider"
+        android:orientation="vertical" >
+    </LinearLayout>
+
     <TextView
         android:id="@+id/alarm_history_content"
         android:layout_width="0dp"
@@ -43,6 +71,13 @@
         android:layout_weight="1"
         android:textSize="@dimen/text_small" >
     </TextView>
+
+    <LinearLayout
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@color/divider"
+        android:orientation="vertical" >
+    </LinearLayout>
 
     <TextView
         android:id="@+id/alarm_history_status"

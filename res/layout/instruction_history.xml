@@ -13,6 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="ID"
             android:textSize="@dimen/text_small" >
         </TextView>
@@ -21,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="发出时间"
             android:textSize="@dimen/text_small" >
         </TextView>
@@ -29,6 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="执行时间"
             android:textSize="@dimen/text_small" >
         </TextView>
@@ -37,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="发送用户"
             android:textSize="@dimen/text_small" />
 
@@ -44,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="温室ID"
             android:textSize="@dimen/text_small" >
         </TextView>
@@ -52,6 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="控制内容"
             android:textSize="@dimen/text_small" />
     </LinearLayout>
@@ -60,8 +66,8 @@
         android:id="@+id/instructions_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="#19000000"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/divider"
         android:dividerHeight="2dp"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"

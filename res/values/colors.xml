@@ -16,6 +16,9 @@
 	<color name="red_dark">#660902</color>
 	<color name="blue_dark">#018ADC</color>
 	<color name="blue_light">#99018ADC</color>
+	<color name="divider">#19000000</color>
+	<color name="table_back_1">#ffffffff</color>
+	<color name="table_back_2">#ffdbeef4</color>
 
 	<!-- 字体颜色，选中 -->
 	<color name="tabs_textcolor_true">#01b201</color>

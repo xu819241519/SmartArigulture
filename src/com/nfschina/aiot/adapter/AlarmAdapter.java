@@ -42,13 +42,19 @@ public class AlarmAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		
+
 		holder.getContent().setText(Constant.TestListItem[position]);
 		holder.getGreenHouse().setText(Constant.TestListItem[position]);
 		holder.getID().setText(Constant.TestListItem[position]);
 		holder.getLevel().setText(Constant.TestListItem[position]);
 		holder.getStatus().setText(Constant.TestListItem[position]);
 		holder.getTime().setText(Constant.TestListItem[position]);
+
+		if (position % 2 == 0) {
+			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+		} else {
+			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+		}
 		return convertView;
 	}
 

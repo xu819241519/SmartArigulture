@@ -24,6 +24,7 @@ int attr ptrSubHeaderTextAppearance 0x7f01000b
 int color black 0x7f090006
 int color blue_dark 0x7f09000d
 int color blue_light 0x7f09000e
+int color divider 0x7f09000f
 int color fragment_bg 0x7f09000a
 int color gray_dark 0x7f090008
 int color gray_darker 0x7f090009
@@ -33,8 +34,10 @@ int color green_light 0x7f090003
 int color line 0x7f09000b
 int color nav_bg 0x7f090001
 int color red_dark 0x7f09000c
-int color tabs_textcolor_false 0x7f090010
-int color tabs_textcolor_true 0x7f09000f
+int color table_back_1 0x7f090010
+int color table_back_2 0x7f090011
+int color tabs_textcolor_false 0x7f090013
+int color tabs_textcolor_true 0x7f090012
 int color transparent 0x7f090000
 int color tranwhite 0x7f090005
 int color white 0x7f090004

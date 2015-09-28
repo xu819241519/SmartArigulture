@@ -47,6 +47,12 @@ public class NewsAdapter extends BaseAdapter {
 			holder.getTime().setText(Constant.TestListItem[position]);
 			holder.getTitle().setText(Constant.TestListItem[position]);
 		}
+
+		if (position % 2 == 0) {
+			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+		} else {
+			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+		}
 		return convertView;
 	}
 

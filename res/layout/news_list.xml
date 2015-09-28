@@ -12,19 +12,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="新闻标题"
+            android:layout_weight="1"
             android:gravity="center"
-            android:layout_weight="1" >
+            android:text="新闻标题" >
         </TextView>
+
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" 
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="时间">
+            android:text="时间" >
         </TextView>
     </LinearLayout>
+
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/news_list"

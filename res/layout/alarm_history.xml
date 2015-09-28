@@ -10,67 +10,73 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:text="ID"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="ID"
             android:textSize="@dimen/text_small" >
         </TextView>
 
+
         <TextView
-            android:text="时间"
             android:id="@+id/alarm_history_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="时间"
             android:textSize="@dimen/text_small" >
         </TextView>
 
+
         <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="等级"
+            android:textSize="@dimen/text_small" >
+        </TextView>
+
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/text_small" >
-        </TextView>
-
-        <TextView
             android:text="温室"
+            android:textSize="@dimen/text_small" >
+        </TextView>
+
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/text_small" >
-        </TextView>
-
-        <TextView
             android:text="内容"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
             android:textSize="@dimen/text_small" >
         </TextView>
 
+
         <TextView
-            android:text="状态"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="状态"
             android:textSize="@dimen/text_small" >
         </TextView>
     </LinearLayout>
+
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/alarm_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
-        android:divider="#19000000"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/divider"
         android:dividerHeight="2dp"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
