@@ -30,7 +30,7 @@ public class Constant {
 	public static int REG_FAILED = 3;
 
 	// relate to toast
-	// 用户名和密码提示
+	// tips of username or password
 	public static String FILL_NAME_PASSWORD = "用户名或密码不正确！";
 	// undefine case
 	public static String UNDEF = "未定义的行为";
@@ -38,14 +38,16 @@ public class Constant {
 	public static String CONFIRM_EXIT = "再按一次退出应用";
 	// end of the list
 	public static String END_OF_LIST = "列表结尾";
+	// tips of password
+	public static String FILL_PASSWORD = "填写有误，不允许密码为空";
 
 	// relate to counts
 	// the count of home buttons
 	public static int HOME_BTN_COUNT = 4;
 	// the count of home pics
 	public static int HOME_PICS = 3;
-	
-	//identify the status
+
+	// identify the status
 	public static int TEMPERATURE = 0;
 	public static int CARBONDIOXIDE = 1;
 	public static int HUMIDITY = 2;

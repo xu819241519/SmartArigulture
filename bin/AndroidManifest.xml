@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -31,6 +33,9 @@
         <activity android:name="com.nfschina.aiot.activity.AllGreenActivity"></activity>
         <activity android:name="com.nfschina.aiot.activity.History"></activity>
         <activity android:name="com.nfschina.aiot.activity.News"></activity>
+        <activity android:name="com.nfschina.aiot.activity.Others"></activity>
+        <activity android:name="com.nfschina.aiot.activity.About"></activity>
+        <activity android:name="com.nfschina.aiot.activity.ChangePassword"></activity>
     </application>
 
 </manifest>

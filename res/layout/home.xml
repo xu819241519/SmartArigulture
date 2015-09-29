@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_back"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.nfschina.aiot">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,12 +28,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="180dp" >
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:auto_cycle="true"
+            app:pager_animation="Default"
+            android:visibility="visible"
+            app:pager_animation_span="1100" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/home_viewpager"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="0dp" >
         </android.support.v4.view.ViewPager>
 
         <LinearLayout
@@ -69,7 +78,6 @@
                 android:clickable="true"
                 android:padding="15.0dip"
                 android:src="@drawable/dot" />
-
         </LinearLayout>
     </RelativeLayout>
 

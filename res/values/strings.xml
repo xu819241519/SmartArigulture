@@ -30,6 +30,15 @@
     <!-- title -->
     <string name="history_title">历史记录</string>
     <string name="news_title">农业新闻</string>
-    
+
+    <!-- others -->
+    <string name="about">关于软件</string>
+    <string name="change_pswd">修改密码</string>
+    <string name="about_content_content">\t农业大棚客户端版权所有\n@青岛中科方德软件有限公司\n公司地址：青岛市高新区智力岛路1号创业大厦C座11层
+\n邮箱：admin@nfs-qd.com</string>
+    <string name="about_content_footer">方德农业大棚 v1.0</string>
+    <string name="old_pswd">原密码：</string>
+    <string name="new_pswd">新密码：</string>
+    <string name="confirm_pswd">确认密码：</string>
 
 </resources>

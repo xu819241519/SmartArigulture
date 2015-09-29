@@ -3,77 +3,40 @@
  */
 package com.nfschina.aiot.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import com.nfschina.aiot.R;
-import com.nfschina.aiot.adapter.GenelFragmentAdapter;
 import com.nfschina.aiot.constant.Constant;
-import com.nfschina.aiot.fragment.Pic_Advert1;
-import com.nfschina.aiot.fragment.Pic_Advert2;
-import com.nfschina.aiot.fragment.Pic_Advert3;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.util.Random;
+
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView.ImageLoadListener;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
 /**
  * @author xu
  *
  */
-public class Home extends FragmentActivity implements OnClickListener, OnPageChangeListener {
+public class Home extends FragmentActivity implements OnClickListener {
 
 	// the button to the subitem
 	private LinearLayout[] mBtnItem;
 
 	// the time of click back button
 	private long mExitTime;
-	// the viewpager filled with pics
-	private ViewPager mViewPager;
-	// the view filled with pics
-	private List<Fragment> mFragmentsList;
-	// the adapter of pics
-	private GenelFragmentAdapter mPicAdapter;
 	// the imageview of dots
-	//private ImageView[] mDots;
+	// private ImageView[] mDots;
 	// the current page of the imageview
 	private int mCurrentPage;
-
-	// the time
-	private Timer mTimer = new Timer();
-	// teh timetask
-	private TimerTask mTimeTask = new TimerTask() {
-
-		@Override
-		public void run() {
-			Message msg = new Message();
-			msg.what = 1;
-			mHandler.sendMessage(msg);
-		}
-	};
-
-	// the handler
-	private Handler mHandler = new Handler() {
-		@Override
-		public void handleMessage(android.os.Message msg) {
-			mCurrentPage += 1;
-			if (mCurrentPage >= Constant.HOME_PICS)
-				mCurrentPage = 0;
-			 mViewPager.setCurrentItem(mCurrentPage);
-			 //setCurrentDot(mCurrentPage);
-		}
-	};
+	// the pic container
+	private SliderLayout mSliderLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +46,12 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 		setListener();
 
 		mExitTime = 0;
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		mSliderLayout.startAutoCycle();
 	}
 
 	/**
@@ -94,18 +63,23 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 		mBtnItem[1] = (LinearLayout) findViewById(R.id.btn_monitor_center);
 		mBtnItem[2] = (LinearLayout) findViewById(R.id.btn_news);
 		mBtnItem[3] = (LinearLayout) findViewById(R.id.btn_other);
+		mSliderLayout = (SliderLayout) findViewById(R.id.slider);
 
-		mViewPager = (ViewPager) findViewById(R.id.home_viewpager);
-		mFragmentsList = new ArrayList<Fragment>();
-		mFragmentsList.add(new Pic_Advert1());
-		mFragmentsList.add(new Pic_Advert2());
-		mFragmentsList.add(new Pic_Advert3());
-		mPicAdapter = new GenelFragmentAdapter(getSupportFragmentManager(), mFragmentsList);
-		mViewPager.setAdapter(mPicAdapter);
-		mViewPager.setOnPageChangeListener(this);
+		TextSliderView textSliderView = new TextSliderView(this);
+		textSliderView.image("http://bbs.unpcn.com/attachment.aspx?attachmentid=4341481");
+		mSliderLayout.addSlider(textSliderView);
+		textSliderView.setOnImageLoadListener(new ImageLoadListener() {
 
-		//initDots();
-		mTimer.schedule(mTimeTask, 5000, 5000);
+			@Override
+			public void onStart(BaseSliderView target) {
+				mSliderLayout.setPresetTransformer(new Random().nextInt(16));
+			}
+
+			@Override
+			public void onEnd(boolean result, BaseSliderView target) {
+
+			}
+		});
 	}
 
 	/**
@@ -129,6 +103,7 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 			intent = new Intent(Home.this, News.class);
 			break;
 		case R.id.btn_other:
+			intent = new Intent(Home.this, Others.class);
 			break;
 		default:
 			Toast.makeText(this, Constant.UNDEF, Toast.LENGTH_SHORT).show();
@@ -147,59 +122,11 @@ public class Home extends FragmentActivity implements OnClickListener, OnPageCha
 		} else
 			finish();
 	}
-
+	
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
-		// TODO Auto-generated method stub
-
+	protected void onStop() {
+		mSliderLayout.stopAutoCycle();
+		super.onStop();
 	}
-
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onPageSelected(int arg0) {
-		//setCurrentDot(arg0);
-	}
-
-	/*
-	 * 初始化小圆点
-	 */
-//	private void initDots() {
-//		LinearLayout ll = (LinearLayout) findViewById(R.id.home_ll);
-//
-//		mDots = new ImageView[mFragmentsList.size()];
-//
-//		// 循环取得小点图片
-//		for (int i = 0; i < mFragmentsList.size(); i++) {
-//			mDots[i] = (ImageView) ll.getChildAt(i);
-//			mDots[i].setEnabled(false);// 都设为灰色
-//		}
-//
-//		mCurrentPage = 0;
-//		mDots[mCurrentPage].setEnabled(true);// 设置为白色，即选中状态
-//		mDots[mCurrentPage].setVisibility(0);
-//	}
-
-	/**
-	 * 设置小圆点的当前页面
-	 * 
-	 * @param position
-	 *            当前页面的索引值
-	 */
-//	private void setCurrentDot(int position) {
-//		if (position < 0 || position > mFragmentsList.size() - 1 || mCurrentPage == position) {
-//			return;
-//		}
-//
-//		for (int i = 0; i < Constant.HOME_PICS; ++i)
-//			mDots[i].setEnabled(false);
-//		mDots[mCurrentPage].setEnabled(true);
-//
-//		mCurrentPage = position;
-//	}
 
 }

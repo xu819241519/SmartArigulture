@@ -126,7 +126,7 @@ public class Login extends Activity implements OnClickListener {
 		if(mAutoLogin){
 			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, true);
 		}
-		Intent intent = new Intent(Login.this, Home.class);
+		Intent intent = new Intent(this, Home.class);
 		startActivity(intent);
 		this.finish();
 	}
