@@ -1,14 +1,14 @@
 package com.nfschina.aiot.activity;
 
-import org.w3c.dom.Text;
-
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.db.AccessDataBase;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,6 +24,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 	private EditText mConfirmPassword;
 	private Button mChangePassword;
 	private TextView mBack;
+	private AlertDialog mAlertDialog;
 
 	// the string of the EditText
 	private String mOldPasswordString;
@@ -85,6 +86,9 @@ public class ChangePassword extends Activity implements OnClickListener {
 				|| "".equals(mConfirmPasswordString)) {
 			Toast.makeText(this, Constant.FILL_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
+		} else if (mOldPasswordString.equals(mNewPasswordString)) {
+			Toast.makeText(this, Constant.DIFF_PASSWORD, Toast.LENGTH_SHORT).show();
+			return false;
 		}
 		return true;
 	}
@@ -93,6 +97,55 @@ public class ChangePassword extends Activity implements OnClickListener {
 	 * perform changing the password
 	 */
 	private void PerformChangePassword() {
+		mAlertDialog = new AlertDialog.Builder(this).create();
+		mAlertDialog.setMessage("ÕýÔÚÐÞ¸ÄÃÜÂë...");
+		mAlertDialog.show();
+		new PerformLinkChangePassword(this).execute();
+	}
+
+	/**
+	 * dismiss the alertdialog
+	 */
+	public void finishAlertDialog() {
+		if (mAlertDialog != null) {
+			mAlertDialog.dismiss();
+		}
+	}
+
+	public class PerformLinkChangePassword extends AsyncTask<Void, Void, Integer> {
+
+		private Activity mActivity;
+
+		public PerformLinkChangePassword(Activity activity) {
+			mActivity = activity;
+		}
+
+		@Override
+		protected Integer doInBackground(Void... params) {
+			int resultCode = Constant.SERVER_CONNECT_FAILED;
+			try {
+				resultCode = AccessDataBase.ConnectChangePassword(Constant.CURRENT_USER, mOldPasswordString, mNewPasswordString);
+				return resultCode;
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			return resultCode;
+		}
+		
+		@Override
+		protected void onPostExecute(Integer result) {
+			finishAlertDialog();
+			if (result == Constant.SERVER_CONNECT_FAILED) {
+				Toast.makeText(mActivity, Constant.CONNECT_FAILED_INFO, Toast.LENGTH_SHORT).show();
+			} else if (result == Constant.SERVER_CHANGE_PASSWORD_FAILED) {
+				Toast.makeText(mActivity, Constant.CHANGE_PASSWORD_FAILED, Toast.LENGTH_SHORT).show();
+			} else if (result == Constant.SERVER_CHANGE_PASSWORD_SUCCESS) {
+				Toast.makeText(mActivity, Constant.CHANGE_PASSWORD_SUCCESS, Toast.LENGTH_SHORT).show();
+				finish();
+			} else if (result == Constant.SERVER_SQL_FAILED) {
+				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();
+			}
+		}
 
 	}
 

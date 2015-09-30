@@ -3,6 +3,9 @@
  */
 package com.nfschina.aiot.constant;
 
+import android.content.res.Resources.Theme;
+import android.widget.RelativeLayout;
+
 /**
  * @author xu
  *
@@ -10,24 +13,44 @@ package com.nfschina.aiot.constant;
 public class Constant {
 
 	// relate to shareperferences
-	// 是否第一次进入
+	// is the first time of login
 	public static String IS_FIRST_IN = "IsFirstIn";
-	// 是否记住密码
+	// is remember the password
 	public static String IS_REMEMBER_PWD = "IsRememberPwd";
-	// 是否自动登录
+	// is auto login
 	public static String IS_AUTO_LOGIN = "IsAutoLogin";
-	// 密码
+	// password
 	public static String PWD = "pwd";
-	// 用户名
+	// user name
 	public static String USER_NAME = "User_Name";
 
 	// relate to register
-	// 注册请求码
+	// the request code of registering
 	public static int REG_CODE = 1;
-	// 注册成功
+	// register success
 	public static int REG_SUCCESS = 2;
-	// 注册失败
+	// register failed
 	public static int REG_FAILED = 3;
+
+	// relate to return code of connecting server
+	// connect the server failed
+	public static int SERVER_CONNECT_FAILED = 0;
+	// username or password failed
+	public static int SERVER_LOGIN_FAILED = 1;
+	// login success
+	public static int SERVER_LOGIN_SUCCESS = 2;
+	// sql statement failed
+	public static int SERVER_SQL_FAILED = 3;
+	// other failed
+	public static int SERVER_UNKNOWN_FAILED = 4;
+	// register success
+	public static int SERVER_REGISTER_SUCCESS = 5;
+	// register failed
+	public static int SERVER_REGISTER_FAILED = 6;
+	// change password success
+	public static int SERVER_CHANGE_PASSWORD_SUCCESS = 7;
+	// change password failed
+	public static int SERVER_CHANGE_PASSWORD_FAILED = 8;
 
 	// relate to toast
 	// tips of username or password
@@ -40,6 +63,22 @@ public class Constant {
 	public static String END_OF_LIST = "列表结尾";
 	// tips of password
 	public static String FILL_PASSWORD = "填写有误，不允许密码为空";
+	// tips of register password
+	public static String DIFF_PASSWORD = "两次输入的密码不相同";
+	// failed to login
+	public static String LOGIN_FAILED_INFO = "用户名或密码错误";
+	// change password failed
+	public static String CHANGE_PASSWORD_FAILED = "更改密码失败";
+	// change password success 
+	public static String CHANGE_PASSWORD_SUCCESS = "更改密码成功";
+	// failed to register
+	public static String REGISTER_FAILED_INFO = "用户名或密码不符合要求";
+	// register success 
+	public static String REGISTER_SUCCESS = "注册成功";
+	// failed to connect server
+	public static String CONNECT_FAILED_INFO = "与服务器连接失败";
+	// failed to execute sql statement
+	public static String SQL_FAILED_INFO = "查询语句出错";
 
 	// relate to counts
 	// the count of home buttons
@@ -56,7 +95,11 @@ public class Constant {
 	// fragment tags
 	public static String NEWS_CONTENT = "news_content";
 	public static String NEWS_LIST = "news_list";
-
+	
+	
+	// the current user
+	public static String CURRENT_USER = null ;
+	
 	// temp data
 	public static String[] GreenHouseName = new String[] { "温室大棚1", "温室大棚2", "温室大棚3", "温室大棚4", "温室大棚5", "温室大棚5",
 			"温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5", "温室大棚5",

@@ -6,6 +6,7 @@
 	<classpathentry kind="lib" path="libs/android-support-v7-gridlayout.jar"/>
 	<classpathentry kind="lib" path="libs/hellocharts-library-1.5.7.jar"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.36-bin.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>

@@ -1,10 +1,21 @@
 package com.nfschina.aiot.activity;
 
+import java.util.List;
+
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.constant.ConstantFun;
+import com.nfschina.aiot.db.AccessDataBase;
 import com.nfschina.aiot.db.SharePerencesHelper;
+
+import android.R.anim;
+import android.R.integer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,27 +26,28 @@ import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener {
 
-	// 用户名输入的EditText
+	// the EditText of user name
 	private EditText mUserNameEditText;
-	// 密码输入的EditText
+	// the EditText of password
 	private EditText mPasswordEditText;
-	// 记住密码CheckBox
+	// the CheckBox of remember password
 	private CheckBox mRememberCheckBox;
-	// 自动登录CheckBox
+	// the CheckBox of auto login
 	private CheckBox mAutoLoginCheckBox;
-	// 登录按钮
+	// the button of login
 	private Button mLoginButton;
-	// 注册按钮
+	// the button of register
 	private Button mRegisterButton;
-	// 用户名
+	// the string of user name
 	private String mUserName;
-	// 密码
+	// the string of password
 	private String mPassword;
-	// 是否记住密码
+	// is remember password
 	private boolean mRemember;
-	// 是否自动登录
+	// is auto login
 	private boolean mAutoLogin;
-
+	// the alertdialog
+	private AlertDialog mAlertDialog;
 
 	public Login() {
 	}
@@ -110,8 +122,11 @@ public class Login extends Activity implements OnClickListener {
 				|| mPassword.equals(null)) {
 			Toast.makeText(this, Constant.FILL_NAME_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
-		} else
+		} else {
+			mPassword = ConstantFun.getMD5String(mPassword);
 			return true;
+		}
+
 	}
 
 	/**
@@ -119,16 +134,10 @@ public class Login extends Activity implements OnClickListener {
 	 */
 	public void PerformLogin() {
 
-		if (mRemember) {
-			SharePerencesHelper.putString(this, Constant.USER_NAME, mUserName);
-			SharePerencesHelper.putString(this, Constant.PWD, mPassword);
-		}
-		if(mAutoLogin){
-			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, true);
-		}
-		Intent intent = new Intent(this, Home.class);
-		startActivity(intent);
-		this.finish();
+		mAlertDialog = new AlertDialog.Builder(this).create();
+		mAlertDialog.setMessage("正在登陆...");
+		mAlertDialog.show();
+		new PerformLinkLogin(this).execute();
 	}
 
 	/**
@@ -178,6 +187,15 @@ public class Login extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 */
+	
+	public void finishAlertDialog(){
+		if(mAlertDialog != null){
+			mAlertDialog.cancel();
+		}
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Constant.REG_SUCCESS) {
@@ -185,6 +203,65 @@ public class Login extends Activity implements OnClickListener {
 			mUserNameEditText.setText(username);
 		}
 	}
-	
+
+	/**
+	 * save the info of the login data
+	 */
+	private void saveInfo() {
+		if (mRemember) {
+			SharePerencesHelper.putString(this, Constant.USER_NAME, mUserName);
+			SharePerencesHelper.putString(this, Constant.PWD, mPassword);
+		}
+		if (mAutoLogin) {
+			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, true);
+		}
+	}
+
+	/**
+	 * perform link the server for login
+	 * 
+	 * @author xu
+	 *
+	 */
+	public class PerformLinkLogin extends AsyncTask<Void, Void, Integer> {
+
+		private Activity mActivity;
+
+
+		public PerformLinkLogin(Activity activity) {
+			mActivity = activity;
+		}
+
+		@Override
+		protected Integer doInBackground(Void... params) {
+			int result = Constant.SERVER_CONNECT_FAILED;
+			try {
+				result = AccessDataBase.ConnectLogin(mUserName, mPassword);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			finishAlertDialog();
+			if (result == Constant.SERVER_CONNECT_FAILED) {
+				Toast.makeText(mActivity, Constant.CONNECT_FAILED_INFO, Toast.LENGTH_SHORT).show();
+			} else if (result == Constant.SERVER_LOGIN_FAILED) {
+				Toast.makeText(mActivity, Constant.LOGIN_FAILED_INFO, Toast.LENGTH_SHORT).show();
+			} else if (result == Constant.SERVER_LOGIN_SUCCESS) {
+				saveInfo();
+				Intent intent = new Intent(Login.this, Home.class);
+				startActivity(intent);
+				Constant.CURRENT_USER = mUserName;
+				mActivity.finish();				
+			} else if (result == Constant.SERVER_SQL_FAILED) {
+				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();
+			}
+		}
+
+	}
 
 }
