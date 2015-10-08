@@ -1,7 +1,11 @@
 package com.nfschina.aiot.adapter;
 
+import java.util.List;
+
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.entity.AlarmEntity;
+import com.nfschina.aiot.entity.InstructionEntity;
 
 import android.R.raw;
 import android.view.View;
@@ -12,14 +16,17 @@ import android.widget.TextView;
 
 public class InstructionsAdapter extends BaseAdapter {
 
+	//the list of the instruction history
+	private List<InstructionEntity> mList;
+	
 	@Override
 	public int getCount() {
-		return Constant.TestListItem.length;
+		return mList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return Constant.TestListItem[position];
+		return position;
 	}
 
 	@Override
@@ -50,12 +57,12 @@ public class InstructionsAdapter extends BaseAdapter {
 			holder = (Holder) convertView.getTag();
 		}
 		if (holder != null) {
-			holder.getID().setText(Constant.TestListItem[position]);
-			holder.getGreenHouse().setText(Constant.TestListItem[position]);
-			holder.getContent().setText(Constant.TestListItem[position]);
-			holder.getPerformTime().setText(Constant.TestListItem[position]);
-			holder.getSendTime().setText(Constant.TestListItem[position]);
-			holder.getUser().setText(Constant.TestListItem[position]);
+			holder.getID().setText(Integer.toString(mList.get(position).getID()));
+			holder.getGreenHouse().setText(Integer.toString(mList.get(position).getGreenHouseID()));
+			holder.getContent().setText(mList.get(position).getContent());
+			holder.getPerformTime().setText(mList.get(position).getRunTime().toString());
+			holder.getSendTime().setText(mList.get(position).getSendTime().toString());
+			holder.getUser().setText(Integer.toString(mList.get(position).getUserID()));
 		}
 
 		return convertView;
@@ -116,6 +123,34 @@ public class InstructionsAdapter extends BaseAdapter {
 		public void setContent(TextView mContent) {
 			this.mContent = mContent;
 		}
+	}
+	
+	
+	/**
+	 * add data to the list
+	 * 
+	 * @param alarmEntities
+	 *            the list of the InstructionEntity
+	 * @return true if added,or false
+	 */
+	public boolean addData(List<InstructionEntity> alarmEntities) {
+		if (mList != null) {
+			return mList.addAll(alarmEntities);
+		} else
+			return false;
+	}
+
+	/**
+	 * clear the list
+	 * 
+	 * @return true if the list is clear,or false
+	 */
+	public boolean clearData() {
+		if (mList != null && mList.isEmpty() == false) {
+			mList.clear();
+			return true;
+		}
+		return false;
 	}
 
 }

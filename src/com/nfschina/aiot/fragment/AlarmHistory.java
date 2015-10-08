@@ -1,11 +1,16 @@
 package com.nfschina.aiot.fragment;
 
+import java.util.List;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.adapter.AlarmAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
+import com.nfschina.aiot.db.AccessDataBase;
+import com.nfschina.aiot.entity.AlarmEntity;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class AlarmHistory extends Fragment {
 
@@ -21,6 +27,14 @@ public class AlarmHistory extends Fragment {
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
 	private View mView;
+
+	// the current page
+	private int mPage = 0;
+	// the count of one page
+	private int mSize = 15;
+
+	// the adapter of the alarmhistory
+	private AlarmAdapter mAlarmAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +54,7 @@ public class AlarmHistory extends Fragment {
 	private void initUIControls() {
 		mPullRefreshListView = (PullToRefreshListView) mView.findViewById(R.id.alarm_list);
 		mPullRefreshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
+		mPullRefreshListView.setScrollingWhileRefreshingEnabled(true);
 		mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
 
 			@Override
@@ -48,7 +63,7 @@ public class AlarmHistory extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				new GetDataTask().execute();
+				new GetDataTask().execute(true);
 			}
 
 			@Override
@@ -57,16 +72,16 @@ public class AlarmHistory extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				new GetDataTask().execute();
+				new GetDataTask().execute(false);
 			}
-
+			
 		});
-
 		mPullRefreshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
 		mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
 		mListView = mPullRefreshListView.getRefreshableView();
-		mListView.setAdapter(new AlarmAdapter());
-		mPullRefreshListView.setRefreshing(true);
+		mAlarmAdapter = new AlarmAdapter();
+		mListView.setAdapter(mAlarmAdapter);
+		//mPullRefreshListView.setRefreshing(true);
 	}
 
 	/**
@@ -75,24 +90,42 @@ public class AlarmHistory extends Fragment {
 	 * @author xu
 	 *
 	 */
-	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+	private class GetDataTask extends AsyncTask<Boolean, Void, Boolean> {
 
 		@Override
-		protected String[] doInBackground(Void... params) {
-			try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e) {
+		protected Boolean doInBackground(Boolean... params) {
+			Boolean result = false;
+			// pull down
+			if (params[0]) {
+				mPage = 0;
+				mAlarmAdapter.clearData();
+				mAlarmAdapter.addData(AccessDataBase.getAlarmHistoryData(mPage, mSize));
+				result = true;
 			}
-			return Constant.TestListItem;
+			// pull up
+			else {
+				List<AlarmEntity> list = AccessDataBase.getAlarmHistoryData(mPage + 1, mSize);
+				if (list != null && list.size() != 0) {
+					mPage++;
+					mAlarmAdapter.addData(list);
+					result = true;
+				} else if (list != null) {
+					mPullRefreshListView
+							.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_START);
+				} else {
+					Toast.makeText(getActivity(), Constant.UNDEF, Toast.LENGTH_SHORT).show();
+				}
+
+			}
+			return result;
 		}
 
 		@Override
-		protected void onPostExecute(String[] result) {
-
-			// Call onRefreshComplete when the list has been refreshed.
+		protected void onPostExecute(Boolean result) {
+			if(result)
+				mAlarmAdapter.notifyDataSetChanged();
 			mPullRefreshListView.onRefreshComplete();
-
-			super.onPostExecute(result);
+			
 		}
 	}
 }

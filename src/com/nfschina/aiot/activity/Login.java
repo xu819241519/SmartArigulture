@@ -236,7 +236,7 @@ public class Login extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 			int result = Constant.SERVER_CONNECT_FAILED;
 			try {
-				result = AccessDataBase.ConnectLogin(mUserName, mPassword);
+				result = AccessDataBase.connectLogin(mUserName, mPassword);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

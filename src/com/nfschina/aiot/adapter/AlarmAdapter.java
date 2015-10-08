@@ -1,8 +1,13 @@
 package com.nfschina.aiot.adapter;
 
-import com.nfschina.aiot.R;
-import com.nfschina.aiot.constant.Constant;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.nfschina.aiot.R;
+import com.nfschina.aiot.entity.AlarmEntity;
+
+import android.R.integer;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,14 +16,22 @@ import android.widget.TextView;
 
 public class AlarmAdapter extends BaseAdapter {
 
+	// the list of the alarm history
+	private List<AlarmEntity> mList;
+
+	public AlarmAdapter() {
+		super();
+		mList = new ArrayList<AlarmEntity>();
+	}
+
 	@Override
 	public int getCount() {
-		return Constant.TestListItem.length;
+		return mList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return Constant.TestListItem[position];
+		return position;
 	}
 
 	@Override
@@ -42,13 +55,13 @@ public class AlarmAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-
-		holder.getContent().setText(Constant.TestListItem[position]);
-		holder.getGreenHouse().setText(Constant.TestListItem[position]);
-		holder.getID().setText(Constant.TestListItem[position]);
-		holder.getLevel().setText(Constant.TestListItem[position]);
-		holder.getStatus().setText(Constant.TestListItem[position]);
-		holder.getTime().setText(Constant.TestListItem[position]);
+		
+		holder.getContent().setText(mList.get(position).getContent());
+		holder.getGreenHouse().setText(Integer.toString(mList.get(position).getGreenHouseID()));
+		holder.getID().setText(Integer.toString(mList.get(position).getID()));
+		holder.getLevel().setText(mList.get(position).getLevel());
+		holder.getStatus().setText(mList.get(position).getState());
+		holder.getTime().setText(((Timestamp) mList.get(position).getTime()).toString());
 
 		if (position % 2 == 0) {
 			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
@@ -113,5 +126,32 @@ public class AlarmAdapter extends BaseAdapter {
 		public void setStatus(TextView mStatus) {
 			this.mStatus = mStatus;
 		}
+	}
+
+	/**
+	 * add data to the list
+	 * 
+	 * @param alarmEntities
+	 *            the list of the AlarmEntity
+	 * @return true if added,or false
+	 */
+	public boolean addData(List<AlarmEntity> alarmEntities) {
+		if (mList != null) {
+			return mList.addAll(alarmEntities);
+		} else
+			return false;
+	}
+
+	/**
+	 * clear the list
+	 * 
+	 * @return true if the list is clear,or false
+	 */
+	public boolean clearData() {
+		if (mList != null && mList.isEmpty() == false) {
+			mList.clear();
+			return true;
+		}
+		return false;
 	}
 }

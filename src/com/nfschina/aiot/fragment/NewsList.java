@@ -47,6 +47,7 @@ public class NewsList extends Fragment {
 		mPullRefleshListView = (PullToRefreshListView) mView.findViewById(R.id.news_list);
 
 		mPullRefleshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
+		mPullRefleshListView.setScrollingWhileRefreshingEnabled(true);
 		mPullRefleshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
 
 			@Override

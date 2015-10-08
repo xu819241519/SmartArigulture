@@ -126,7 +126,7 @@ public class Register extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 			int resultCode = Constant.SERVER_CONNECT_FAILED;
 			try {
-				resultCode = AccessDataBase.ConnectRegister(mUserName, mPassword);
+				resultCode = AccessDataBase.connectRegister(mUserName, mPassword);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

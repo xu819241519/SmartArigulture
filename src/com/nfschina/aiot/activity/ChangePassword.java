@@ -6,7 +6,6 @@ import com.nfschina.aiot.db.AccessDataBase;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -86,7 +85,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 				|| "".equals(mConfirmPasswordString)) {
 			Toast.makeText(this, Constant.FILL_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
-		} else if (mOldPasswordString.equals(mNewPasswordString)) {
+		} else if (mConfirmPassword.equals(mNewPasswordString)) {
 			Toast.makeText(this, Constant.DIFF_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
 		}
@@ -124,7 +123,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 			int resultCode = Constant.SERVER_CONNECT_FAILED;
 			try {
-				resultCode = AccessDataBase.ConnectChangePassword(Constant.CURRENT_USER, mOldPasswordString, mNewPasswordString);
+				resultCode = AccessDataBase.connectChangePassword(Constant.CURRENT_USER, mOldPasswordString, mNewPasswordString);
 				return resultCode;
 			} catch (Exception e) {
 				e.printStackTrace();
