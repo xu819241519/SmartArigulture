@@ -14,9 +14,14 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 报警记录适配器
+ * @author xu
+ *
+ */
 public class AlarmAdapter extends BaseAdapter {
 
-	// the list of the alarm history
+	// 报警记录实体的list
 	private List<AlarmEntity> mList;
 
 	public AlarmAdapter() {
@@ -72,11 +77,17 @@ public class AlarmAdapter extends BaseAdapter {
 	}
 
 	public class Holder {
+		//报警ID
 		private TextView mID;
+		//报警时间
 		private TextView mTime;
+		//温室ID
 		private TextView mGreenHouse;
+		//报警内容
 		private TextView mContent;
+		//报警等级
 		private TextView mLevel;
+		//状态
 		private TextView mStatus;
 
 		public TextView getID() {
@@ -129,11 +140,10 @@ public class AlarmAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * add data to the list
+	 * 添加报警记录实体
 	 * 
-	 * @param alarmEntities
-	 *            the list of the AlarmEntity
-	 * @return true if added,or false
+	 * @param alarmEntities 报警记录的list
+	 * @return 成功添加返回true，否则false
 	 */
 	public boolean addData(List<AlarmEntity> alarmEntities) {
 		if (mList != null) {
@@ -143,9 +153,9 @@ public class AlarmAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * clear the list
+	 * 清空报警记录list
 	 * 
-	 * @return true if the list is clear,or false
+	 * @return 清空成功返回true，否则返回false
 	 */
 	public boolean clearData() {
 		if (mList != null && mList.isEmpty() == false) {

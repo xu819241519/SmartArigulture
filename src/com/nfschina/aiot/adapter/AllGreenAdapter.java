@@ -1,19 +1,22 @@
 package com.nfschina.aiot.adapter;
 
-import java.net.ContentHandler;
-
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.activity.History;
 import com.nfschina.aiot.constant.Constant;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+/**
+ * À˘”–¥Û≈Ô  ≈‰∆˜
+ * @author xu
+ *
+ */
 
 public class AllGreenAdapter extends BaseAdapter {
 
@@ -24,12 +27,12 @@ public class AllGreenAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return Constant.GreenHouseName.length;
+		return Constant.GreenHouseName.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return Constant.GreenHouseName[position];
+		return Constant.GreenHouseName.get(position);
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class AllGreenAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		holder.getmTextView().setText(Constant.GreenHouseName[position]);
+		holder.getmTextView().setText(Integer.toString(Constant.GreenHouseName.get(position)));
 		holder.getmTextView().setOnClickListener(new View.OnClickListener() {
 			
 			@Override

@@ -7,6 +7,7 @@ import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,19 +24,29 @@ import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
+/**
+ * 温室大棚数据历史记录
+ * 通过第三方库（AndroidSliderImage）的折线图来实现展示
+ * @author xu
+ *
+ */
 public class GreenHouseHistory extends Fragment implements OnClickListener {
 
-	// the UI controls
+	// 光照按钮
 	private RadioButton mSunshine;
+	// 二氧化碳按钮
 	private RadioButton mCarbonDioxide;
+	// 湿度按钮
 	private RadioButton mHumidity;
+	// 温度按钮
 	private RadioButton mTemperature;
+	
 	private View mView;
 
-	// the current selected item
+	// 当前选择查看的值
 	private int mCurrentItem = Constant.CARBONDIOXIDE;
 
-	// test controls
+	// 折线图
 	private LineChartView mChart;
 
 	@Override
@@ -53,7 +64,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * Initialize the UI controls
+	 * 初始化UI控件
 	 */
 	private void InitUIControls() {
 		mSunshine = (RadioButton) mView.findViewById(R.id.greenhouse_history_sunshine);
@@ -68,7 +79,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * set the listener of the UI controls
+	 * 设置UI控件的监听
 	 */
 	private void setListener() {
 		mSunshine.setOnClickListener(this);
@@ -78,10 +89,9 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * change the charts
+	 * 更换折线图显示的实体种类
 	 * 
-	 * @param kind
-	 *            the kind of the chart to be display
+	 * @param kind 要显示的实体种类
 	 */
 	public void changeCharts(int kind) {
 		LineChartData data = null;
@@ -101,9 +111,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * get the temperature data
-	 * 
-	 * @return the data of temperature
+	 * 获得温度数据
 	 */
 	private LineChartData getTemperatureData() {
 		List<PointValue> values = new ArrayList<PointValue>();
@@ -143,9 +151,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * get the humidity data
-	 * 
-	 * @return the data of humidity
+	 * 获得湿度数据
 	 */
 	private LineChartData getHumidityData() {
 		List<PointValue> values = new ArrayList<PointValue>();
@@ -185,9 +191,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * get the sunshine data
-	 * 
-	 * @return the data of the sunshine
+	 * 获得光照数据
 	 */
 	private LineChartData getSunshineData() {
 		List<PointValue> values = new ArrayList<PointValue>();
@@ -227,9 +231,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
-	 * get the carbon dioxide data
-	 * 
-	 * @return the data of carbon dioxide
+	 * 获得二氧化碳数据
 	 */
 	private LineChartData getCarbonDioxideData() {
 
@@ -269,6 +271,9 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		return data;
 	}
 
+	/**
+	 * 按钮点击事件
+	 */
 	@Override
 	public void onClick(View v) {
 
@@ -293,5 +298,24 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			break;
 		}
 		changeCharts(mCurrentItem);
+	}
+	
+	
+	
+	/**
+	 * @author xu
+	 *
+	 */
+	public class GetDataTask extends AsyncTask<Void, Void, Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+		}
 	}
 }

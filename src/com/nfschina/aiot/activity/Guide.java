@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
- * 
+ * 第一次登陆时显示的引导页，指明app的特性
+ * 将几张图片放在fragment里，fragment结合viewpager左右切换，当切换到最后一页时提供一个进入主页面的按钮
+ * 点击按钮进入主页面
  * @author xu
  *
  */

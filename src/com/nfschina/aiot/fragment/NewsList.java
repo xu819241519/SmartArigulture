@@ -1,15 +1,15 @@
 package com.nfschina.aiot.fragment;
 
+import java.util.List;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.activity.News;
 import com.nfschina.aiot.adapter.NewsAdapter;
-import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
-
-import android.graphics.AvoidXfermode.Mode;
-import android.os.AsyncTask;
+import com.nfschina.aiot.entity.NewsListEntity;
+import com.nfschina.aiot.util.NewsListGetUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,13 +20,28 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.text.format.DateUtils;
 
+/**
+ * 新闻列表
+ * 
+ * @author xu
+ *
+ */
+
 public class NewsList extends Fragment {
 
-	
-	// the UI controls
+	// 下拉刷新控件
 	private PullToRefreshListView mPullRefleshListView;
 	private ListView mListView;
 	private View mView;
+	
+	// 第几页
+	private int mPage;
+	
+	// 联网获取新闻的工具类
+	private NewsListGetUtil mNewsGetUtil;
+
+	// 适配器
+	private NewsAdapter mNewsAdapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,9 +56,11 @@ public class NewsList extends Fragment {
 	}
 
 	/**
-	 * Initialize the UI controls
+	 * 初始化UI控件
 	 */
 	private void initUIControls() {
+		
+		mPage = 0;
 		mPullRefleshListView = (PullToRefreshListView) mView.findViewById(R.id.news_list);
 
 		mPullRefleshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
@@ -56,7 +73,8 @@ public class NewsList extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				new GetDataTask().execute();
+				mPage = 0;
+				mNewsGetUtil.updateNewsList(mPage);
 			}
 
 			@Override
@@ -65,55 +83,40 @@ public class NewsList extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				new GetDataTask().execute();
+				mPage++;
+				mNewsGetUtil.updateNewsList(mPage);
 			}
-			
+
 		});
 
 		mPullRefleshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
 
 		mPullRefleshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
-				
 
 		mListView = mPullRefleshListView.getRefreshableView();
-		mListView.setAdapter(new NewsAdapter());
+		mNewsAdapter = new NewsAdapter();
+		mNewsGetUtil = new NewsListGetUtil(this);
+		mNewsGetUtil.updateNewsList(mPage);
+		mListView.setAdapter(mNewsAdapter);
 		
+
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				News parents = (News) getActivity();
-				parents.goNewsContent(parent.getAdapter().getItem(position).toString());
+				((News)parents).goNewsContent((NewsListEntity) parent.getAdapter().getItem(position));
 			}
 		});
-		
-		
+
 	}
 
 	/**
-	 * get the data from internet
-	 * 
-	 * @author xu
-	 *
+	 * 联网更新新闻数据
+	 * @param newsListEntities 通过网络获取的新闻列表实体
 	 */
-	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
-
-		@Override
-		protected String[] doInBackground(Void... params) {
-			try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e) {
-			}
-			return Constant.TestListItem;
-		}
-
-		@Override
-		protected void onPostExecute(String[] result) {
-
-			// Call onRefreshComplete when the list has been refreshed.
-			mPullRefleshListView.onRefreshComplete();
-
-			super.onPostExecute(result);
-		}
+	public void updateAdapter(List<NewsListEntity> newsListEntities){
+		mNewsAdapter.addData(newsListEntities);
+		mPullRefleshListView.onRefreshComplete();
 	}
 }

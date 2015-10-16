@@ -10,6 +10,13 @@ import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.SharePerencesHelper;
 
 
+/**
+ * 启动页面
+ * 判断是否第一次启动，若是进入引导页面，否则进入登录页面
+ * @author xu
+ *
+ */
+
 public class Splash extends Activity {
 
 	//是否是第一次进入

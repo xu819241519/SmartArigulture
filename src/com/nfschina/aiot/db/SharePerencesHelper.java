@@ -8,6 +8,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 
+/**
+ * shareperferences相关
+ * @author xu
+ *
+ */
+
 public class SharePerencesHelper {
 
 	// shareperference文件的名字
@@ -22,16 +28,12 @@ public class SharePerencesHelper {
 	}
 
 	/**
-	 * 获取shareperferences的布尔型值
+	 * 从shareperferences获取一个布尔型值
 	 * 
 	 * @param context
-	 * @param key
-	 *            :The name of the preference to retrieve
-	 * @param defValue
-	 *            :Value to return if this preference does not exist
-	 * @return :Returns the preference value if it exists, or defValue. Throws
-	 *         ClassCastException if there is a preference with this name that
-	 *         is not a boolean.
+	 * @param key 关键字
+	 * @param defValue shareperferences不存在时返回的默认值
+	 * @return :返回布尔型结果值，如果shareperferences不存在，返回defValue
 	 */
 	public static boolean getBoolean(Context context,String key, boolean defValue) {
 		SharedPreferences sPreferences = context.getSharedPreferences(DB_NAME, Context.MODE_PRIVATE);
@@ -40,11 +42,11 @@ public class SharePerencesHelper {
 	}
 
 	/**
-	 * Set a boolean value in the preferences 
+	 * 设置shareperferences的一个布尔值
 	 * @param context
-	 * @param key The name of the preference to modify
-	 * @param value The name of the preference to modify
-	 * @return if the setting succeeds,return true,otherwise return false
+	 * @param key 关键字
+	 * @param value 设置的布尔值
+	 * @return 如果设置成功，返回true，否则返回false
 	 */
 	public static boolean putBoolean(Context context,String key, boolean value) {		
 		Editor editor = context.getSharedPreferences(DB_NAME, Context.MODE_PRIVATE).edit();
@@ -54,11 +56,11 @@ public class SharePerencesHelper {
 	}
 	
 	/**
-	 * Retrieve a String value from the preferences
+	 * 从shareperferences获取一个string的值
 	 * @param context
-	 * @param key The name of the preference to retrieve
-	 * @param defValue  Value to return if this preference does not exist
-	 * @return Returns the preference value if it exists, or defValue. Throws ClassCastException if there is a preference with this name that is not a String.
+	 * @param key 关键字
+	 * @param defValue  如果不存在，返回defValue
+	 * @return 如果关键字存在，返回结果，否则返回defValue
 	 */
 	public static String getString(Context context,String key,String defValue){
 		SharedPreferences sPreferences = context.getSharedPreferences(DB_NAME, Context.MODE_PRIVATE);
@@ -66,11 +68,11 @@ public class SharePerencesHelper {
 	}
 	
 	/**
-	 * Set a String value in the preferences
+	 * 设置一个shareperferences的值
 	 * @param context
-	 * @param key The name of the preference to modify
-	 * @param value The new value for the preference. Supplying null as the value is equivalent to calling remove(String) with this key
-	 * @return Returns true if the action succeeds,or false.
+	 * @param key 关键字
+	 * @param value 设置新的值
+	 * @return 如果设置成功，返回true，否则返回false
 	 */
 	public static boolean putString(Context context,String key,String value){
 		Editor editor = context.getSharedPreferences(DB_NAME, Context.MODE_PRIVATE).edit();

@@ -9,11 +9,13 @@ import com.nfschina.aiot.adapter.InstructionsAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;
-import com.nfschina.aiot.entity.AlarmEntity;
 import com.nfschina.aiot.entity.InstructionEntity;
 
+import android.graphics.AvoidXfermode.Mode;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -22,19 +24,26 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * 指令记录
+ * 通过上拉控件实现展示数据
+ * @author xu
+ *
+ */
+
 public class InstructionsHistory extends Fragment {
 
-	// the UI controls
+	// 下拉刷新控件
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
 	private View mView;
 
-	// the current page
-	private int mPage;
-	// the count of one page
-	private int mSize;
+	// 当前页码
+	private int mPage = 0;
+	// 每页的数量
+	private int mSize = 15;
 
-	// the adapter
+	// 适配器
 	private InstructionsAdapter mInstructionsAdapter;
 
 	@Override
@@ -50,7 +59,7 @@ public class InstructionsHistory extends Fragment {
 	}
 
 	/**
-	 * Initialize the UI controls
+	 * 初始化UI控件
 	 */
 	private void initUIControls() {
 		mPullRefreshListView = (PullToRefreshListView) mView.findViewById(R.id.instructions_list);
@@ -81,17 +90,25 @@ public class InstructionsHistory extends Fragment {
 
 		mPullRefreshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
 
-		mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
+		// mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
 
 		mListView = mPullRefreshListView.getRefreshableView();
 		mInstructionsAdapter = new InstructionsAdapter();
 		mListView.setAdapter(mInstructionsAdapter);
 
+		new Handler(new Handler.Callback() {
+			
+			@Override
+			public boolean handleMessage(Message msg) {
+				mPullRefreshListView.setRefreshing();
+				return true;
+			}
+		}).sendEmptyMessageDelayed(0, 300);
 		// mPullRefreshListView.setRefreshing(true);
 	}
 
 	/**
-	 * get the data from internet
+	 * 连接服务器获取指令数据
 	 * 
 	 * @author xu
 	 *
@@ -101,7 +118,7 @@ public class InstructionsHistory extends Fragment {
 		@Override
 		protected Boolean doInBackground(Boolean... params) {
 			Boolean result = false;
-			//pull down
+			// pull down
 			if (params[0]) {
 				mPage = 0;
 				mInstructionsAdapter.clearData();
@@ -113,11 +130,6 @@ public class InstructionsHistory extends Fragment {
 					mPage++;
 					mInstructionsAdapter.addData(list);
 					result = true;
-				} else if (list != null) {
-					mPullRefreshListView
-							.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_START);
-				} else {
-					Toast.makeText(getActivity(), Constant.UNDEF, Toast.LENGTH_SHORT).show();
 				}
 			}
 			return result;
@@ -126,8 +138,13 @@ public class InstructionsHistory extends Fragment {
 		@Override
 		protected void onPostExecute(Boolean result) {
 
-			if(result)
+			if (result)
 				mInstructionsAdapter.notifyDataSetChanged();
+			else {
+				//mPullRefreshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_START);
+
+				Toast.makeText(getActivity(), Constant.END_OF_LIST, Toast.LENGTH_SHORT).show();
+			}
 			// Call onRefreshComplete when the list has been refreshed.
 			mPullRefreshListView.onRefreshComplete();
 

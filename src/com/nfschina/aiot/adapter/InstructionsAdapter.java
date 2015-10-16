@@ -1,5 +1,6 @@
 package com.nfschina.aiot.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nfschina.aiot.R;
@@ -14,10 +15,22 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 指令记录适配器
+ * @author xu
+ *
+ */
+
 public class InstructionsAdapter extends BaseAdapter {
 
-	//the list of the instruction history
+	//指令记录的list
 	private List<InstructionEntity> mList;
+	
+	
+	public InstructionsAdapter() {
+		super();
+		mList = new ArrayList<InstructionEntity>();
+	}
 	
 	@Override
 	public int getCount() {
@@ -40,11 +53,6 @@ public class InstructionsAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new Holder();
 			convertView = LinearLayout.inflate(parent.getContext(), R.layout.instructions_history_item, null);
-			if (position % 2 == 0) {
-				convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-			} else {
-				convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-			}
 
 			holder.setID((TextView) convertView.findViewById(R.id.instructions_history_id));
 			holder.setSendTime((TextView) convertView.findViewById(R.id.instructions_history_sendtime));
@@ -64,16 +72,28 @@ public class InstructionsAdapter extends BaseAdapter {
 			holder.getSendTime().setText(mList.get(position).getSendTime().toString());
 			holder.getUser().setText(Integer.toString(mList.get(position).getUserID()));
 		}
+		
+		if (position % 2 == 0) {
+			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+		} else {
+			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+		}
 
 		return convertView;
 	}
 
 	public class Holder {
+		//指令ID
 		private TextView mID;
+		//指令发送时间
 		private TextView mSendTime;
+		//指令执行时间
 		private TextView mPerformTime;
+		//发出用户
 		private TextView mUser;
+		//温室ID
 		private TextView mGreenHouse;
+		//指令内容
 		private TextView mContent;
 
 		public TextView getID() {
@@ -127,11 +147,10 @@ public class InstructionsAdapter extends BaseAdapter {
 	
 	
 	/**
-	 * add data to the list
+	 * 添加指令记录数据
 	 * 
-	 * @param alarmEntities
-	 *            the list of the InstructionEntity
-	 * @return true if added,or false
+	 * @param alarmEntities 指令记录实体list
+	 * @return 成功添加返回true，否则false
 	 */
 	public boolean addData(List<InstructionEntity> alarmEntities) {
 		if (mList != null) {
@@ -141,9 +160,9 @@ public class InstructionsAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * clear the list
+	 * 清空list
 	 * 
-	 * @return true if the list is clear,or false
+	 * @return 清空成功返回true，否则返回false
 	 */
 	public boolean clearData() {
 		if (mList != null && mList.isEmpty() == false) {

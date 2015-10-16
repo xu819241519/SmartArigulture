@@ -8,6 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Òýµ¼Ò³Ãæ2
+ * @author xu
+ *
+ */
+
 public class Guide_2 extends Fragment {
 
 	@Override

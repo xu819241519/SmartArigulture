@@ -17,23 +17,30 @@ import android.widget.Toast;
 import com.nfschina.aiot.constant.*;
 import com.nfschina.aiot.db.AccessDataBase;
 
+
+/**
+ * 注册页面
+ * @author xu
+ *
+ */
+
 public class Register extends Activity implements OnClickListener {
 
-	// the register button
+	// 注册按钮
 	private Button mRegister;
-	// the EditText of username
+	// 用户名编辑框
 	private EditText mUserNameEditText;
-	// the EditText of password
+	// 密码编辑框
 	private EditText mPasswordEditText;
-	// the layout of back btn
+	// 返回按钮
 	private LinearLayout mBackLinearLayout;
 
-	// the alertDialog
+	// 提示对话框
 	private AlertDialog mAlertDialog;
 
-	// the string of username
+	// 用户名
 	private String mUserName;
-	// the string of password;
+	// 密码
 	private String mPassword;
 
 	@Override
@@ -45,7 +52,7 @@ public class Register extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * initialize the UI controls
+	 * 初始化UI控件
 	 */
 	private void InitUIControls() {
 		mRegister = (Button) findViewById(R.id.register_reg);
@@ -55,7 +62,7 @@ public class Register extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * set the listener of the UI controls
+	 * 设置UI控件的监听
 	 */
 	private void SetListener() {
 		mRegister.setOnClickListener(this);
@@ -63,9 +70,9 @@ public class Register extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * get the data of the register
+	 * 验证填写的信息是否符合要求
 	 * 
-	 * @return return true if success,or false
+	 * @return 如果符合返回true，否则false
 	 */
 	private boolean GetRegisterData() {
 		mUserName = mUserNameEditText.getText().toString();
@@ -78,7 +85,7 @@ public class Register extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * perform the register action
+	 * 执行注册
 	 */
 	private void PerformRegister() {
 		mAlertDialog = new AlertDialog.Builder(this).create();
@@ -89,7 +96,7 @@ public class Register extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * dismiss the alertdialog
+	 * 关闭等待对话框
 	 */
 	public void finishAlertDialog() {
 		if (mAlertDialog != null) {
@@ -97,14 +104,18 @@ public class Register extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 点击事件
+	 */
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		//注册
 		case R.id.register_reg:
 			if (GetRegisterData())
 				PerformRegister();
 			break;
-
+		//返回
 		case R.id.register_back:
 			finish();
 			break;
@@ -115,6 +126,11 @@ public class Register extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * 连接数据库执行注册
+	 * @author xu
+	 *
+	 */
 	public class PerformLinkRegister extends AsyncTask<Void, Void, Integer> {
 		private Activity mActivity;
 
@@ -135,6 +151,7 @@ public class Register extends Activity implements OnClickListener {
 
 		@Override
 		protected void onPostExecute(Integer result) {
+			//提示消息
 			finishAlertDialog();
 			if (result == Constant.SERVER_CONNECT_FAILED) {
 				Toast.makeText(mActivity, Constant.CONNECT_FAILED_INFO, Toast.LENGTH_SHORT).show();

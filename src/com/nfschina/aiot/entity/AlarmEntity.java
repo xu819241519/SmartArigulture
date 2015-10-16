@@ -2,14 +2,25 @@ package com.nfschina.aiot.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * 报警记录实体
+ * @author xu
+ *
+ */
+
 public class AlarmEntity {
 
-	//the Instructions table attributes
+	//报警ID
 	private int ID;
+	//温室ID
 	private int GreenHouseID;
+	//报警正文
 	private String Content;
+	//报警时间
 	private Timestamp Time;
+	//报警状态
 	private String State;
+	//等级
 	private String Level;
 	
 	public AlarmEntity(int iD, int greenHouseID, String content, Timestamp time, String state,

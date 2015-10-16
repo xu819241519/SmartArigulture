@@ -2,6 +2,7 @@ package com.nfschina.aiot.activity;
 
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;
 
 import android.app.Activity;
@@ -15,17 +16,29 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 修改密码页面
+ * 需要输入旧密码和两遍新密码，当输入合法时连接服务器修改
+ * @author xu
+ *
+ */
+
 public class ChangePassword extends Activity implements OnClickListener {
 
-	// the UI controls
+	// 旧密码编辑框
 	private EditText mOldPassword;
+	// 新密码编辑框
 	private EditText mNewPassword;
+	// 确认新密码编辑框
 	private EditText mConfirmPassword;
+	// 更改密码按钮
 	private Button mChangePassword;
+	// 返回按钮
 	private TextView mBack;
+	// 提示对话框
 	private AlertDialog mAlertDialog;
 
-	// the string of the EditText
+	// 与UI控件相关的字符串变量
 	private String mOldPasswordString;
 	private String mNewPasswordString;
 	private String mConfirmPasswordString;
@@ -34,6 +47,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.changepassword);
+		
 		initUIControls();
 		setListener();
 
@@ -41,7 +55,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Initialize the UI controls
+	 * 初始化UI控件
 	 */
 	private void initUIControls() {
 		mOldPassword = (EditText) findViewById(R.id.other_old_pswd);
@@ -52,7 +66,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * set the listener of the UI controls
+	 * 给UI控件设置监听
 	 */
 	private void setListener() {
 		mChangePassword.setOnClickListener(this);
@@ -72,9 +86,9 @@ public class ChangePassword extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * get data of the password
+	 * 获取填写的信息
 	 * 
-	 * @return return true if the data is corrent, or false
+	 * @return 如果填写的信息符合要求，返回true，否则false
 	 */
 	private boolean GetChangePasswordData() {
 		mOldPasswordString = mOldPassword.getText().toString().trim();
@@ -89,11 +103,13 @@ public class ChangePassword extends Activity implements OnClickListener {
 			Toast.makeText(this, Constant.DIFF_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
 		}
+		mOldPasswordString = ConstantFun.getMD5String(mOldPasswordString);
+		mNewPasswordString = ConstantFun.getMD5String(mNewPasswordString);
 		return true;
 	}
 
 	/**
-	 * perform changing the password
+	 * 执行更改密码
 	 */
 	private void PerformChangePassword() {
 		mAlertDialog = new AlertDialog.Builder(this).create();
@@ -103,7 +119,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * dismiss the alertdialog
+	 * 关闭等待对话框
 	 */
 	public void finishAlertDialog() {
 		if (mAlertDialog != null) {
@@ -111,6 +127,11 @@ public class ChangePassword extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 向服务器发送修改密码的命令
+	 * @author xu
+	 * 根据返回的resultcode来判断是否修改成功
+	 */
 	public class PerformLinkChangePassword extends AsyncTask<Void, Void, Integer> {
 
 		private Activity mActivity;
@@ -133,7 +154,10 @@ public class ChangePassword extends Activity implements OnClickListener {
 		
 		@Override
 		protected void onPostExecute(Integer result) {
+			//关闭等待对话框
 			finishAlertDialog();
+			
+			//提示消息
 			if (result == Constant.SERVER_CONNECT_FAILED) {
 				Toast.makeText(mActivity, Constant.CONNECT_FAILED_INFO, Toast.LENGTH_SHORT).show();
 			} else if (result == Constant.SERVER_CHANGE_PASSWORD_FAILED) {

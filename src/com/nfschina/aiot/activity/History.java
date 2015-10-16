@@ -25,38 +25,50 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * 历史记录页面
+ * 分为指令记录、报警记录和数据记录。三个记录用fragment和viewpager左右切换，或者用radiobutton点击切换。
+ * 数据记录里包括温度、湿度、光照、二氧化碳浓度
+ * @author xu
+ *
+ */
+
 public class History extends FragmentActivity implements OnPageChangeListener, OnCheckedChangeListener {
 
-	// the UI controls
+	// UI控件
 	private ViewPager mViewPager;
 	private FragmentPagerAdapter mAdapter;
 	private List<Fragment> mFragmentList;
 	private RadioGroup mRadioGroup;
 	private TextView mGoBack;
 
-	// current selected items
+	// viewpager的当前页面索引
 	private int mCurrentItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history);
+		
 		InitUIControls();
 		setListener();
 
 	}
 
 	/**
-	 * Initialize the UI controls
+	 * 初始化UI控件
 	 * 
 	 * @author xu
 	 */
 	private void InitUIControls() {
 
+		//绑定控件
 		mViewPager = (ViewPager) findViewById(R.id.history_viewpager);
 		mRadioGroup = (RadioGroup) findViewById(R.id.history_group);
 		mGoBack = (TextView) findViewById(R.id.history_back);
 
+		//初始化framelist页面
 		mFragmentList = new ArrayList<Fragment>();
 		mFragmentList.add(new InstructionsHistory());
 		mFragmentList.add(new GreenHouseHistory());
@@ -64,13 +76,16 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 		mAdapter = new GenelFragmentAdapter(getSupportFragmentManager(), mFragmentList);
 		
 
-		
+		//设置适配器
 		mViewPager.setAdapter(mAdapter);
 		mViewPager.setCurrentItem(1);
 		mCurrentItem = 0;
 
 	}
 
+	/**
+	 * 设置UI监听事件
+	 */
 	private void setListener() {
 		mViewPager.setOnPageChangeListener(this);
 		mRadioGroup.setOnCheckedChangeListener(this);
@@ -94,7 +109,7 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 	}
 
 	/**
-	 * listen to the viewpager's change
+	 * 监听viewpager选择的事件
 	 */
 	@Override
 	public void onPageSelected(int arg0) {
@@ -119,6 +134,9 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 		
 	}
 
+	/**
+	 * 点击radiogroup切换fragment页面事件
+	 */
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		mCurrentItem = 1;

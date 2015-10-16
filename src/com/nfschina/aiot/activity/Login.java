@@ -7,11 +7,13 @@ import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;
 import com.nfschina.aiot.db.SharePerencesHelper;
+import com.nfschina.aiot.util.NewsListGetUtil;
 
 import android.R.anim;
 import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
@@ -24,33 +26,37 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * 登录页面
+ * 输入用户名和密码进行登录
+ * @author xu
+ *
+ */
+
 public class Login extends Activity implements OnClickListener {
 
-	// the EditText of user name
+	// 用户名编辑框
 	private EditText mUserNameEditText;
-	// the EditText of password
+	// 密码编辑框
 	private EditText mPasswordEditText;
-	// the CheckBox of remember password
+	// 记住密码多选框
 	private CheckBox mRememberCheckBox;
-	// the CheckBox of auto login
+	// 自动登录多选框
 	private CheckBox mAutoLoginCheckBox;
-	// the button of login
+	// 登录按钮
 	private Button mLoginButton;
-	// the button of register
+	// 注册按钮
 	private Button mRegisterButton;
-	// the string of user name
+	// 用户名
 	private String mUserName;
-	// the string of password
+	// 密码
 	private String mPassword;
-	// is remember password
+	// 是否记住密码
 	private boolean mRemember;
-	// is auto login
+	// 是否自动登录
 	private boolean mAutoLogin;
-	// the alertdialog
-	private AlertDialog mAlertDialog;
-
-	public Login() {
-	}
+	// 提示对话框
+	private ProgressDialog mProgressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +65,13 @@ public class Login extends Activity implements OnClickListener {
 
 		initUIControls();
 		setListener();
+		
+		//Toast.makeText(this, Integer.toString(newsGetUtil.getPageCount("f")), Toast.LENGTH_SHORT).show();
 
 	}
 
 	/**
-	 * initialize the UI controls
+	 * 初始化UI控件
 	 */
 	public void initUIControls() {
 		mUserNameEditText = (EditText) findViewById(R.id.edit_username);
@@ -77,7 +85,7 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * initialize controls of the view
+	 * 初始化编辑框
 	 */
 	public void initEditViews() {
 		mRemember = SharePerencesHelper.getBoolean(this, Constant.IS_REMEMBER_PWD, false);
@@ -100,7 +108,7 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * set the listener of the controls
+	 * 设置UI的监听
 	 */
 	public void setListener() {
 		mLoginButton.setOnClickListener(this);
@@ -111,9 +119,9 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * get the data for login
+	 * 填写是信息是否符合要求
 	 * 
-	 * @return return true if success,or false
+	 * @return 如果符合，返回true，否则false
 	 */
 	private boolean GetLoginData() {
 		mUserName = mUserNameEditText.getText().toString();
@@ -130,37 +138,37 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * perform the login action
+	 * 执行登录
 	 */
 	public void PerformLogin() {
 
-		mAlertDialog = new AlertDialog.Builder(this).create();
-		mAlertDialog.setMessage("正在登陆...");
-		mAlertDialog.show();
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		mProgressDialog.setMessage("正在登录...");
+		mProgressDialog.show();
 		new PerformLinkLogin(this).execute();
 	}
 
 	/**
-	 * the clicking listener of the view
-	 * 
-	 * @param v
-	 *            the view which to be listened
+	 * 点击事件监听
 	 */
 	@Override
 	public void onClick(View v) {
 
 		Intent intent = new Intent();
 		switch (v.getId()) {
-
+		// 点击登录按钮
 		case R.id.bt_login:
 			if (GetLoginData()) {
 				PerformLogin();
 			}
 			break;
+		// 点击注册按钮
 		case R.id.bt_register:
 			intent.setClass(Login.this, Register.class);
 			startActivityForResult(intent, Constant.REG_CODE);
 			break;
+		// 点击自动登录
 		case R.id.cb_auto_login:
 			if (mAutoLoginCheckBox.isChecked() == true) {
 				mRememberCheckBox.setChecked(true);
@@ -170,6 +178,7 @@ public class Login extends Activity implements OnClickListener {
 				mAutoLogin = false;
 			}
 			break;
+		// 点击记住密码
 		case R.id.cb_rember_pswd:
 			if (mRememberCheckBox.isChecked() == true) {
 				mRemember = true;
@@ -188,14 +197,16 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * 关闭提示对话框
 	 */
-	
-	public void finishAlertDialog(){
-		if(mAlertDialog != null){
-			mAlertDialog.cancel();
+	public void finishAlertDialog() {
+		if (mProgressDialog != null) {
+			mProgressDialog.cancel();
+			mProgressDialog = null;
 		}
 	}
-	
+
+	// 注册页面返回
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Constant.REG_SUCCESS) {
@@ -205,7 +216,7 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * save the info of the login data
+	 * 保存登录信息
 	 */
 	private void saveInfo() {
 		if (mRemember) {
@@ -218,7 +229,7 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * perform link the server for login
+	 * 连接数据库执行登录
 	 * 
 	 * @author xu
 	 *
@@ -226,7 +237,6 @@ public class Login extends Activity implements OnClickListener {
 	public class PerformLinkLogin extends AsyncTask<Void, Void, Integer> {
 
 		private Activity mActivity;
-
 
 		public PerformLinkLogin(Activity activity) {
 			mActivity = activity;
@@ -246,7 +256,8 @@ public class Login extends Activity implements OnClickListener {
 
 		@Override
 		protected void onPostExecute(Integer result) {
-			finishAlertDialog();
+
+			// 提示消息
 			if (result == Constant.SERVER_CONNECT_FAILED) {
 				Toast.makeText(mActivity, Constant.CONNECT_FAILED_INFO, Toast.LENGTH_SHORT).show();
 			} else if (result == Constant.SERVER_LOGIN_FAILED) {
@@ -256,10 +267,15 @@ public class Login extends Activity implements OnClickListener {
 				Intent intent = new Intent(Login.this, Home.class);
 				startActivity(intent);
 				Constant.CURRENT_USER = mUserName;
-				mActivity.finish();				
+				Constant.CURRENT_PASSWORD = mPassword;
+				finishAlertDialog();
+				mActivity.finish();
 			} else if (result == Constant.SERVER_SQL_FAILED) {
 				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();
 			}
+
+			// 关闭提示对话框
+			finishAlertDialog();
 		}
 
 	}

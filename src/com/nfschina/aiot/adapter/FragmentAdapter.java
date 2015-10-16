@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 
 /**
- * fragment的适配器
+ * 引导页面的fragment的适配器
  * @author xu
  *
  */

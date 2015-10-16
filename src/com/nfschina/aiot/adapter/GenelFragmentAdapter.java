@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 
 /**
- * fragmentµÄÊÊÅäÆ÷
+ * ÆÕÍ¨fragmentµÄÊÊÅäÆ÷
  * @author xu
  *
  */

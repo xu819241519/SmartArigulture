@@ -2,14 +2,24 @@ package com.nfschina.aiot.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * 指令实体
+ * @author xu
+ *
+ */
 public class InstructionEntity {
 
-	//the Alarm table attributes
+	//指令ID
 	private int ID;
+	//指令正文
 	private String Content;
+	//指令发送时间
 	private Timestamp SendTime;
+	//指令执行时间
 	private Timestamp RunTime;
+	//温室ID
 	private int GreenHouseID;
+	//发送指令用户
 	private int UserID;
 	
 

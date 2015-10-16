@@ -322,8 +322,8 @@ int drawable about 0x7f020057
 int drawable about_back 0x7f020058
 int drawable back 0x7f020059
 int drawable btn_bg_lightyellow 0x7f02005a
-int drawable butten_pressed 0x7f02005b
-int drawable butten_unpress 0x7f02005c
+int drawable button_pressed 0x7f02005b
+int drawable button_unpress 0x7f02005c
 int drawable checkbox_off_background 0x7f02005d
 int drawable checkbox_on_background 0x7f02005e
 int drawable default_ptr_flip 0x7f02005f

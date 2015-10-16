@@ -1,7 +1,11 @@
 package com.nfschina.aiot.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.entity.NewsListEntity;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +13,28 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 新闻适配器
+ * 
+ * @author xu
+ *
+ */
 public class NewsAdapter extends BaseAdapter {
 
+	List<NewsListEntity> mNewsListEntity;
+
 	public NewsAdapter() {
-
+		mNewsListEntity = new ArrayList<NewsListEntity>();
 	}
-
+	
 	@Override
 	public int getCount() {
-		return Constant.TestListItem.length;
+		return mNewsListEntity.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return Constant.TestListItem[position];
+		return mNewsListEntity.get(position);
 	}
 
 	@Override
@@ -44,8 +56,8 @@ public class NewsAdapter extends BaseAdapter {
 		}
 		if (holder != null) {
 
-			holder.getTime().setText(Constant.TestListItem[position]);
-			holder.getTitle().setText(Constant.TestListItem[position]);
+			holder.getTime().setText(mNewsListEntity.get(position).getTime());
+			holder.getTitle().setText(mNewsListEntity.get(position).getTitle());
 		}
 
 		if (position % 2 == 0) {
@@ -57,7 +69,9 @@ public class NewsAdapter extends BaseAdapter {
 	}
 
 	public class Holder {
+		// 新闻标题
 		private TextView mTitle;
+		// 新闻时间
 		private TextView mTime;
 
 		public TextView getTitle() {
@@ -76,4 +90,14 @@ public class NewsAdapter extends BaseAdapter {
 			this.mTime = mTime;
 		}
 	}
+	
+	/**
+	 * 添加新闻列表项
+	 * @param newsListEntities 新闻列表项
+	 */
+	public void addData(List<NewsListEntity> newsListEntities){
+		mNewsListEntity.addAll(newsListEntities);
+		notifyDataSetChanged();
+	}
+	
 }
