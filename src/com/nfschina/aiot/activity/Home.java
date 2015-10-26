@@ -65,7 +65,8 @@ public class Home extends FragmentActivity implements OnClickListener {
 
 
 		TextSliderView textSliderView = new TextSliderView(this);
-		textSliderView.image("http://bbs.unpcn.com/attachment.aspx?attachmentid=4341481");
+		//textSliderView.image("http://bbs.unpcn.com/attachment.aspx?attachmentid=4341481");
+		textSliderView.image(R.drawable.index_banner);
 		mSliderLayout.addSlider(textSliderView);
 		textSliderView.setOnImageLoadListener(new ImageLoadListener() {
 

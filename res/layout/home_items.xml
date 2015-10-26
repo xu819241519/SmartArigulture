@@ -8,23 +8,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/very_big_space"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:id="@+id/btn_history"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@drawable/home_btn_selector"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="90dp"
                 android:src="@drawable/index_lishi" />
 
             <TextView
@@ -32,22 +36,30 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/little_space"
-                android:text="@string/home_btn1" />
+                android:text="@string/home_btn1"
+                android:textSize="@dimen/text_big" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/home_spliter" >
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_monitor_center"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/home_btn_selector"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="90dp"
                 android:src="@drawable/index_jiankong" />
 
             <TextView
@@ -55,29 +67,39 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/little_space"
-                android:text="@string/home_btn2" />
+                android:text="@string/home_btn2"
+                android:textSize="@dimen/text_big" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="2dp"
+        android:background="@color/home_spliter" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:id="@+id/btn_news"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/home_btn_selector"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="90dp"
                 android:src="@drawable/index_nongye" />
 
             <TextView
@@ -85,22 +107,30 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/little_space"
-                android:text="@string/home_btn3" />
+                android:text="@string/home_btn3"
+                android:textSize="@dimen/text_big" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/home_spliter" >
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btn_other"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/home_btn_selector"
             android:clickable="true"
             android:focusable="true"
+            android:gravity="center"
             android:orientation="vertical" >
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="90dp"
                 android:src="@drawable/index_shezhi" />
 
             <TextView
@@ -108,7 +138,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/little_space"
-                android:text="@string/home_btn4" />
+                android:text="@string/home_btn4"
+                android:textSize="@dimen/text_big" />
         </LinearLayout>
     </LinearLayout>
 

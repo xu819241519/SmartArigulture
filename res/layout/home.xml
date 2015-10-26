@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_back"
     android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.nfschina.aiot">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="499dp" >
+        android:layout_height="0dp"
+        android:layout_weight="40" >
 
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
@@ -26,8 +26,16 @@
         </android.support.v4.view.ViewPager>
 
     </RelativeLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/home_spliter_image"></LinearLayout>
 
-    <include layout="@layout/home_items" >
-    </include>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="59"
+        layout="@layout/home_items" />
 
 </LinearLayout>

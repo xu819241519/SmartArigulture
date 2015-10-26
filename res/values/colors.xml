@@ -19,6 +19,9 @@
 	<color name="divider">#19000000</color>
 	<color name="table_back_1">#ffffffff</color>
 	<color name="table_back_2">#ffdbeef4</color>
+	<color name="home_hover">#ffeeeeee</color>
+	<color name="home_spliter">#FFDADADA</color>
+	<color name="home_spliter_image">#ff9ace40</color>
 
 	<!-- 字体颜色，选中 -->
 	<color name="tabs_textcolor_true">#01b201</color>

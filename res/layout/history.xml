@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/history_nav"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="65dp"
         android:background="@color/nav_bg" >
 
         <TextView
@@ -34,25 +34,27 @@
     <LinearLayout
         android:id="@+id/history_bottom"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:background="@color/gray_light" >
 
         <RadioGroup
             android:id="@+id/history_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
             android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/radio_history_instructions"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@drawable/history_instructions_selector"
                 android:gravity="center"
                 android:text="控制记录"
+                android:layout_gravity="center"
                 android:textColor="@drawable/history_button_text_color"
                 android:textSize="@dimen/text_small"
          		android:checked="false" />
@@ -60,7 +62,7 @@
             <RadioButton
                 android:id="@+id/radio_history_greenhouse"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1.5"
                 android:button="@null"
                 android:drawableTop="@drawable/history_greenhose_selector"
@@ -73,7 +75,7 @@
             <RadioButton
                 android:id="@+id/radio_history_alarm"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableTop="@drawable/history_alarm_selector"
