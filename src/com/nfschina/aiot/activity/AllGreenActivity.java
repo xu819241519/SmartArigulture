@@ -10,7 +10,9 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -20,10 +22,12 @@ import android.widget.TextView;
  *
  */
 
-public class AllGreenActivity extends Activity {
+public class AllGreenActivity extends Activity implements OnClickListener {
 
 	//返回按钮
-	private TextView mGoBack;
+	private ImageButton mGoBack;
+	//主页按钮
+	private ImageButton mGoHome;
 	//存放大棚的网格控件
 	private GridView mGridView;
 	
@@ -40,15 +44,12 @@ public class AllGreenActivity extends Activity {
 	private void InitUIControls(){
 		//绑定控件
 		mGridView = (GridView)findViewById(R.id.greenhouse_list_gv);
-		mGoBack = (TextView)findViewById(R.id.greenhouse_list_back);
+		mGoBack = (ImageButton)findViewById(R.id.greenhouse_back);
+		mGoHome = (ImageButton)findViewById(R.id.greenhouse_gohome);
 		//设置返回按钮监听事件
-		mGoBack.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+		mGoBack.setOnClickListener(this);
+		//设置主页按钮监听事件
+		mGoHome.setOnClickListener(this);
 		
 		//执行查询
 		new GetDataTask().execute();
@@ -73,6 +74,16 @@ public class AllGreenActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			//设置适配器
 			mGridView.setAdapter(new AllGreenAdapter(AllGreenActivity.this));
+		}
+	}
+
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == R.id.greenhouse_back){
+			finish();
+		}else if(v.getId() == R.id.greenhouse_gohome){
+			 finish();
 		}
 	}
 }

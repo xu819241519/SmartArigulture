@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/nav_bg" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/nav_bg" >
 
-		<TextView
-			android:id="@+id/greenhouse_list_back"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:drawableLeft="@drawable/back"
-			android:gravity="center_vertical"
-			android:padding="@dimen/normal_space"
-			android:text="@string/back"
-			android:textColor="@drawable/nav_back_text_color"
-			android:textSize="@dimen/text_normal" />
+        <ImageButton
+            android:id="@+id/greenhouse_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back" />
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:text="@string/allgreenhouse"
-			android:textColor="@color/white"
-			android:textSize="@dimen/text_larger" />
-	</RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/allgreenhouse"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_top_big" />
 
-	<GridView
-		android:id="@+id/greenhouse_list_gv"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:numColumns="3"
-		android:padding="5dp"
-		android:scrollbars="none" >
-	</GridView>
+        <ImageButton
+            android:id="@+id/greenhouse_gohome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/nav_bg"
+            android:src="@drawable/home" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/greenhouse_list_gv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="3"
+        android:padding="5dp"
+        android:scrollbars="none" >
+    </GridView>
 
 </LinearLayout>

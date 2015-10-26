@@ -11,6 +11,7 @@
         android:layout_height="48dp"
         android:layout_weight="2"
         android:layout_gravity="center"
+        android:textSize="@dimen/text_normal"
         android:gravity="center" >
     </TextView>
 

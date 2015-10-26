@@ -6,13 +6,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:background="@color/title_back"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="新闻标题" >
         </TextView>
@@ -22,6 +25,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="时间" >
         </TextView>

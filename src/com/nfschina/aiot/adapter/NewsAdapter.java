@@ -60,11 +60,11 @@ public class NewsAdapter extends BaseAdapter {
 			holder.getTitle().setText(mNewsListEntity.get(position).getTitle());
 		}
 
-		if (position % 2 == 0) {
-			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-		} else {
-			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-		}
+//		if (position % 2 == 0) {
+//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+//		} else {
+//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+//		}
 		return convertView;
 	}
 

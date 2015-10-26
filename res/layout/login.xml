@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E6E6"
+    android:background="#ffecf1f0"
     android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/login_logo"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/big_space"
-        android:layout_weight="1"
         android:src="@drawable/ic_launcher" />
 
     <TextView
@@ -24,48 +23,72 @@
     <LinearLayout
         android:id="@+id/login_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/very_big_space"
         android:layout_marginLeft="@dimen/normal_space"
         android:layout_marginRight="@dimen/normal_space"
-        android:layout_weight="5"
-        android:background="#E6E6E6"
+        android:background="#ffecf1f0"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="@dimen/big_space"
+            android:background="@drawable/login_shape"
             android:orientation="horizontal" >
 
             <ImageView
                 android:id="@+id/image_username"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:src="@drawable/icon_people" />
+
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/normal_space"
+                android:background="@color/login_spliter" >
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/edit_username"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/big_space"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:layout_marginRight="@dimen/big_space"
+                android:background="@null"
                 android:ems="20"
-                android:singleLine="true"
-                android:hint="@string/hint_username" />
+                android:hint="@string/hint_username"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="@dimen/normal_space"
+            android:background="@drawable/login_shape"
             android:orientation="horizontal" >
 
             <ImageView
                 android:id="@+id/image_password"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:src="@drawable/icon_lock" />
+
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/normal_space"
+                android:background="@color/login_spliter" >
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/edit_password"
@@ -73,10 +96,13 @@
                 android:layout_height="48dp"
                 android:layout_marginEnd="@dimen/normal_space"
                 android:layout_marginRight="@dimen/normal_space"
+                android:background="@null"
                 android:ems="20"
-                android:singleLine="true"
                 android:hint="@string/hint_password"
-                android:inputType="textPassword" />
+                android:layout_marginLeft="@dimen/normal_space"
+                android:inputType="textPassword"
+                android:layout_gravity="center_vertical"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout

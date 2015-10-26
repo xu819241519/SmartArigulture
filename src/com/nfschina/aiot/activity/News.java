@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -26,7 +27,10 @@ import android.widget.TextView;
 public class News extends FragmentActivity implements OnClickListener {
 
 	// 返回按钮
-	private TextView mBack;
+	private ImageButton mBack;
+	//主页按钮
+	private ImageButton mHome;
+	
 	private FragmentManager mFragmentManager;
 
 	@Override
@@ -42,7 +46,8 @@ public class News extends FragmentActivity implements OnClickListener {
 	 * 初始化UI控件
 	 */
 	private void InitUIControls() {
-		mBack = (TextView) findViewById(R.id.news_back);
+		mBack = (ImageButton) findViewById(R.id.news_back);
+		mHome = (ImageButton) findViewById(R.id.news_gohome);
 		
 		mFragmentManager = getSupportFragmentManager();
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
@@ -55,6 +60,7 @@ public class News extends FragmentActivity implements OnClickListener {
 	 */
 	private void setListener() {
 		mBack.setOnClickListener(this);
+		mHome.setOnClickListener(this);
 	}
 
 	/**
@@ -64,6 +70,9 @@ public class News extends FragmentActivity implements OnClickListener {
 	public void onClick(View v) {
 		if (v.getId() == R.id.news_back)
 			finish();
+		else if(v.getId() == R.id.news_gohome){
+			finish();
+		}
 	}
 	
 	/**

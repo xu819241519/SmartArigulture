@@ -2,7 +2,8 @@
 <resources>
 
 	<color name="transparent">#00000000</color>
-	<color name="nav_bg">#404040</color>
+	<color name="nav_bg_topline">#ff31c514</color>
+	<color name="nav_bg">#ff3ba327</color>
 	<color name="green_dark">#288b54</color>
 	<color name="green_light">#99288b54</color>
 	<color name="white">#ffffff</color>
@@ -22,6 +23,11 @@
 	<color name="home_hover">#ffeeeeee</color>
 	<color name="home_spliter">#FFDADADA</color>
 	<color name="home_spliter_image">#ff9ace40</color>
+	<color name="history_spliter_bottom">#ffcacaca</color>
+	<color name="title_back">#ff333333</color>
+	<color name="btn_normal_color">#ff3ba327</color>
+	<color name="btn_hover_clolr">#ff3ba327</color>
+	<color name="login_spliter">#ffcccbcb</color>
 
 	<!-- 字体颜色，选中 -->
 	<color name="tabs_textcolor_true">#01b201</color>

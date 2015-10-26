@@ -10,6 +10,7 @@ import com.nfschina.aiot.fragment.AlarmHistory;
 import com.nfschina.aiot.fragment.GreenHouseHistory;
 import com.nfschina.aiot.fragment.InstructionsHistory;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,14 +36,15 @@ import android.widget.Toast;
  *
  */
 
-public class History extends FragmentActivity implements OnPageChangeListener, OnCheckedChangeListener {
+public class History extends FragmentActivity implements OnPageChangeListener, OnCheckedChangeListener, OnClickListener {
 
 	// UI控件
 	private ViewPager mViewPager;
 	private FragmentPagerAdapter mAdapter;
 	private List<Fragment> mFragmentList;
 	private RadioGroup mRadioGroup;
-	private TextView mGoBack;
+	private ImageButton mGoBack;
+	private ImageButton mGoHome;
 
 	// viewpager的当前页面索引
 	private int mCurrentItem;
@@ -66,7 +69,8 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 		//绑定控件
 		mViewPager = (ViewPager) findViewById(R.id.history_viewpager);
 		mRadioGroup = (RadioGroup) findViewById(R.id.history_group);
-		mGoBack = (TextView) findViewById(R.id.history_back);
+		mGoBack = (ImageButton) findViewById(R.id.history_back);
+		mGoHome = (ImageButton) findViewById(R.id.history_gohome);
 
 		//初始化framelist页面
 		mFragmentList = new ArrayList<Fragment>();
@@ -89,13 +93,8 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 	private void setListener() {
 		mViewPager.setOnPageChangeListener(this);
 		mRadioGroup.setOnCheckedChangeListener(this);
-		mGoBack.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+		mGoHome.setOnClickListener(this);
+		mGoBack.setOnClickListener(this);
 	}
 
 	@Override
@@ -155,5 +154,15 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 			break;
 		}
 		mViewPager.setCurrentItem(mCurrentItem);
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == R.id.history_back){
+			finish();
+		}
+		else if(v.getId() == R.id.history_gohome){
+			finish();
+		}
 	}
 }
