@@ -91,8 +91,6 @@ public class NewsList extends Fragment {
 
 		mPullRefleshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
 
-		mPullRefleshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
-
 		mListView = mPullRefleshListView.getRefreshableView();
 		mNewsAdapter = new NewsAdapter();
 		mNewsGetUtil = new NewsListGetUtil(this);
@@ -118,5 +116,8 @@ public class NewsList extends Fragment {
 	public void updateAdapter(List<NewsListEntity> newsListEntities){
 		mNewsAdapter.addData(newsListEntities);
 		mPullRefleshListView.onRefreshComplete();
+		if(newsListEntities == null || newsListEntities.size() == 0){
+			mPullRefleshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
+		}
 	}
 }

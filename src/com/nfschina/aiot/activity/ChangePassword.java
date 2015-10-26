@@ -99,12 +99,15 @@ public class ChangePassword extends Activity implements OnClickListener {
 				|| "".equals(mConfirmPasswordString)) {
 			Toast.makeText(this, Constant.FILL_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
-		} else if (mConfirmPassword.equals(mNewPasswordString)) {
+		} else if (!mConfirmPasswordString.equals(mNewPasswordString)) {
 			Toast.makeText(this, Constant.DIFF_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
+		} else if(mConfirmPasswordString.equals(mOldPasswordString)){
+			Toast.makeText(this, Constant.SAME_PASSWORD, Toast.LENGTH_SHORT).show();
+			return false;
 		}
-		mOldPasswordString = ConstantFun.getMD5String(mOldPasswordString);
-		mNewPasswordString = ConstantFun.getMD5String(mNewPasswordString);
+//		mOldPasswordString = ConstantFun.getMD5String(mOldPasswordString);
+//		mNewPasswordString = ConstantFun.getMD5String(mNewPasswordString);
 		return true;
 	}
 
@@ -164,6 +167,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 				Toast.makeText(mActivity, Constant.CHANGE_PASSWORD_FAILED, Toast.LENGTH_SHORT).show();
 			} else if (result == Constant.SERVER_CHANGE_PASSWORD_SUCCESS) {
 				Toast.makeText(mActivity, Constant.CHANGE_PASSWORD_SUCCESS, Toast.LENGTH_SHORT).show();
+				setResult(Constant.CHANGE_PSWD_SUCCESS_CODE);
 				finish();
 			} else if (result == Constant.SERVER_SQL_FAILED) {
 				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();

@@ -1,10 +1,14 @@
 package com.nfschina.aiot.db;
 
+import java.net.IDN;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
@@ -23,8 +27,8 @@ import com.nfschina.aiot.entity.InstructionEntity;
 public class AccessDataBase {
 
 	// 连接字符串
-	private static String mUrl = "jdbc:mysql://10.50.200.236:3306/javademo?"
-			+ "user=root&password=123456&useUnicode=true&characterEncoding=UTF8";
+	private static String mUrl = "jdbc:mysql://10.50.200.120:3306/zkghdb?"
+			+ "user=root&password=root&useUnicode=true&characterEncoding=UTF8";
 
 	// resultcode
 	private static int mResultCode = Constant.SERVER_CONNECT_FAILED;
@@ -68,7 +72,7 @@ public class AccessDataBase {
 		Statement stmt = getStatement();
 		if (stmt != null) {
 
-			String sql = "select * from info where id=1";
+			String sql = "select * from sys_user where USER_ID='" + name + "' and USER_PASSWORD='" + pswd + "'";
 			ResultSet rs = null;
 			try {
 				rs = stmt.executeQuery(sql);
@@ -95,23 +99,31 @@ public class AccessDataBase {
 	/**
 	 * 连接服务器注册
 	 * 
-	 * @param name 用户名
+	 * @param id 登录名
 	 * @param pswd 密码
 	 * @return the resultcode
 	 */
-	public static int connectRegister(String name, String pswd) {
+	public static int connectRegister(String id, String pswd) {
 		mResultCode = Constant.SERVER_CONNECT_FAILED;
 		Statement stmt = getStatement();
 		if (stmt != null) {
-			String sql = "insert into ";
+			String sql = "select * from sys_user where USER_ID='" + id + "'";
 			try {
-				boolean rs = stmt.execute(sql);
-				if (rs) {
-					mResultCode = Constant.SERVER_REGISTER_SUCCESS;
+				ResultSet rs = stmt.executeQuery(sql);
+				if (rs != null && rs.next()) {
+					mResultCode = Constant.SERVER_REGISTER_EXIST;
+					rs.close();
 
 				} else {
-
-					mResultCode = Constant.SERVER_REGISTER_FAILED;
+					Date date=new Date();
+					DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String time=format.format(date);
+					sql = "insert into sys_user (USER_ID,USER_PASSWORD,ADD_TIME) values('" + id + "','" + pswd + "','" + time + "')" ;
+					int rows = stmt.executeUpdate(sql);
+					if(rows>0)
+						mResultCode = Constant.SERVER_REGISTER_SUCCESS;
+					else
+						mResultCode = Constant.SERVER_REGISTER_FAILED;
 				}
 
 			} catch (java.sql.SQLException e) {
@@ -134,31 +146,34 @@ public class AccessDataBase {
 	/**
 	 * 连接服务器修改密码
 	 * 
-	 * @param name 用户名
+	 * @param id 用户名
 	 * @param oldPassword 旧密码
 	 * @param newPassword 新密码
 	 * @return the resultcode
 	 */
-	public static int connectChangePassword(String name, String oldPassword, String newPassword) {
+	public static int connectChangePassword(String id, String oldPassword, String newPassword) {
 
 		mResultCode = Constant.SERVER_CONNECT_FAILED;
 
 		Statement stmt = getStatement();
 		if (stmt != null) {
 
-			String sql = "select * from info where id=1";
+			String sql = "select * from sys_user where USER_ID='" + id + "' and USER_PASSWORD='" + oldPassword + "'";
 			ResultSet rs = null;
 			try {
 				rs = stmt.executeQuery(sql);
 				if (rs != null && rs.next()) {
-					sql = "";
+					sql = "update sys_user set USER_PASSWORD='" + newPassword + "' where USER_ID='" + id + "'";
 					int row = stmt.executeUpdate(sql);
 					if (row == 1) {
 						mResultCode = Constant.SERVER_CHANGE_PASSWORD_SUCCESS;
 						Constant.CURRENT_PASSWORD = newPassword;
 					}
+					rs.close();
 				} else {
 					mResultCode = Constant.SERVER_CHANGE_PASSWORD_FAILED;
+					if(rs != null)
+						rs.close();
 				}
 			} catch (java.sql.SQLException e) {
 				mResultCode = Constant.SERVER_SQL_FAILED;

@@ -25,8 +25,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * 指令记录
- * 通过上拉控件实现展示数据
+ * 指令记录 通过上拉控件实现展示数据
+ * 
  * @author xu
  *
  */
@@ -90,14 +90,12 @@ public class InstructionsHistory extends Fragment {
 
 		mPullRefreshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
 
-		// mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
-
 		mListView = mPullRefreshListView.getRefreshableView();
 		mInstructionsAdapter = new InstructionsAdapter();
 		mListView.setAdapter(mInstructionsAdapter);
 
 		new Handler(new Handler.Callback() {
-			
+
 			@Override
 			public boolean handleMessage(Message msg) {
 				mPullRefreshListView.setRefreshing();
@@ -115,6 +113,8 @@ public class InstructionsHistory extends Fragment {
 	 */
 	private class GetDataTask extends AsyncTask<Boolean, Void, Boolean> {
 
+		private boolean hasPullUpData = true;
+
 		@Override
 		protected Boolean doInBackground(Boolean... params) {
 			Boolean result = false;
@@ -130,6 +130,9 @@ public class InstructionsHistory extends Fragment {
 					mPage++;
 					mInstructionsAdapter.addData(list);
 					result = true;
+					hasPullUpData = true;
+				} else {
+					hasPullUpData = false;
 				}
 			}
 			return result;
@@ -141,12 +144,17 @@ public class InstructionsHistory extends Fragment {
 			if (result)
 				mInstructionsAdapter.notifyDataSetChanged();
 			else {
-				//mPullRefreshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_START);
+				// mPullRefreshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.PULL_FROM_START);
 
 				Toast.makeText(getActivity(), Constant.END_OF_LIST, Toast.LENGTH_SHORT).show();
 			}
 			// Call onRefreshComplete when the list has been refreshed.
 			mPullRefreshListView.onRefreshComplete();
+
+			if (!hasPullUpData) {
+				mPullRefreshListView
+						.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
+			}
 
 			super.onPostExecute(result);
 		}

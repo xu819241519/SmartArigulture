@@ -32,7 +32,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="147dp"
         android:layout_marginTop="@dimen/big_space"
         android:background="@color/white"
         android:orientation="vertical" >
@@ -93,6 +93,41 @@
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
                 android:text="@string/change_pswd"
+                android:textSize="@dimen/text_larger" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="@dimen/big_space"
+            android:layout_marginRight="@dimen/big_space"
+            android:background="@color/gray_light"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/others_logout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/others_btn_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/big_space"
+                android:layout_marginStart="@dimen/big_space"
+                android:src="@drawable/icon_lock" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:text="@string/logout"
                 android:textSize="@dimen/text_larger" />
         </LinearLayout>
     </LinearLayout>

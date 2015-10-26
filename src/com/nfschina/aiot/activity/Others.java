@@ -2,6 +2,8 @@ package com.nfschina.aiot.activity;
 
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.constant.ConstantFun;
+import com.nfschina.aiot.db.SharePerencesHelper;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,6 +28,8 @@ public class Others extends Activity implements OnClickListener{
 	private LinearLayout mAbout;
 	// 更改密码
 	private LinearLayout mChangePswd;
+	// 注销
+	private LinearLayout mLogout;
 	// 返回按钮
 	private TextView mBack;
 
@@ -44,6 +48,7 @@ public class Others extends Activity implements OnClickListener{
 	private void initUIControls() {
 		mAbout = (LinearLayout) findViewById(R.id.others_about);
 		mChangePswd = (LinearLayout) findViewById(R.id.others_change_pswd);
+		mLogout = (LinearLayout) findViewById(R.id.others_logout);
 		mBack = (TextView)findViewById(R.id.others_back);
 	}
 	
@@ -53,6 +58,7 @@ public class Others extends Activity implements OnClickListener{
 	private void setListener(){
 		mAbout.setOnClickListener(this);
 		mChangePswd.setOnClickListener(this);
+		mLogout.setOnClickListener(this);
 		mBack.setOnClickListener(this);
 	}
 
@@ -71,6 +77,14 @@ public class Others extends Activity implements OnClickListener{
 		case R.id.others_change_pswd:
 			intent = new Intent(this,ChangePassword.class);
 			break;
+		//注销
+		case R.id.others_logout:
+			Constant.CURRENT_USER = null;
+			Constant.CURRENT_PASSWORD = null;
+			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
+			intent = new Intent(this,Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+			break;
 		//返回
 		case R.id.others_back:
 			this.finish();
@@ -80,6 +94,22 @@ public class Others extends Activity implements OnClickListener{
 			break;
 		}
 		if(intent != null){
+			if(v.getId() != R.id.others_change_pswd)
+				startActivity(intent);
+			else{
+				startActivityForResult(intent, Constant.CHANGE_PSWD_CODE);
+			}
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == Constant.CHANGE_PSWD_SUCCESS_CODE){
+			SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, false);
+			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
+			Constant.CURRENT_PASSWORD =  null;
+			Intent intent = new Intent(this,Login.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		}
 	}

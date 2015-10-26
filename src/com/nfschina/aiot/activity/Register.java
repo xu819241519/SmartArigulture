@@ -28,8 +28,8 @@ public class Register extends Activity implements OnClickListener {
 
 	// 注册按钮
 	private Button mRegister;
-	// 用户名编辑框
-	private EditText mUserNameEditText;
+	// 登录名编辑框
+	private EditText mUserIDEditText;
 	// 密码编辑框
 	private EditText mPasswordEditText;
 	// 返回按钮
@@ -38,8 +38,8 @@ public class Register extends Activity implements OnClickListener {
 	// 提示对话框
 	private AlertDialog mAlertDialog;
 
-	// 用户名
-	private String mUserName;
+	// 登录名
+	private String mUserID;
 	// 密码
 	private String mPassword;
 
@@ -57,7 +57,7 @@ public class Register extends Activity implements OnClickListener {
 	private void InitUIControls() {
 		mRegister = (Button) findViewById(R.id.register_reg);
 		mPasswordEditText = (EditText) findViewById(R.id.register_pswd);
-		mUserNameEditText = (EditText) findViewById(R.id.register_username);
+		mUserIDEditText = (EditText) findViewById(R.id.register_username);
 		mBackLinearLayout = (LinearLayout) findViewById(R.id.register_back);
 	}
 
@@ -75,9 +75,9 @@ public class Register extends Activity implements OnClickListener {
 	 * @return 如果符合返回true，否则false
 	 */
 	private boolean GetRegisterData() {
-		mUserName = mUserNameEditText.getText().toString();
+		mUserID = mUserIDEditText.getText().toString();
 		mPassword = mPasswordEditText.getText().toString();
-		if ("".equals(mUserName) || "".equals(mPassword) || mUserName == null || mPassword == null) {
+		if ("".equals(mUserID) || "".equals(mPassword) || mUserID == null || mPassword == null) {
 			Toast.makeText(this, Constant.FILL_NAME_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
 		} else
@@ -142,7 +142,7 @@ public class Register extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 			int resultCode = Constant.SERVER_CONNECT_FAILED;
 			try {
-				resultCode = AccessDataBase.connectRegister(mUserName, mPassword);
+				resultCode = AccessDataBase.connectRegister(mUserID, mPassword);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -159,11 +159,13 @@ public class Register extends Activity implements OnClickListener {
 				Toast.makeText(mActivity, Constant.LOGIN_FAILED_INFO, Toast.LENGTH_SHORT).show();
 			} else if (result == Constant.SERVER_REGISTER_SUCCESS) {
 				Intent intent = new Intent();
-				intent.putExtra("username", mUserName);
+				intent.putExtra(Constant.REG_RETURN, mUserID);
 				setResult(Constant.REG_SUCCESS, intent);
 				finish();
 			} else if (result == Constant.SERVER_SQL_FAILED) {
 				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();
+			} else if(result == Constant.SERVER_REGISTER_EXIST){
+				Toast.makeText(mActivity, Constant.REGISTER_FAILED_EXIST, Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

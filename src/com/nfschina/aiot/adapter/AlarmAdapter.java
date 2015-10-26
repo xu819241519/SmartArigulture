@@ -1,6 +1,8 @@
 package com.nfschina.aiot.adapter;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import com.nfschina.aiot.R;
 import com.nfschina.aiot.entity.AlarmEntity;
 
 import android.R.integer;
+import android.provider.ContactsContract.Contacts.Data;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 
 /**
  * 报警记录适配器
+ * 
  * @author xu
  *
  */
@@ -60,13 +64,15 @@ public class AlarmAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		
+
 		holder.getContent().setText(mList.get(position).getContent());
 		holder.getGreenHouse().setText(Integer.toString(mList.get(position).getGreenHouseID()));
 		holder.getID().setText(Integer.toString(mList.get(position).getID()));
 		holder.getLevel().setText(mList.get(position).getLevel());
 		holder.getStatus().setText(mList.get(position).getState());
-		holder.getTime().setText(((Timestamp) mList.get(position).getTime()).toString());
+		DateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+		String time = sdf.format(mList.get(position).getTime());
+		holder.getTime().setText(time);
 
 		if (position % 2 == 0) {
 			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
@@ -77,17 +83,17 @@ public class AlarmAdapter extends BaseAdapter {
 	}
 
 	public class Holder {
-		//报警ID
+		// 报警ID
 		private TextView mID;
-		//报警时间
+		// 报警时间
 		private TextView mTime;
-		//温室ID
+		// 温室ID
 		private TextView mGreenHouse;
-		//报警内容
+		// 报警内容
 		private TextView mContent;
-		//报警等级
+		// 报警等级
 		private TextView mLevel;
-		//状态
+		// 状态
 		private TextView mStatus;
 
 		public TextView getID() {
@@ -142,7 +148,8 @@ public class AlarmAdapter extends BaseAdapter {
 	/**
 	 * 添加报警记录实体
 	 * 
-	 * @param alarmEntities 报警记录的list
+	 * @param alarmEntities
+	 *            报警记录的list
 	 * @return 成功添加返回true，否则false
 	 */
 	public boolean addData(List<AlarmEntity> alarmEntities) {

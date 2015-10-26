@@ -25,7 +25,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@drawable/home_history" />
+                android:src="@drawable/index_lishi" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@drawable/home_monitoring" />
+                android:src="@drawable/index_jiankong" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@drawable/home_news" />
+                android:src="@drawable/index_nongye" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@drawable/home_setting" />
+                android:src="@drawable/index_shezhi" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -27,16 +27,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * 登录页面
- * 输入用户名和密码进行登录
+ * 登录页面 输入用户名和密码进行登录
+ * 
  * @author xu
  *
  */
 
 public class Login extends Activity implements OnClickListener {
 
-	// 用户名编辑框
-	private EditText mUserNameEditText;
+	// 登录名编辑框
+	private EditText mUserIDEditText;
 	// 密码编辑框
 	private EditText mPasswordEditText;
 	// 记住密码多选框
@@ -47,8 +47,8 @@ public class Login extends Activity implements OnClickListener {
 	private Button mLoginButton;
 	// 注册按钮
 	private Button mRegisterButton;
-	// 用户名
-	private String mUserName;
+	// 登录名
+	private String mUserID;
 	// 密码
 	private String mPassword;
 	// 是否记住密码
@@ -65,8 +65,9 @@ public class Login extends Activity implements OnClickListener {
 
 		initUIControls();
 		setListener();
-		
-		//Toast.makeText(this, Integer.toString(newsGetUtil.getPageCount("f")), Toast.LENGTH_SHORT).show();
+
+		// Toast.makeText(this, Integer.toString(newsGetUtil.getPageCount("f")),
+		// Toast.LENGTH_SHORT).show();
 
 	}
 
@@ -74,7 +75,7 @@ public class Login extends Activity implements OnClickListener {
 	 * 初始化UI控件
 	 */
 	public void initUIControls() {
-		mUserNameEditText = (EditText) findViewById(R.id.edit_username);
+		mUserIDEditText = (EditText) findViewById(R.id.edit_username);
 		mPasswordEditText = (EditText) findViewById(R.id.edit_password);
 		mRememberCheckBox = (CheckBox) findViewById(R.id.cb_rember_pswd);
 		mAutoLoginCheckBox = (CheckBox) findViewById(R.id.cb_auto_login);
@@ -88,18 +89,27 @@ public class Login extends Activity implements OnClickListener {
 	 * 初始化编辑框
 	 */
 	public void initEditViews() {
+		if(Constant.CURRENT_USER != null){
+			mUserIDEditText.setText(Constant.CURRENT_USER);
+		}
 		mRemember = SharePerencesHelper.getBoolean(this, Constant.IS_REMEMBER_PWD, false);
 		mAutoLogin = SharePerencesHelper.getBoolean(this, Constant.IS_AUTO_LOGIN, false);
 		if (mRemember) {
-			mUserName = SharePerencesHelper.getString(this, Constant.USER_NAME, null);
+			mUserID = SharePerencesHelper.getString(this, Constant.USER_ID, null);
 			mPassword = SharePerencesHelper.getString(this, Constant.PWD, null);
-			if (mPassword != null && mUserName != null) {
-				mUserNameEditText.setText(mUserName);
+			if (mPassword != null && mUserID != null) {
+				mUserIDEditText.setText(mUserID);
 				mPasswordEditText.setText(mPassword);
+				mRememberCheckBox.setChecked(true);
+				if (mAutoLogin) {
+					showAlertDialog();
+					mAutoLoginCheckBox.setChecked(true);
+					onClick(mLoginButton);
+				}
 			} else {
 				SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, false);
 				SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
-				SharePerencesHelper.putString(this, Constant.USER_NAME, null);
+				SharePerencesHelper.putString(this, Constant.USER_ID, null);
 				SharePerencesHelper.putString(this, Constant.PWD, null);
 				mRemember = false;
 				mAutoLogin = false;
@@ -124,14 +134,14 @@ public class Login extends Activity implements OnClickListener {
 	 * @return 如果符合，返回true，否则false
 	 */
 	private boolean GetLoginData() {
-		mUserName = mUserNameEditText.getText().toString();
-		mPassword = mPasswordEditText.getText().toString();
-		if ("".equals(mUserName.trim()) || mUserName.equals(null) || "".equals(mPassword.trim())
+		mUserID = mUserIDEditText.getText().toString().trim();
+		mPassword = mPasswordEditText.getText().toString().trim();
+		if ("".equals(mUserID.trim()) || mUserID.equals(null) || "".equals(mPassword.trim())
 				|| mPassword.equals(null)) {
 			Toast.makeText(this, Constant.FILL_NAME_PASSWORD, Toast.LENGTH_SHORT).show();
 			return false;
 		} else {
-			mPassword = ConstantFun.getMD5String(mPassword);
+			// mPassword = ConstantFun.getMD5String(mPassword);
 			return true;
 		}
 
@@ -141,11 +151,7 @@ public class Login extends Activity implements OnClickListener {
 	 * 执行登录
 	 */
 	public void PerformLogin() {
-
-		mProgressDialog = new ProgressDialog(this);
-		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		mProgressDialog.setMessage("正在登录...");
-		mProgressDialog.show();
+		showAlertDialog();
 		new PerformLinkLogin(this).execute();
 	}
 
@@ -197,6 +203,18 @@ public class Login extends Activity implements OnClickListener {
 	}
 
 	/**
+	 * 显示提示对话框
+	 */
+	public void showAlertDialog(){
+		if(mProgressDialog == null){
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			mProgressDialog.setMessage("正在登录...");
+			mProgressDialog.show();
+		}
+	}
+	
+	/**
 	 * 关闭提示对话框
 	 */
 	public void finishAlertDialog() {
@@ -210,8 +228,8 @@ public class Login extends Activity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Constant.REG_SUCCESS) {
-			String username = data.getStringExtra("username");
-			mUserNameEditText.setText(username);
+			String username = data.getStringExtra(Constant.REG_RETURN);
+			mUserIDEditText.setText(username);
 		}
 	}
 
@@ -220,8 +238,9 @@ public class Login extends Activity implements OnClickListener {
 	 */
 	private void saveInfo() {
 		if (mRemember) {
-			SharePerencesHelper.putString(this, Constant.USER_NAME, mUserName);
+			SharePerencesHelper.putString(this, Constant.USER_ID, mUserID);
 			SharePerencesHelper.putString(this, Constant.PWD, mPassword);
+			SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, true);
 		}
 		if (mAutoLogin) {
 			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, true);
@@ -246,7 +265,7 @@ public class Login extends Activity implements OnClickListener {
 		protected Integer doInBackground(Void... params) {
 			int result = Constant.SERVER_CONNECT_FAILED;
 			try {
-				result = AccessDataBase.connectLogin(mUserName, mPassword);
+				result = AccessDataBase.connectLogin(mUserID, mPassword);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -266,9 +285,9 @@ public class Login extends Activity implements OnClickListener {
 				saveInfo();
 				Intent intent = new Intent(Login.this, Home.class);
 				startActivity(intent);
-				Constant.CURRENT_USER = mUserName;
+				Constant.CURRENT_USER = mUserID;
 				Constant.CURRENT_PASSWORD = mPassword;
-				finishAlertDialog();
+				//finishAlertDialog();
 				mActivity.finish();
 			} else if (result == Constant.SERVER_SQL_FAILED) {
 				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();

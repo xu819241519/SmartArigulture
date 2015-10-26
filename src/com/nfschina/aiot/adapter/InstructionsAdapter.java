@@ -1,5 +1,7 @@
 package com.nfschina.aiot.adapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,21 +19,21 @@ import android.widget.TextView;
 
 /**
  * 指令记录适配器
+ * 
  * @author xu
  *
  */
 
 public class InstructionsAdapter extends BaseAdapter {
 
-	//指令记录的list
+	// 指令记录的list
 	private List<InstructionEntity> mList;
-	
-	
+
 	public InstructionsAdapter() {
 		super();
 		mList = new ArrayList<InstructionEntity>();
 	}
-	
+
 	@Override
 	public int getCount() {
 		return mList.size();
@@ -68,11 +70,15 @@ public class InstructionsAdapter extends BaseAdapter {
 			holder.getID().setText(Integer.toString(mList.get(position).getID()));
 			holder.getGreenHouse().setText(Integer.toString(mList.get(position).getGreenHouseID()));
 			holder.getContent().setText(mList.get(position).getContent());
-			holder.getPerformTime().setText(mList.get(position).getRunTime().toString());
-			holder.getSendTime().setText(mList.get(position).getSendTime().toString());
+			DateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+			String time = sdf.format(mList.get(position).getRunTime());
+			holder.getPerformTime().setText(time);
+			sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+			time = sdf.format(mList.get(position).getSendTime());
+			holder.getSendTime().setText(time);
 			holder.getUser().setText(Integer.toString(mList.get(position).getUserID()));
 		}
-		
+
 		if (position % 2 == 0) {
 			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
 		} else {
@@ -83,17 +89,17 @@ public class InstructionsAdapter extends BaseAdapter {
 	}
 
 	public class Holder {
-		//指令ID
+		// 指令ID
 		private TextView mID;
-		//指令发送时间
+		// 指令发送时间
 		private TextView mSendTime;
-		//指令执行时间
+		// 指令执行时间
 		private TextView mPerformTime;
-		//发出用户
+		// 发出用户
 		private TextView mUser;
-		//温室ID
+		// 温室ID
 		private TextView mGreenHouse;
-		//指令内容
+		// 指令内容
 		private TextView mContent;
 
 		public TextView getID() {
@@ -144,12 +150,12 @@ public class InstructionsAdapter extends BaseAdapter {
 			this.mContent = mContent;
 		}
 	}
-	
-	
+
 	/**
 	 * 添加指令记录数据
 	 * 
-	 * @param alarmEntities 指令记录实体list
+	 * @param alarmEntities
+	 *            指令记录实体list
 	 * @return 成功添加返回true，否则false
 	 */
 	public boolean addData(List<InstructionEntity> alarmEntities) {

@@ -5,6 +5,7 @@ package com.nfschina.aiot.constant;
 
 import java.util.List;
 
+import android.R.string;
 import android.content.res.Resources.Theme;
 import android.widget.RelativeLayout;
 
@@ -27,10 +28,18 @@ public class Constant {
 	public static String IS_AUTO_LOGIN = "IsAutoLogin";
 	// 密码
 	public static String PWD = "pwd";
-	// 用户名
-	public static String USER_NAME = "User_Name";
+	// 登录名
+	public static String USER_ID = "User_ID";
 	// 超时时间
 	public static int TIME_OUT = 6;
+	
+	/**
+	 * 与修改密码有关
+	 */
+	// 修改密码请求码
+	public static int CHANGE_PSWD_CODE = 1;
+	// 修改密码成功
+	public static int CHANGE_PSWD_SUCCESS_CODE = 2;
 
 	/**
 	 * 与注册相关
@@ -41,13 +50,15 @@ public class Constant {
 	public static int REG_SUCCESS = 2;
 	// 注册失败
 	public static int REG_FAILED = 3;
+	// 注册返回值的键
+	public static String REG_RETURN = "userid";
 
 	/**
 	 * 与连接数据库相关
 	 */
 	// 连接数据库失败
 	public static int SERVER_CONNECT_FAILED = 0;
-	// 用户名或密码不正确
+	// 登录名或密码不正确
 	public static int SERVER_LOGIN_FAILED = 1;
 	// 登录成功
 	public static int SERVER_LOGIN_SUCCESS = 2;
@@ -63,13 +74,16 @@ public class Constant {
 	public static int SERVER_CHANGE_PASSWORD_SUCCESS = 7;
 	// 修改密码失败
 	public static int SERVER_CHANGE_PASSWORD_FAILED = 8;
+	// 注册失败，该用户名已经存在
+	public static int SERVER_REGISTER_EXIST = 10;
+	
 	
 
 	/**
 	 * 与Toast相关
 	 */
-	// 用户名或密码不正确
-	public static String FILL_NAME_PASSWORD = "用户名或密码不正确！";
+	// 登录名或密码不正确
+	public static String FILL_NAME_PASSWORD = "登录名或密码不正确！";
 	// 未定义的行为
 	public static String UNDEF = "未定义的行为";
 	// 再按一次退出
@@ -79,15 +93,19 @@ public class Constant {
 	// 密码不能为空
 	public static String FILL_PASSWORD = "填写有误，不允许密码为空";
 	// 两次密码不相同
-	public static String DIFF_PASSWORD = "两次输入的密码不相同";
-	// 用户名或密码错误
-	public static String LOGIN_FAILED_INFO = "用户名或密码错误";
+	public static String DIFF_PASSWORD = "两次输入的新密码不相同";
+	// 新密码和旧密码不能相同
+	public static String SAME_PASSWORD = "新密码和旧密码不能相同";
+	// 登录名或密码错误
+	public static String LOGIN_FAILED_INFO = "登录名或密码错误";
 	// 更改密码失败
 	public static String CHANGE_PASSWORD_FAILED = "更改密码失败";
 	// 更改密码成功
 	public static String CHANGE_PASSWORD_SUCCESS = "更改密码成功";
 	// 注册失败
-	public static String REGISTER_FAILED_INFO = "用户名或密码不符合要求";
+	public static String REGISTER_FAILED_INFO = "登录名或密码不符合要求";
+	// 注册失败，用户名已经存在
+	public static String REGISTER_FAILED_EXIST = "该登录名已经被注册！请尝试其他登录名";
 	// 注册成功
 	public static String REGISTER_SUCCESS = "注册成功";
 	// 连接服务器失败
@@ -113,7 +131,7 @@ public class Constant {
 	public static String NEWS_CONTENT = "news_content";
 	public static String NEWS_LIST = "news_list";
 
-	// 当前用户名
+	// 当前登录名
 	public static String CURRENT_USER = null;
 	// 当前密码
 	public static String CURRENT_PASSWORD = null;

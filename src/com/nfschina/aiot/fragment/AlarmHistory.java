@@ -26,10 +26,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 /**
- * 报警记录
- * 用上拉控件实现展示
+ * 报警记录 用上拉控件实现展示
+ * 
  * @author xu
  *
  */
@@ -90,7 +89,7 @@ public class AlarmHistory extends Fragment {
 
 		});
 		mPullRefreshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
-		mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
+		
 		mListView = mPullRefreshListView.getRefreshableView();
 		mAlarmAdapter = new AlarmAdapter();
 		mListView.setAdapter(mAlarmAdapter);
@@ -114,6 +113,9 @@ public class AlarmHistory extends Fragment {
 	 */
 	private class GetDataTask extends AsyncTask<Boolean, Void, Boolean> {
 
+		// 上拉是否取到数据
+		private boolean hasPullUpData = true;
+
 		@Override
 		protected Boolean doInBackground(Boolean... params) {
 			Boolean result = false;
@@ -131,6 +133,9 @@ public class AlarmHistory extends Fragment {
 					mPage++;
 					mAlarmAdapter.addData(list);
 					result = true;
+					hasPullUpData = true;
+				} else {
+					hasPullUpData = false;
 				}
 			}
 			return result;
@@ -144,6 +149,8 @@ public class AlarmHistory extends Fragment {
 				Toast.makeText(getActivity(), Constant.END_OF_LIST, Toast.LENGTH_SHORT).show();
 			}
 			mPullRefreshListView.onRefreshComplete();
+			if(!hasPullUpData)
+				mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
 
 		}
 	}
