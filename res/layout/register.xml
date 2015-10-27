@@ -2,38 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E6E6"
+    android:background="@color/general_back"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#808080"
+        android:layout_height="56dp"
+        android:background="@color/nav_bg"
         android:orientation="horizontal" >
 
-        <LinearLayout
+        <ImageButton
             android:id="@+id/register_back"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:clickable="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/back" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:src="@drawable/back" >
-            </ImageView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="left"
-                android:text="@string/register"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_larger" />
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_top_big" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -47,7 +40,7 @@
         android:layout_marginLeft="@dimen/normal_space"
         android:layout_marginTop="@dimen/normal_space"
         android:text="注册账户"
-        android:textSize="@dimen/text_normal" />
+        android:textSize="@dimen/text_big" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -55,29 +48,36 @@
         android:layout_marginLeft="@dimen/normal_space"
         android:layout_marginRight="@dimen/normal_space"
         android:layout_marginTop="@dimen/normal_space"
-        android:background="@drawable/round_rectangle_back"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/userinfo_shape"
             android:orientation="horizontal" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="45dp"
                 android:layout_height="48dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/normal_space"
+                android:layout_marginRight="@dimen/normal_space"
                 android:gravity="center"
-                android:text="用户名：" />
+                android:text="用户名" />
+
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/usrinfo_spliter" >
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/register_username"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:background="@null"
                 android:ems="10" >
-
-                <requestFocus />
             </EditText>
         </LinearLayout>
 
@@ -92,19 +92,29 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/userinfo_shape"
             android:orientation="horizontal" >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="45dp"
                 android:layout_height="48dp"
                 android:layout_marginLeft="@dimen/normal_space"
+                android:layout_marginRight="@dimen/normal_space"
                 android:gravity="center"
-                android:text="密   码：" />
+                android:text="密   码" />
+
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/usrinfo_spliter" >
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/register_pswd"
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:background="@null"
                 android:inputType="textPassword" />
         </LinearLayout>

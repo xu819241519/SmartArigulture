@@ -47,7 +47,6 @@ public class NewsListGetUtil {
 
 	// newslist 的 fragment
 	private NewsList mNewsList;
-	
 
 	/**
 	 * 获取新闻实体
@@ -73,9 +72,9 @@ public class NewsListGetUtil {
 				return;
 			} else {
 				String url = NEWS_URL;
-				if (page == 0)
+				if (page == 1)
 					url += "index.htm";
-				else {
+				else if(page != 0){
 					url += "index_" + mRequirePage + ".htm";
 				}
 				mCurrentState = STATE_GET_LIST;

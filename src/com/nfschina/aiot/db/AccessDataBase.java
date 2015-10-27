@@ -222,13 +222,13 @@ public class AccessDataBase {
 		List<AlarmEntity> result = null;
 		Statement statement = getStatement();
 		if (statement != null) {
-			String sql = "select * from Warning limit " + page * size + "," + size;
+			String sql = "select * from warningvaluetb limit " + page * size + "," + size;
 			ResultSet rs = null;
 			try {
 				rs = statement.executeQuery(sql);
 				while (rs != null && rs.next()) {
-					AlarmEntity alarmEntity = new AlarmEntity(rs.getInt(1), rs.getInt(2), rs.getString(4),
-							rs.getTimestamp(5), rs.getString(6), rs.getString(7));
+					AlarmEntity alarmEntity = new AlarmEntity(rs.getInt("warningvalueid"), rs.getInt("greenhouseid"), rs.getString(4),
+							rs.getString(5), rs.getString(6), rs.getString(7));
 					if (result == null)
 						result = new ArrayList<AlarmEntity>();
 					result.add(alarmEntity);
@@ -264,13 +264,13 @@ public class AccessDataBase {
 		List<InstructionEntity> result = null;
 		Statement statement = getStatement();
 		if (statement != null) {
-			String sql = "select * from InstructionTB limit " + page * size + "," + size;
+			String sql = "select * from instructiontb limit " + page * size + "," + size;
 			ResultSet rs = null;
 			try {
 				rs = statement.executeQuery(sql);
 				while (rs != null && rs.next()) {
 					InstructionEntity instructionEntity = new InstructionEntity(rs.getInt(1), rs.getString(2),
-							rs.getTimestamp(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6));
+							rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
 					if (result == null)
 						result = new ArrayList<InstructionEntity>();
 					result.add(instructionEntity);

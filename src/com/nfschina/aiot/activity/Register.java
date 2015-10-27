@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class Register extends Activity implements OnClickListener {
 	// 密码编辑框
 	private EditText mPasswordEditText;
 	// 返回按钮
-	private LinearLayout mBackLinearLayout;
+	private ImageButton mBack;
 
 	// 提示对话框
 	private AlertDialog mAlertDialog;
@@ -58,7 +59,7 @@ public class Register extends Activity implements OnClickListener {
 		mRegister = (Button) findViewById(R.id.register_reg);
 		mPasswordEditText = (EditText) findViewById(R.id.register_pswd);
 		mUserIDEditText = (EditText) findViewById(R.id.register_username);
-		mBackLinearLayout = (LinearLayout) findViewById(R.id.register_back);
+		mBack = (ImageButton) findViewById(R.id.register_back);
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class Register extends Activity implements OnClickListener {
 	 */
 	private void SetListener() {
 		mRegister.setOnClickListener(this);
-		mBackLinearLayout.setOnClickListener(this);
+		mBack.setOnClickListener(this);
 	}
 
 	/**

@@ -17,13 +17,13 @@ public class AlarmEntity {
 	//报警正文
 	private String Content;
 	//报警时间
-	private Timestamp Time;
+	private String Time;
 	//报警状态
 	private String State;
 	//等级
 	private String Level;
 	
-	public AlarmEntity(int iD, int greenHouseID, String content, Timestamp time, String state,
+	public AlarmEntity(int iD, int greenHouseID, String content, String time, String state,
 			String level) {
 		super();
 		ID = iD;
@@ -59,11 +59,11 @@ public class AlarmEntity {
 		Content = content;
 	}
 
-	public Timestamp getTime() {
+	public String getTime() {
 		return Time;
 	}
 
-	public void setTime(Timestamp time) {
+	public void setTime(String time) {
 		Time = time;
 	}
 

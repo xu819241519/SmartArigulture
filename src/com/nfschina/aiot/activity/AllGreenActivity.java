@@ -7,6 +7,7 @@ import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -83,7 +84,10 @@ public class AllGreenActivity extends Activity implements OnClickListener {
 		if(v.getId() == R.id.greenhouse_back){
 			finish();
 		}else if(v.getId() == R.id.greenhouse_gohome){
-			 finish();
+			Intent intent = new Intent(this,Home.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
 		}
 	}
 }

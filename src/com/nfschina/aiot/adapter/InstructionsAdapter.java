@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.entity.AlarmEntity;
 import com.nfschina.aiot.entity.InstructionEntity;
 
@@ -68,22 +69,18 @@ public class InstructionsAdapter extends BaseAdapter {
 		}
 		if (holder != null) {
 			holder.getID().setText(Integer.toString(mList.get(position).getID()));
-			holder.getGreenHouse().setText(Integer.toString(mList.get(position).getGreenHouseID()));
+			holder.getGreenHouse().setText(mList.get(position).getGreenHouseID());
 			holder.getContent().setText(mList.get(position).getContent());
-			DateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-			String time = sdf.format(mList.get(position).getRunTime());
-			holder.getPerformTime().setText(time);
-			sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-			time = sdf.format(mList.get(position).getSendTime());
-			holder.getSendTime().setText(time);
-			holder.getUser().setText(Integer.toString(mList.get(position).getUserID()));
+			holder.getPerformTime().setText(ConstantFun.formatTimeString(mList.get(position).getRunTime(),true));
+			holder.getSendTime().setText(ConstantFun.formatTimeString(mList.get(position).getSendTime(),false));
+			holder.getUser().setText(mList.get(position).getUserID());
 		}
 
-		if (position % 2 == 0) {
-			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-		} else {
-			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-		}
+//		if (position % 2 == 0) {
+//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+//		} else {
+//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+//		}
 
 		return convertView;
 	}

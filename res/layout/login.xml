@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffecf1f0"
+    android:background="@color/general_back"
     android:orientation="vertical" >
 
     <ImageView
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/big_space"
-            android:background="@drawable/login_shape"
+            android:background="@drawable/userinfo_shape"
             android:orientation="horizontal" >
 
             <ImageView
@@ -50,7 +50,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/normal_space"
-                android:background="@color/login_spliter" >
+                android:background="@color/usrinfo_spliter" >
             </LinearLayout>
 
             <EditText
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/normal_space"
-            android:background="@drawable/login_shape"
+            android:background="@drawable/userinfo_shape"
             android:orientation="horizontal" >
 
             <ImageView
@@ -87,7 +87,7 @@
                 android:layout_height="36dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/normal_space"
-                android:background="@color/login_spliter" >
+                android:background="@color/usrinfo_spliter" >
             </LinearLayout>
 
             <EditText

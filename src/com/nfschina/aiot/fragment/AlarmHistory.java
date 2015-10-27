@@ -75,7 +75,7 @@ public class AlarmHistory extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				new GetDataTask().execute(true);
+				//new GetDataTask().execute(true);
 			}
 
 			@Override
@@ -84,7 +84,7 @@ public class AlarmHistory extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				new GetDataTask().execute(false);
+				//new GetDataTask().execute(false);
 			}
 
 		});

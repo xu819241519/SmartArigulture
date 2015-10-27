@@ -14,18 +14,18 @@ public class InstructionEntity {
 	//指令正文
 	private String Content;
 	//指令发送时间
-	private Timestamp SendTime;
+	private String SendTime;
 	//指令执行时间
-	private Timestamp RunTime;
+	private String RunTime;
 	//温室ID
-	private int GreenHouseID;
+	private String GreenHouseID;
 	//发送指令用户
-	private int UserID;
+	private String UserID;
 	
 
 
-	public InstructionEntity(int iD, String content, Timestamp sendTime, Timestamp runTime, int greenHouseID,
-			int userID) {
+	public InstructionEntity(int iD, String content, String sendTime, String runTime, String greenHouseID,
+			String userID) {
 		super();
 		ID = iD;
 		Content = content;
@@ -51,35 +51,35 @@ public class InstructionEntity {
 		Content = content;
 	}
 
-	public Timestamp getSendTime() {
+	public String getSendTime() {
 		return SendTime;
 	}
 
-	public void setSendTime(Timestamp sendTime) {
+	public void setSendTime(String sendTime) {
 		SendTime = sendTime;
 	}
 
-	public Timestamp getRunTime() {
+	public String getRunTime() {
 		return RunTime;
 	}
 
-	public void setRunTime(Timestamp runTime) {
+	public void setRunTime(String runTime) {
 		RunTime = runTime;
 	}
 
-	public int getGreenHouseID() {
+	public String getGreenHouseID() {
 		return GreenHouseID;
 	}
 
-	public void setGreenHouseID(int greenHouseID) {
+	public void setGreenHouseID(String greenHouseID) {
 		GreenHouseID = greenHouseID;
 	}
 
-	public int getUserID() {
+	public String getUserID() {
 		return UserID;
 	}
 
-	public void setUserID(int userID) {
+	public void setUserID(String userID) {
 		UserID = userID;
 	}
 	

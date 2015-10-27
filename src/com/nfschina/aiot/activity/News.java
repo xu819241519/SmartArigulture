@@ -7,7 +7,9 @@ import com.nfschina.aiot.entity.NewsListEntity;
 import com.nfschina.aiot.fragment.NewsContent;
 import com.nfschina.aiot.fragment.NewsList;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -32,6 +34,10 @@ public class News extends FragmentActivity implements OnClickListener {
 	private ImageButton mHome;
 	
 	private FragmentManager mFragmentManager;
+	//新闻列表
+	private NewsList mNewsList;
+	//新闻正文
+	private NewsContent mNewsContent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +57,8 @@ public class News extends FragmentActivity implements OnClickListener {
 		
 		mFragmentManager = getSupportFragmentManager();
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
-		ft.add(R.id.news_fragment,new NewsList(), Constant.NEWS_LIST);
+		mNewsList = new NewsList();
+		ft.add(R.id.news_fragment,mNewsList, Constant.NEWS_LIST);
 		ft.commit();
 	}
 
@@ -68,9 +75,15 @@ public class News extends FragmentActivity implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.news_back)
-			finish();
+		
+		if (v.getId() == R.id.news_back){
+			onBackPressed();
+		}
+			
 		else if(v.getId() == R.id.news_gohome){
+			Intent intent = new Intent(this,Home.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 			finish();
 		}
 	}
@@ -80,8 +93,26 @@ public class News extends FragmentActivity implements OnClickListener {
 	 */
 	public void goNewsContent(NewsListEntity newsListEntity){
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
-		ft.replace(R.id.news_fragment, new NewsContent(newsListEntity), Constant.NEWS_CONTENT);
+		ft.hide(mNewsList);
+		mNewsContent = new NewsContent(newsListEntity);
+		ft.add(R.id.news_fragment,mNewsContent,Constant.NEWS_CONTENT);
 		ft.addToBackStack(null);
+		//ft.replace(R.id.news_fragment, , Constant.NEWS_CONTENT);
+		//ft.show(mNewsContent);
 		ft.commit();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(mFragmentManager.getBackStackEntryCount() == 0)
+			super.onBackPressed();
+		else {
+			FragmentTransaction ft = mFragmentManager.beginTransaction();
+			mFragmentManager.popBackStack();
+			ft.remove(mNewsContent);
+			ft.show(mNewsList);
+			ft.commit();
+		}
+		
 	}
 }

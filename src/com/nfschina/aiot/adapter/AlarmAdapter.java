@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nfschina.aiot.R;
+import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.entity.AlarmEntity;
 
 import android.R.integer;
@@ -70,15 +71,13 @@ public class AlarmAdapter extends BaseAdapter {
 		holder.getID().setText(Integer.toString(mList.get(position).getID()));
 		holder.getLevel().setText(mList.get(position).getLevel());
 		holder.getStatus().setText(mList.get(position).getState());
-		DateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-		String time = sdf.format(mList.get(position).getTime());
-		holder.getTime().setText(time);
+		holder.getTime().setText(ConstantFun.formatTimeString(mList.get(position).getTime(),true));
 
-		if (position % 2 == 0) {
-			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-		} else {
-			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-		}
+//		if (position % 2 == 0) {
+//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+//		} else {
+//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+//		}
 		return convertView;
 	}
 

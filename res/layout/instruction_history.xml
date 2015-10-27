@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="42dp"
         
         android:background="@color/title_back"
         android:orientation="horizontal" >
@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2.5"
             android:gravity="center"
             android:layout_gravity="center"
             android:text="发出时间"
@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2.5"
             android:gravity="center"
             android:layout_gravity="center"
             android:text="执行时间"
@@ -47,20 +47,20 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:layout_gravity="center"
-            android:text="发送用户"
+            android:text="用户"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:layout_gravity="center"
-            android:text="温室号"
+            android:text="温室"
             android:textColor="@color/white"
             android:textSize="@dimen/text_small" >
         </TextView>
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2.3"
             android:gravity="center"
             android:layout_gravity="center"
             android:text="控制内容"
@@ -82,7 +82,7 @@
         android:layout_height="fill_parent"
         android:cacheColorHint="@color/transparent"
         android:divider="@color/divider"
-        android:dividerHeight="2dp"
+        android:dividerHeight="1dp"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"

@@ -9,11 +9,13 @@ import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.nfschina.aiot.R;
 
 import android.app.Activity;
+import android.text.Html;
 import android.widget.ListView;
 import android.widget.Toast;
 
 /**
  * 常量函数
+ * 
  * @author xu
  *
  */
@@ -23,7 +25,8 @@ public class ConstantFun {
 	/**
 	 * 获取SoundPullEventListener
 	 * 
-	 * @param activity 当前activity
+	 * @param activity
+	 *            当前activity
 	 * @return the SoundPullEventListener
 	 */
 	public static SoundPullEventListener<ListView> getSoundListener(Activity activity) {
@@ -36,7 +39,9 @@ public class ConstantFun {
 
 	/**
 	 * 当列表到达结尾，显示提示
-	 * @param activity 当前activity
+	 * 
+	 * @param activity
+	 *            当前activity
 	 * @return OnLastItemVisibleListener
 	 */
 	public static OnLastItemVisibleListener getLastItemVisibleListener(final Activity activity) {
@@ -51,7 +56,9 @@ public class ConstantFun {
 
 	/**
 	 * 对给定字符串进行MD5加密
-	 * @param string 给定的字符串
+	 * 
+	 * @param string
+	 *            给定的字符串
 	 * @return 加密后的字符串
 	 */
 	public static String getMD5String(String string) {
@@ -69,10 +76,11 @@ public class ConstantFun {
 
 	}
 
-	
 	/**
 	 * 转换成16进制的字符串
-	 * @param digest 待转换的byte数组
+	 * 
+	 * @param digest
+	 *            待转换的byte数组
 	 * @return 转换后的16进制的字符串
 	 */
 	private static String toHex(byte[] digest) {
@@ -88,6 +96,39 @@ public class ConstantFun {
 			sb.append(out);
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * 格式化时间字符串
+	 * 
+	 * @param time
+	 *            待格式化的字符串
+	 * @param timeBig
+	 *            时分秒是否用大字体
+	 * @return 格式化后的字符串
+	 */
+	public static CharSequence formatTimeString(String time, boolean timeBig) {
+		String result = time;
+		if (time != null && time.length() == 14) {
+			result = "<font>";
+			result = time.substring(0, 4);
+			result += "/";
+			result += time.substring(4, 6);
+			result += "/";
+			result += time.substring(6, 8);
+			result += "</font><br><font>";
+			if (timeBig)
+				result += "<big>";
+			result += time.substring(8, 10);
+			result += ":";
+			result += time.substring(10, 12);
+			result += ":";
+			result += time.substring(12, 14);
+			if (timeBig)
+				result += "</big>";
+			result += "</font>";
+		}
+		return Html.fromHtml(result);
 	}
 
 }

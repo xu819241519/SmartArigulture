@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,9 @@ public class Others extends Activity implements OnClickListener{
 	// 注销
 	private LinearLayout mLogout;
 	// 返回按钮
-	private TextView mBack;
+	private ImageButton mBack;
+	// 主页按钮
+	private ImageButton mGoHome;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,8 @@ public class Others extends Activity implements OnClickListener{
 		mAbout = (LinearLayout) findViewById(R.id.others_about);
 		mChangePswd = (LinearLayout) findViewById(R.id.others_change_pswd);
 		mLogout = (LinearLayout) findViewById(R.id.others_logout);
-		mBack = (TextView)findViewById(R.id.others_back);
+		mBack = (ImageButton)findViewById(R.id.others_back);
+		mGoHome = (ImageButton)findViewById(R.id.others_gohome);
 	}
 	
 	/**
@@ -60,6 +64,7 @@ public class Others extends Activity implements OnClickListener{
 		mChangePswd.setOnClickListener(this);
 		mLogout.setOnClickListener(this);
 		mBack.setOnClickListener(this);
+		mGoHome.setOnClickListener(this);
 	}
 
 	/**
@@ -88,6 +93,12 @@ public class Others extends Activity implements OnClickListener{
 		//返回
 		case R.id.others_back:
 			this.finish();
+			break;
+		case R.id.others_gohome:
+			intent = new Intent(this,Home.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
 			break;
 		default:
 			Toast.makeText(this, Constant.UNDEF, Toast.LENGTH_SHORT).show();

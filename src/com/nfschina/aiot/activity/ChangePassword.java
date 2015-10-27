@@ -7,12 +7,14 @@ import com.nfschina.aiot.db.AccessDataBase;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,9 @@ public class ChangePassword extends Activity implements OnClickListener {
 	// 更改密码按钮
 	private Button mChangePassword;
 	// 返回按钮
-	private TextView mBack;
+	private ImageButton mBack;
+	// 主页按钮
+	private ImageButton mGoHome;
 	// 提示对话框
 	private AlertDialog mAlertDialog;
 
@@ -61,7 +65,8 @@ public class ChangePassword extends Activity implements OnClickListener {
 		mOldPassword = (EditText) findViewById(R.id.other_old_pswd);
 		mNewPassword = (EditText) findViewById(R.id.other_new_pswd);
 		mConfirmPassword = (EditText) findViewById(R.id.other_confirm_pswd);
-		mBack = (TextView) findViewById(R.id.change_password_back);
+		mBack = (ImageButton) findViewById(R.id.change_password_back);
+		mGoHome = (ImageButton) findViewById(R.id.change_password_gohome);
 		mChangePassword = (Button) findViewById(R.id.bt_change_pswd);
 	}
 
@@ -71,6 +76,7 @@ public class ChangePassword extends Activity implements OnClickListener {
 	private void setListener() {
 		mChangePassword.setOnClickListener(this);
 		mBack.setOnClickListener(this);
+		mGoHome.setOnClickListener(this);
 	}
 
 	@Override
@@ -81,6 +87,11 @@ public class ChangePassword extends Activity implements OnClickListener {
 			if (GetChangePasswordData()) {
 				PerformChangePassword();
 			}
+		}else if(v.getId() == R.id.change_password_gohome){
+			Intent intent = new Intent(ChangePassword.this,Home.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			finish();
 		}
 
 	}

@@ -10,6 +10,7 @@ import com.nfschina.aiot.fragment.AlarmHistory;
 import com.nfschina.aiot.fragment.GreenHouseHistory;
 import com.nfschina.aiot.fragment.InstructionsHistory;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -162,6 +163,9 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 			finish();
 		}
 		else if(v.getId() == R.id.history_gohome){
+			Intent intent = new Intent(this,Home.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 			finish();
 		}
 	}
