@@ -27,6 +27,7 @@
 	<color name="title_back">#ff333333</color>
 	<color name="btn_normal">#ff3ba327</color>
 	<color name="btn_hover">#ff3ba327</color>
+	<color name="history_cursor">#ff3ba126</color>
 	<color name="usrinfo_spliter">#ffcccbcb</color>
 	<color name="general_back">#ffecf1f0</color>
 	<color name="listview_text">#ff666666</color>

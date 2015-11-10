@@ -1,32 +1,49 @@
 package com.nfschina.aiot.fragment;
 
 import java.util.ArrayList;
+import java.util.FormatFlagsConversionMismatchException;
 import java.util.List;
 
 import com.nfschina.aiot.R;
+import com.nfschina.aiot.R.color;
+import com.nfschina.aiot.activity.History;
 import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.db.AccessDataBase;
+import com.nfschina.aiot.entity.CarbonDioxideEntity;
+import com.nfschina.aiot.entity.EnvironmentParameterEntity;
+import com.nfschina.aiot.entity.HumidityEntity;
+import com.nfschina.aiot.entity.IlluminanceEntity;
+import com.nfschina.aiot.entity.TemperatureEntity;
 
+import android.R.integer;
+import android.app.ActionBar.LayoutParams;
+import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
- * 温室大棚数据历史记录
- * 通过第三方库（AndroidSliderImage）的折线图来实现展示
+ * 温室大棚数据历史记录 通过第三方库（AndroidSliderImage）的折线图来实现展示
+ * 
  * @author xu
  *
  */
@@ -40,14 +57,22 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	private RadioButton mHumidity;
 	// 温度按钮
 	private RadioButton mTemperature;
-	
+
 	private View mView;
+
+	// 当前游标
+	private ImageView mCursor;
+	// 当前温室ID
+	private String GreenHouseID;
 
 	// 当前选择查看的值
 	private int mCurrentItem = Constant.CARBONDIOXIDE;
 
 	// 折线图
 	private LineChartView mChart;
+
+	// 等待对话框
+	private ProgressDialog mDialog;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,18 +89,46 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	}
 
 	/**
+	 * 显示或关闭等待对话框
+	 * 
+	 * @param show
+	 */
+	private void showDialog(boolean show) {
+		if (show) {
+			if (mDialog == null) {
+				mDialog = new ProgressDialog(getActivity());
+				mDialog.setTitle("正在获取数据...");
+				mDialog.show();
+			}
+		} else {
+			if (mDialog != null) {
+				mDialog.dismiss();
+				mDialog = null;
+			}
+		}
+	}
+
+	/**
 	 * 初始化UI控件
 	 */
 	private void InitUIControls() {
 		mSunshine = (RadioButton) mView.findViewById(R.id.greenhouse_history_sunshine);
+		GreenHouseID = ((History) getActivity()).getGreenHouseID();
 		mCarbonDioxide = (RadioButton) mView.findViewById(R.id.greenhouse_history_carbondioxide);
 		mHumidity = (RadioButton) mView.findViewById(R.id.greenhouse_history_humidity);
 		mTemperature = (RadioButton) mView.findViewById(R.id.greenhouse_history_temperature);
+		mCursor = (ImageView) mView.findViewById(R.id.history_cursor);
+		android.view.ViewGroup.LayoutParams para;
+		para = mCursor.getLayoutParams();
+		para.width = getResources().getDisplayMetrics().widthPixels / 4;
+		mCursor.setLayoutParams(para);
+
 		mCarbonDioxide.setChecked(true);
 		mChart = (LineChartView) getActivity().findViewById(R.id.chart);
 		mChart.setInteractive(true);
 		mChart.setZoomType(ZoomType.HORIZONTAL);
 		mChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+		showDialog(true);
 	}
 
 	/**
@@ -91,184 +144,11 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	/**
 	 * 更换折线图显示的实体种类
 	 * 
-	 * @param kind 要显示的实体种类
+	 * @param kind
+	 *            要显示的实体种类
 	 */
 	public void changeCharts(int kind) {
-		LineChartData data = null;
-		if (kind == Constant.CARBONDIOXIDE) {
-			data = getCarbonDioxideData();
-		} else if (kind == Constant.SUNSHINE) {
-			data = getSunshineData();
-		} else if (kind == Constant.TEMPERATURE) {
-			data = getTemperatureData();
-		} else if (kind == Constant.HUMIDITY) {
-			data = getHumidityData();
-		}
-		if (data != null) {
-			mChart.setLineChartData(data);
-			mChart.setVisibility(View.VISIBLE);
-		}
-	}
-
-	/**
-	 * 获得温度数据
-	 */
-	private LineChartData getTemperatureData() {
-		List<PointValue> values = new ArrayList<PointValue>();
-		values.add(new PointValue(10, 20));
-		values.add(new PointValue(10, 40));
-		values.add(new PointValue(20, 30));
-		values.add(new PointValue(30, 40));
-		values.add(new PointValue(40, 10));
-		values.add(new PointValue(50, 10));
-		values.add(new PointValue(60, 10));
-		values.add(new PointValue(70, 30));
-
-		// In most cased you can call data model methods in
-		// builder-pattern-like manner.
-		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-		List<Line> lines = new ArrayList<Line>();
-		lines.add(line);
-
-		LineChartData data = new LineChartData();
-		data.setLines(lines);
-		// 坐标轴
-		Axis axisX = new Axis(); // X轴
-		axisX.setHasTiltedLabels(true);
-		axisX.setTextColor(Color.BLUE);
-		axisX.setName("采集时间1");
-
-		axisX.setMaxLabelChars(3);
-
-		data.setAxisXBottom(axisX);
-
-		Axis axisY = new Axis(); // Y轴
-		axisY.setMaxLabelChars(3);
-		axisY.setName("光照");
-		data.setAxisYLeft(axisY);
-
-		return data;
-	}
-
-	/**
-	 * 获得湿度数据
-	 */
-	private LineChartData getHumidityData() {
-		List<PointValue> values = new ArrayList<PointValue>();
-		values.add(new PointValue(10, 20));
-		values.add(new PointValue(10, 40));
-		values.add(new PointValue(20, 30));
-		values.add(new PointValue(30, 40));
-		values.add(new PointValue(40, 10));
-		values.add(new PointValue(50, 10));
-		values.add(new PointValue(60, 10));
-		values.add(new PointValue(70, 30));
-
-		// In most cased you can call data model methods in
-		// builder-pattern-like manner.
-		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-		List<Line> lines = new ArrayList<Line>();
-		lines.add(line);
-
-		LineChartData data = new LineChartData();
-		data.setLines(lines);
-		// 坐标轴
-		Axis axisX = new Axis(); // X轴
-		axisX.setHasTiltedLabels(true);
-		axisX.setTextColor(Color.BLUE);
-		axisX.setName("采集时间2");
-
-		axisX.setMaxLabelChars(3);
-
-		data.setAxisXBottom(axisX);
-
-		Axis axisY = new Axis(); // Y轴
-		axisY.setMaxLabelChars(3);
-		axisY.setName("光照");
-		data.setAxisYLeft(axisY);
-
-		return data;
-	}
-
-	/**
-	 * 获得光照数据
-	 */
-	private LineChartData getSunshineData() {
-		List<PointValue> values = new ArrayList<PointValue>();
-		values.add(new PointValue(10, 20));
-		values.add(new PointValue(10, 40));
-		values.add(new PointValue(20, 30));
-		values.add(new PointValue(30, 40));
-		values.add(new PointValue(40, 10));
-		values.add(new PointValue(50, 10));
-		values.add(new PointValue(60, 10));
-		values.add(new PointValue(70, 30));
-
-		// In most cased you can call data model methods in
-		// builder-pattern-like manner.
-		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-		List<Line> lines = new ArrayList<Line>();
-		lines.add(line);
-
-		LineChartData data = new LineChartData();
-		data.setLines(lines);
-		// 坐标轴
-		Axis axisX = new Axis(); // X轴
-		axisX.setHasTiltedLabels(true);
-		axisX.setTextColor(Color.BLUE);
-		axisX.setName("采集时间3");
-
-		axisX.setMaxLabelChars(3);
-
-		data.setAxisXBottom(axisX);
-
-		Axis axisY = new Axis(); // Y轴
-		axisY.setMaxLabelChars(3);
-		axisY.setName("光照");
-		data.setAxisYLeft(axisY);
-
-		return data;
-	}
-
-	/**
-	 * 获得二氧化碳数据
-	 */
-	private LineChartData getCarbonDioxideData() {
-
-		List<PointValue> values = new ArrayList<PointValue>();
-		values.add(new PointValue(10, 20));
-		values.add(new PointValue(10, 40));
-		values.add(new PointValue(20, 30));
-		values.add(new PointValue(30, 40));
-		values.add(new PointValue(40, 10));
-		values.add(new PointValue(50, 10));
-		values.add(new PointValue(60, 10));
-		values.add(new PointValue(70, 30));
-
-		// In most cased you can call data model methods in
-		// builder-pattern-like manner.
-		Line line = new Line(values).setColor(Color.BLUE).setCubic(true);
-		List<Line> lines = new ArrayList<Line>();
-		lines.add(line);
-
-		LineChartData data = new LineChartData();
-		data.setLines(lines);
-		// 坐标轴
-		Axis axisX = new Axis(); // X轴
-		axisX.setHasTiltedLabels(true);
-		axisX.setTextColor(Color.BLUE);
-		axisX.setName("采集时间4");
-
-		axisX.setMaxLabelChars(3);
-
-		data.setAxisXBottom(axisX);
-
-		Axis axisY = new Axis(); // Y轴
-		axisY.setMaxLabelChars(3);
-		axisY.setName("光照");
-		data.setAxisYLeft(axisY);
-
-		return data;
+		new GetDataTask().execute(kind);
 	}
 
 	/**
@@ -276,6 +156,10 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
+
+		android.view.ViewGroup.LayoutParams para;
+		para = mCursor.getLayoutParams();
+		int lastItem = mCurrentItem;
 
 		mCurrentItem = Constant.CARBONDIOXIDE;
 		switch (v.getId()) {
@@ -287,7 +171,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			break;
 
 		case R.id.greenhouse_history_sunshine:
-			mCurrentItem = Constant.SUNSHINE;
+			mCurrentItem = Constant.ILLUMINANCE;
 			break;
 		case R.id.greenhouse_history_temperature:
 			mCurrentItem = Constant.TEMPERATURE;
@@ -298,24 +182,112 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			break;
 		}
 		changeCharts(mCurrentItem);
+
+		TranslateAnimation translateAnimation = new TranslateAnimation(lastItem * para.width, mCurrentItem * para.width,
+				0, 0);
+		translateAnimation.setDuration(200);
+		translateAnimation.setFillAfter(true);
+		mCursor.startAnimation(translateAnimation);
+
 	}
-	
-	
-	
+
+	/**
+	 * 更新界面显示
+	 * 
+	 * @param entities
+	 * @param kind
+	 */
+	private void updateDisplay(List<EnvironmentParameterEntity> entities, int kind) {
+		List<PointValue> values = new ArrayList<PointValue>();
+		List<AxisValue> axisValues = new ArrayList<AxisValue>();
+		for (int i = 0; i < entities.size(); ++i) {
+			if (kind == Constant.CARBONDIOXIDE) {
+				CarbonDioxideEntity carbonDioxideEntity = (CarbonDioxideEntity) entities.get(i);
+				values.add(new PointValue(i, carbonDioxideEntity.getData()));
+				axisValues.add(new AxisValue(i).setLabel(carbonDioxideEntity.getTime()));
+			} else if (kind == Constant.TEMPERATURE) {
+				TemperatureEntity temperatureEntity = (TemperatureEntity) entities.get(i);
+				values.add(new PointValue(i, temperatureEntity.getData()));
+				axisValues.add(new AxisValue(i).setLabel(temperatureEntity.getTime()));
+			} else if (kind == Constant.HUMIDITY) {
+				HumidityEntity humidityEntity = (HumidityEntity) entities.get(i);
+				values.add(new PointValue(i,humidityEntity.getData()));
+				axisValues.add(new AxisValue(i).setLabel(humidityEntity.getTime()));
+			} else if (kind == Constant.ILLUMINANCE) {
+				IlluminanceEntity illuminanceEntity = (IlluminanceEntity) entities.get(i);
+				values.add(new PointValue(i, illuminanceEntity.getData()));
+				axisValues.add(new AxisValue(i).setLabel(illuminanceEntity.getTime()));
+			}
+		}
+
+		// In most cased you can call data model methods in
+		// builder-pattern-like manner.
+		Line line = new Line(values).setColor(Color.WHITE).setCubic(true);
+		List<Line> lines = new ArrayList<Line>();
+		lines.add(line);
+
+		LineChartData data = new LineChartData();
+		data.setLines(lines);
+		// 坐标轴
+		Axis axisX = new Axis(); // X轴
+		axisX.setHasTiltedLabels(true);
+		axisX.setTextColor(Color.WHITE);
+		axisX.setName("时间");
+		axisX.setHasLines(false);
+
+		axisX.setMaxLabelChars(3);
+		axisX.setValues(axisValues);
+
+		data.setAxisXBottom(axisX);
+
+		Axis axisY = new Axis(); // Y轴
+		axisY.setTextColor(Color.WHITE);
+		axisY.setMaxLabelChars(3);
+		if (kind == Constant.TEMPERATURE)
+			axisY.setName("温度");
+		else if (kind == Constant.HUMIDITY)
+			axisY.setName("湿度");
+		else if (kind == Constant.CARBONDIOXIDE)
+			axisY.setName("二氧化碳浓度");
+		else if (kind == Constant.ILLUMINANCE)
+			axisY.setName("光照");
+		data.setAxisYLeft(axisY);
+
+		mChart.setLineChartData(data);
+		mChart.setVisibility(View.VISIBLE);
+		showDialog(false);
+	}
+
 	/**
 	 * @author xu
 	 *
 	 */
-	public class GetDataTask extends AsyncTask<Void, Void, Void>{
+	public class GetDataTask extends AsyncTask<Integer, Void, List<EnvironmentParameterEntity>> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
-			return null;
+		protected List<EnvironmentParameterEntity> doInBackground(Integer... params) {
+			List<EnvironmentParameterEntity> result = null;
+			if (params[0] == Constant.CARBONDIOXIDE) {
+				result = AccessDataBase.getCarbonDioxideData(GreenHouseID);
+			} else if (params[0] == Constant.HUMIDITY) {
+				result = AccessDataBase.getHumidityData(GreenHouseID);
+			} else if (params[0] == Constant.TEMPERATURE) {
+				result = AccessDataBase.getTemperatureData(GreenHouseID);
+			} else if (params[0] == Constant.ILLUMINANCE) {
+				result = AccessDataBase.getIlluminanceData(GreenHouseID);
+			}
+			return result;
 		}
-		
+
 		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
+		protected void onPostExecute(List<EnvironmentParameterEntity> result) {
+			if (result != null && result.size() != 0) {
+				EnvironmentParameterEntity entity = result.get(0);
+				updateDisplay(result, entity.getKind());
+			} else {
+				showDialog(false);
+				Toast.makeText(getActivity(), "未获取到数据更新", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 }

@@ -9,17 +9,26 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mysql.jdbc.Statement;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.entity.AlarmEntity;
 import com.nfschina.aiot.entity.CarbonDioxideEntity;
+import com.nfschina.aiot.entity.EnvironmentParameterEntity;
+import com.nfschina.aiot.entity.GreenHouseEntity;
+import com.nfschina.aiot.entity.HumidityEntity;
+import com.nfschina.aiot.entity.IlluminanceEntity;
 import com.nfschina.aiot.entity.InstructionEntity;
+import com.nfschina.aiot.entity.TemperatureEntity;
 
+import android.database.CursorJoiner.Result;
 
 /**
  * 连接数据库
+ * 
  * @author xu
  *
  */
@@ -37,6 +46,7 @@ public class AccessDataBase {
 
 	/**
 	 * 获取statement
+	 * 
 	 * @return statement
 	 */
 	private static Statement getStatement() {
@@ -60,8 +70,10 @@ public class AccessDataBase {
 	/**
 	 * 连接服务器执行登录
 	 * 
-	 * @param name 登录名
-	 * @param pswd 密码
+	 * @param name
+	 *            登录名
+	 * @param pswd
+	 *            密码
 	 * @return the resultcode
 	 * @throws Exception
 	 */
@@ -99,8 +111,10 @@ public class AccessDataBase {
 	/**
 	 * 连接服务器注册
 	 * 
-	 * @param id 登录名
-	 * @param pswd 密码
+	 * @param id
+	 *            登录名
+	 * @param pswd
+	 *            密码
 	 * @return the resultcode
 	 */
 	public static int connectRegister(String id, String pswd) {
@@ -115,12 +129,13 @@ public class AccessDataBase {
 					rs.close();
 
 				} else {
-					Date date=new Date();
-					DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					String time=format.format(date);
-					sql = "insert into sys_user (USER_ID,USER_PASSWORD,ADD_TIME) values('" + id + "','" + pswd + "','" + time + "')" ;
+					Date date = new Date();
+					DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String time = format.format(date);
+					sql = "insert into sys_user (USER_ID,USER_PASSWORD,ADD_TIME) values('" + id + "','" + pswd + "','"
+							+ time + "')";
 					int rows = stmt.executeUpdate(sql);
-					if(rows>0)
+					if (rows > 0)
 						mResultCode = Constant.SERVER_REGISTER_SUCCESS;
 					else
 						mResultCode = Constant.SERVER_REGISTER_FAILED;
@@ -146,9 +161,12 @@ public class AccessDataBase {
 	/**
 	 * 连接服务器修改密码
 	 * 
-	 * @param id 用户名
-	 * @param oldPassword 旧密码
-	 * @param newPassword 新密码
+	 * @param id
+	 *            用户名
+	 * @param oldPassword
+	 *            旧密码
+	 * @param newPassword
+	 *            新密码
 	 * @return the resultcode
 	 */
 	public static int connectChangePassword(String id, String oldPassword, String newPassword) {
@@ -172,7 +190,7 @@ public class AccessDataBase {
 					rs.close();
 				} else {
 					mResultCode = Constant.SERVER_CHANGE_PASSWORD_FAILED;
-					if(rs != null)
+					if (rs != null)
 						rs.close();
 				}
 			} catch (java.sql.SQLException e) {
@@ -214,21 +232,26 @@ public class AccessDataBase {
 	/**
 	 * 从服务器获取报警记录
 	 * 
-	 * @param page 获取第几页的数据
-	 * @param size 每一页有多少条数据
+	 * @param page
+	 *            获取第几页的数据
+	 * @param size
+	 *            每一页有多少条数据
 	 * @return 报警记录实体的list
 	 */
-	public static List<AlarmEntity> getAlarmHistoryData(int page, int size) {
+	public static List<AlarmEntity> getAlarmHistoryData(int page, int size, String GreenHouseID) {
 		List<AlarmEntity> result = null;
 		Statement statement = getStatement();
 		if (statement != null) {
-			String sql = "select * from warningvaluetb limit " + page * size + "," + size;
+
+			String sql = "select * from warningtb where greenhouseid='" + GreenHouseID + "' limit " + page * size + ","
+					+ size;
 			ResultSet rs = null;
 			try {
 				rs = statement.executeQuery(sql);
-				while (rs != null && rs.next()) {
-					AlarmEntity alarmEntity = new AlarmEntity(rs.getInt("warningvalueid"), rs.getInt("greenhouseid"), rs.getString(4),
-							rs.getString(5), rs.getString(6), rs.getString(7));
+				if (rs != null && rs.next()) {
+
+					AlarmEntity alarmEntity = new AlarmEntity(rs.getInt(1), rs.getString(2), rs.getFloat(4),
+							rs.getInt(5), rs.getFloat(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
 					if (result == null)
 						result = new ArrayList<AlarmEntity>();
 					result.add(alarmEntity);
@@ -237,7 +260,8 @@ public class AccessDataBase {
 				e.printStackTrace();
 			} finally {
 				try {
-					rs.close();
+					if (rs != null)
+						rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -256,15 +280,18 @@ public class AccessDataBase {
 	/**
 	 * 从服务器获取指令记录
 	 * 
-	 * @param page 获取第几页的数据
-	 * @param size 每一页有多少条数据
+	 * @param page
+	 *            获取第几页的数据
+	 * @param size
+	 *            每一页有多少条数据
 	 * @return 指令记录实体的list
 	 */
-	public static List<InstructionEntity> getInstructionHistoryData(int page, int size) {
+	public static List<InstructionEntity> getInstructionHistoryData(int page, int size, String greenHouseID) {
 		List<InstructionEntity> result = null;
 		Statement statement = getStatement();
 		if (statement != null) {
-			String sql = "select * from instructiontb limit " + page * size + "," + size;
+			String sql = "select * from instructiontb where greenhouseid='" + greenHouseID + "' limit " + page * size
+					+ "," + size;
 			ResultSet rs = null;
 			try {
 				rs = statement.executeQuery(sql);
@@ -297,71 +324,230 @@ public class AccessDataBase {
 		return result;
 	}
 
-	
 	/**
 	 * 获取大棚的名字
+	 * 
 	 * @return 大棚名字的list
 	 */
-	public static List<Integer> getGreenHouseName() {
-//		List<Integer> result = null;
-//		Statement statement = getStatement();
-//		if (statement != null) {
-//			String sql = "select UserID from UserInfoTB where UserName='" + Constant.CURRENT_USER +"' and Password='" + Constant.CURRENT_PASSWORD +"'" ;
-//			ResultSet rs = null;
-//			try {
-//				rs = statement.executeQuery(sql);
-//				if (rs != null && rs.next()) {
-//					int userID = rs.getInt(0);
-//					rs.close();
-//					sql = "select distinct GreenHouseID from GreehHouseDeviceTB where UserID=" + userID;
-//					rs = statement.executeQuery(sql);
-//					while(rs != null && rs.next()){
-//						if(result == null)
-//							result = new ArrayList<Integer>();
-//						result.add(rs.getInt(0));
-//					}
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			} finally {
-//
-//				try {
-//					rs.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//				try {
-//					statement.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//				closeConnection();
-//			}
-//		}
-//
-//		closeConnection();
-//		return result;
-		List<Integer> result = new ArrayList<Integer>();
-		for(int i = 0;i < 10 ; ++ i)
-			result.add(i);
+	public static List<GreenHouseEntity> getGreenHouseName() {
+		List<GreenHouseEntity> result = null;
+		Statement statement = getStatement();
+		if (statement != null) {
+
+			String sql = "select * from sys_user where USER_ID='" + Constant.CURRENT_USER + "' and USER_PASSWORD='"
+					+ Constant.CURRENT_PASSWORD + "'";
+
+			ResultSet rs = null;
+			try {
+				rs = statement.executeQuery(sql);
+				if (rs != null && rs.next()) {
+					rs.close();
+					sql = "select GreenHouseId,GreenHouseName from greenhouseinfotb where GreenHouseId in (select HOUSE_ID from greenhouse_user where USER_ID='"
+							+ Constant.CURRENT_USER + "')";
+					rs = statement.executeQuery(sql);
+					while (rs != null && rs.next()) {
+						if (result == null)
+							result = new ArrayList<GreenHouseEntity>();
+						GreenHouseEntity greenHouseEntity = new GreenHouseEntity();
+						greenHouseEntity.setID(rs.getString(1));
+						greenHouseEntity.setName(rs.getString(2));
+						result.add(greenHouseEntity);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				try {
+					statement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				closeConnection();
+			}
+		}
+
+		closeConnection();
 		return result;
 	}
-		
-	
+
 	/**
 	 * 获取二氧化碳的数据
-	 * @param greenHouseID 大棚ID
+	 * 
+	 * @param greenHouseID
+	 *            大棚ID
 	 * @return 二氧化碳的数据的list
 	 */
-	public static List<CarbonDioxideEntity> getCarbonDioxideData(int greenHouseID){
-		List<CarbonDioxideEntity> result = null;
+	public static List<EnvironmentParameterEntity> getCarbonDioxideData(String greenHouseID) {
+		List<EnvironmentParameterEntity> result = null;
 		Statement statement = getStatement();
-		if(statement != null){
-			String sql = "select * from ";
+		if (statement != null) {
+			String sql = "select co2,recordtime from environmentparatb where greenhouseid='" + greenHouseID + "'";
+			ResultSet rs = null;
+			try {
+				rs = statement.executeQuery(sql);
+				while (rs != null && rs.next()) {
+					if (result == null) {
+						result = new ArrayList<EnvironmentParameterEntity>();
+					}
+					CarbonDioxideEntity carbonDioxideEntity = new CarbonDioxideEntity(rs.getInt(1), rs.getString(2));
+					result.add(carbonDioxideEntity);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					statement.close();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+
+			}
 		}
 		closeConnection();
 		return result;
 	}
-	
-	
+
+	/**
+	 * 获取湿度的数据
+	 * 
+	 * @param greenHouseID
+	 *            温室ID
+	 * @return 湿度实体list
+	 */
+	public static List<EnvironmentParameterEntity> getHumidityData(String greenHouseID) {
+		List<EnvironmentParameterEntity> result = null;
+		Statement statement = getStatement();
+		if (statement != null) {
+			String sql = "select humidity,recordtime from environmentparatb where greenhouseid='" + greenHouseID + "'";
+			ResultSet rs = null;
+			try {
+				rs = statement.executeQuery(sql);
+				while (rs != null && rs.next()) {
+					if (result == null) {
+						result = new ArrayList<EnvironmentParameterEntity>();
+					}
+					HumidityEntity humidityEntity = new HumidityEntity(rs.getFloat(1), rs.getString(2));
+					result.add(humidityEntity);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					statement.close();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+
+			}
+		}
+		closeConnection();
+		return result;
+	}
+
+	/**
+	 * 获取光照数据
+	 * 
+	 * @param greenHouseID
+	 *            温室ID
+	 * @return 光照实体list
+	 */
+	public static List<EnvironmentParameterEntity> getIlluminanceData(String greenHouseID) {
+		List<EnvironmentParameterEntity> result = null;
+		Statement statement = getStatement();
+		if (statement != null) {
+			String sql = "select illuminance,recordtime from environmentparatb where greenhouseid='" + greenHouseID
+					+ "'";
+			ResultSet rs = null;
+			try {
+				rs = statement.executeQuery(sql);
+				while (rs != null && rs.next()) {
+					if (result == null) {
+						result = new ArrayList<EnvironmentParameterEntity>();
+					}
+					IlluminanceEntity illuminanceEntity = new IlluminanceEntity(rs.getInt(1), rs.getString(2));
+					result.add(illuminanceEntity);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					statement.close();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+
+			}
+		}
+		closeConnection();
+		return result;
+	}
+
+	/**
+	 * 获取温度数据
+	 * 
+	 * @param greenHouseID
+	 *            温室ID
+	 * @return 温度实体list
+	 */
+	public static List<EnvironmentParameterEntity> getTemperatureData(String greenHouseID) {
+		List<EnvironmentParameterEntity> result = null;
+		Statement statement = getStatement();
+		if (statement != null) {
+			String sql = "select temperature,recordtime from environmentparatb where greenhouseid='" + greenHouseID
+					+ "'";
+			ResultSet rs = null;
+			try {
+				rs = statement.executeQuery(sql);
+				while (rs != null && rs.next()) {
+					if (result == null) {
+						result = new ArrayList<EnvironmentParameterEntity>();
+					}
+					TemperatureEntity temperatureEntity = new TemperatureEntity(rs.getFloat(1), rs.getString(2));
+					result.add(temperatureEntity);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					statement.close();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+
+			}
+		}
+		closeConnection();
+		return result;
+	}
+
 }

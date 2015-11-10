@@ -5,6 +5,7 @@ import java.util.List;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nfschina.aiot.R;
+import com.nfschina.aiot.activity.History;
 import com.nfschina.aiot.adapter.InstructionsAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
@@ -37,6 +38,9 @@ public class InstructionsHistory extends Fragment {
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
 	private View mView;
+	
+	// ÎÂÊÒID
+	private String GreenHouseID;
 
 	// µ±Ç°Ò³Âë
 	private int mPage = 0;
@@ -63,7 +67,7 @@ public class InstructionsHistory extends Fragment {
 	 */
 	private void initUIControls() {
 		mPullRefreshListView = (PullToRefreshListView) mView.findViewById(R.id.instructions_list);
-
+		GreenHouseID = ((History) getActivity()).getGreenHouseID();
 		mPullRefreshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
 		mPullRefreshListView.setScrollingWhileRefreshingEnabled(true);
 		mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -122,10 +126,10 @@ public class InstructionsHistory extends Fragment {
 			if (params[0]) {
 				mPage = 0;
 				mInstructionsAdapter.clearData();
-				mInstructionsAdapter.addData(AccessDataBase.getInstructionHistoryData(mPage, mSize));
+				mInstructionsAdapter.addData(AccessDataBase.getInstructionHistoryData(mPage, mSize, GreenHouseID));
 				result = true;
 			} else {
-				List<InstructionEntity> list = AccessDataBase.getInstructionHistoryData(mPage + 1, mSize);
+				List<InstructionEntity> list = AccessDataBase.getInstructionHistoryData(mPage + 1, mSize, GreenHouseID);
 				if (list != null && list.size() != 0) {
 					mPage++;
 					mInstructionsAdapter.addData(list);

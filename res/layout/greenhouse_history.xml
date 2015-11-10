@@ -6,48 +6,48 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal" >
+        android:layout_height="50dp"
+        android:background="@color/title_back"
+        android:orientation="vertical" >
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/title_back"
             android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/greenhouse_history_carbondioxide"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableBottom="@drawable/history_greenhouse_items_selector"
-                android:button="@null"
-                android:gravity="center"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
+                android:gravity="center"
                 android:text="二氧化碳"
                 android:textColor="@drawable/history_title_text_color"
                 android:textSize="@dimen/text_normal" />
 
             <RadioButton
                 android:id="@+id/greenhouse_history_sunshine"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawableBottom="@drawable/history_greenhouse_items_selector"
                 android:button="@null"
+                android:clickable="true"
                 android:gravity="center"
-                android:text="光照强度"
+                android:text="光照"
                 android:textColor="@drawable/history_title_text_color"
                 android:textSize="@dimen/text_normal" />
 
             <RadioButton
                 android:id="@+id/greenhouse_history_humidity"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableBottom="@drawable/history_greenhouse_items_selector"
-                android:button="@null"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:clickable="true"
                 android:gravity="center"
                 android:text="湿度"
                 android:textColor="@drawable/history_title_text_color"
@@ -55,29 +55,40 @@
 
             <RadioButton
                 android:id="@+id/greenhouse_history_temperature"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_gravity="center"
-                android:drawableBottom="@drawable/history_greenhouse_items_selector"
+                android:layout_weight="1"
                 android:button="@null"
+                android:clickable="true"
                 android:gravity="center"
                 android:text="温度"
                 android:textColor="@drawable/history_title_text_color"
                 android:textSize="@dimen/text_normal" />
         </RadioGroup>
+
+        <ImageView
+            android:id="@+id/history_cursor"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/history_cursor" />
     </LinearLayout>
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@+id/greenhouse_history_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/normal_space"
+        android:layout_marginLeft="@dimen/normal_space"
+        android:layout_marginRight="@dimen/normal_space"
+        android:layout_marginTop="@dimen/normal_space"
+        android:background="@drawable/history_back"
+        android:orientation="vertical" >
 
         <lecho.lib.hellocharts.view.LineChartView
             android:id="@+id/chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 </LinearLayout>

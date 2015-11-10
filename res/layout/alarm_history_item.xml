@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/nav_bg"
-        android:textSize="@dimen/text_small" >
+        android:textSize="@dimen/text_top_small" >
     </TextView>
 
     <TextView
@@ -24,23 +24,10 @@
         android:layout_gravity="center"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="3dp"
-        android:layout_weight="2"
+        android:layout_weight="2.3"
         android:gravity="center"
         android:textColor="@color/listview_text"
-        android:textSize="@dimen/text_small" >
-    </TextView>
-
-    <TextView
-        android:id="@+id/alarm_history_level"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="3dp"
-        android:layout_marginTop="3dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@color/listview_text"
-        android:textSize="@dimen/text_small" >
+        android:textSize="@dimen/text_top_small" >
     </TextView>
 
     <TextView
@@ -53,7 +40,20 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/listview_text"
-        android:textSize="@dimen/text_small" >
+        android:textSize="@dimen/text_top_small" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/alarm_history_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/listview_text"
+        android:textSize="@dimen/text_top_small" >
     </TextView>
 
     <TextView
@@ -63,10 +63,10 @@
         android:layout_gravity="center"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="3dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center"
         android:textColor="@color/listview_text"
-        android:textSize="@dimen/text_small" >
+        android:textSize="@dimen/text_top_small" >
     </TextView>
 
     <TextView
@@ -76,10 +76,10 @@
         android:layout_gravity="center"
         android:layout_marginBottom="3dp"
         android:layout_marginTop="3dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:gravity="center"
         android:textColor="@color/listview_text"
-        android:textSize="@dimen/text_small" >
+        android:textSize="@dimen/text_top_small" >
     </TextView>
 
 </LinearLayout>

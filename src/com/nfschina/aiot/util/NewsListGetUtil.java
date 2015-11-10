@@ -89,10 +89,7 @@ public class NewsListGetUtil {
 	/**
 	 * 构造函数
 	 * 
-	 * @param activity
-	 *            调用该类的activity
-	 * @param parseObject
-	 *            指明需要获取新闻列表还是新闻正文，为PARSE_LIST表示要获取新闻列表，为PARSE_CONTENT表明要获取正文
+	 * @param newsList 表明使用此类的NewsList
 	 */
 	public NewsListGetUtil(NewsList newsList) {
 		mNewsList = newsList;

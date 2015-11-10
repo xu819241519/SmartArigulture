@@ -1,27 +1,31 @@
 package com.nfschina.aiot.entity;
 
-import java.sql.Timestamp;
+import com.nfschina.aiot.constant.Constant;
 
 /**
  * 湿度实体
+ * 
  * @author xu
  *
  */
 
-public class HumidityEntity {
+public class HumidityEntity extends EnvironmentParameterEntity {
 
-	//湿度实体的属性
+	// 湿度实体的属性
 	private float mData;
-	private Timestamp mTimestamp;
-	public HumidityEntity(float mData, Timestamp mTimestamp) {
-		super();
+	private String mTime;
+
+	public HumidityEntity(float mData, String time) {
 		this.mData = mData;
-		this.mTimestamp = mTimestamp;
+		mTime = time;
+		setKind(Constant.HUMIDITY);
 	}
-	public float getmData() {
+
+	public float getData() {
 		return mData;
 	}
-	public Timestamp getmTimestamp() {
-		return mTimestamp;
+
+	public String getTime() {
+		return mTime;
 	}
 }

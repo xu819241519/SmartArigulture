@@ -1,30 +1,33 @@
 package com.nfschina.aiot.entity;
 
-import java.sql.Timestamp;
-
+import com.nfschina.aiot.constant.Constant;
 
 /**
  * 温度实体
+ * 
  * @author xu
  *
  */
 
-public class TemperatureEntity {
+public class TemperatureEntity extends EnvironmentParameterEntity {
 
-	//温度实体的属性
+	// 温度实体的属性
 	private float mData;
-	private Timestamp mTimestamp;
-	public float getmData() {
+	private String mTime;
+
+	public float getData() {
 		return mData;
 	}
-	public Timestamp getmTimestamp() {
-		return mTimestamp;
+
+	public String getTime() {
+		return mTime;
 	}
-	public TemperatureEntity(float mData, Timestamp mTimestamp) {
+
+	public TemperatureEntity(float mData, String time) {
 		super();
 		this.mData = mData;
-		this.mTimestamp = mTimestamp;
+		this.mTime = time;
+		setKind(Constant.TEMPERATURE);
 	}
-	
-	
+
 }

@@ -11,7 +11,6 @@ import com.nfschina.aiot.fragment.GreenHouseHistory;
 import com.nfschina.aiot.fragment.InstructionsHistory;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,23 +20,20 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
-
 /**
- * 历史记录页面
- * 分为指令记录、报警记录和数据记录。三个记录用fragment和viewpager左右切换，或者用radiobutton点击切换。
+ * 历史记录页面 分为指令记录、报警记录和数据记录。三个记录用fragment和viewpager左右切换，或者用radiobutton点击切换。
  * 数据记录里包括温度、湿度、光照、二氧化碳浓度
+ * 
  * @author xu
  *
  */
 
-public class History extends FragmentActivity implements OnPageChangeListener, OnCheckedChangeListener, OnClickListener {
+public class History extends FragmentActivity
+		implements OnPageChangeListener, OnCheckedChangeListener, OnClickListener {
 
 	// UI控件
 	private ViewPager mViewPager;
@@ -47,6 +43,9 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 	private ImageButton mGoBack;
 	private ImageButton mGoHome;
 
+	// 表明进入的是哪个温室大棚
+	private String GreenHouseID;
+
 	// viewpager的当前页面索引
 	private int mCurrentItem;
 
@@ -54,7 +53,7 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history);
-		
+
 		InitUIControls();
 		setListener();
 
@@ -67,21 +66,24 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 	 */
 	private void InitUIControls() {
 
-		//绑定控件
+		// 绑定控件
 		mViewPager = (ViewPager) findViewById(R.id.history_viewpager);
 		mRadioGroup = (RadioGroup) findViewById(R.id.history_group);
 		mGoBack = (ImageButton) findViewById(R.id.history_back);
 		mGoHome = (ImageButton) findViewById(R.id.history_gohome);
 
-		//初始化framelist页面
+		// 设置温室大棚ID
+		Intent intent = getIntent();
+		GreenHouseID = intent.getStringExtra(Constant.INTENT_EXTRA_HISTORY_HOUSE_ID);
+
+		// 初始化framelist页面
 		mFragmentList = new ArrayList<Fragment>();
 		mFragmentList.add(new InstructionsHistory());
 		mFragmentList.add(new GreenHouseHistory());
 		mFragmentList.add(new AlarmHistory());
 		mAdapter = new GenelFragmentAdapter(getSupportFragmentManager(), mFragmentList);
-		
 
-		//设置适配器
+		// 设置适配器
 		mViewPager.setAdapter(mAdapter);
 		mViewPager.setCurrentItem(1);
 		mCurrentItem = 0;
@@ -119,7 +121,7 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 			mCurrentItem = 0;
 			mRadioGroup.check(R.id.radio_history_instructions);
 			break;
-		case 1:			
+		case 1:
 			mCurrentItem = 1;
 			mRadioGroup.check(R.id.radio_history_greenhouse);
 			break;
@@ -131,7 +133,16 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 			Toast.makeText(this, Constant.UNDEF, Toast.LENGTH_SHORT).show();
 			break;
 		}
-		
+
+	}
+
+	/**
+	 * 获取温室ID
+	 * 
+	 * @return 返回当前温室ID
+	 */
+	public String getGreenHouseID() {
+		return GreenHouseID;
 	}
 
 	/**
@@ -159,11 +170,10 @@ public class History extends FragmentActivity implements OnPageChangeListener, O
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId() == R.id.history_back){
+		if (v.getId() == R.id.history_back) {
 			finish();
-		}
-		else if(v.getId() == R.id.history_gohome){
-			Intent intent = new Intent(this,Home.class);
+		} else if (v.getId() == R.id.history_gohome) {
+			Intent intent = new Intent(this, Home.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			finish();

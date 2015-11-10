@@ -1,26 +1,31 @@
 package com.nfschina.aiot.entity;
 
-import java.sql.Timestamp;
+import com.nfschina.aiot.constant.Constant;
 
 /**
  * 二氧化碳实体
+ * 
  * @author xu
  *
  */
 
-public class CarbonDioxideEntity {
+public class CarbonDioxideEntity extends EnvironmentParameterEntity {
 
-	//二氧化碳实体的属性
+	// 二氧化碳实体的属性
 	private int mData;
-	private Timestamp mTimestamp;
-	public CarbonDioxideEntity(int mData, Timestamp mTimestamp) {
+	private String mTime;
+
+	public CarbonDioxideEntity(int mData, String time) {
 		this.mData = mData;
-		this.mTimestamp = mTimestamp;
+		mTime = time;
+		setKind(Constant.CARBONDIOXIDE);
 	}
-	public int getmData() {
+
+	public int getData() {
 		return mData;
 	}
-	public Timestamp getmTimestamp() {
-		return mTimestamp;
+
+	public String getTime() {
+		return mTime;
 	}
 }

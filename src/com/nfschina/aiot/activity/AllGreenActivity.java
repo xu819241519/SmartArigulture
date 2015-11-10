@@ -32,6 +32,7 @@ public class AllGreenActivity extends Activity implements OnClickListener {
 	//存放大棚的网格控件
 	private GridView mGridView;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

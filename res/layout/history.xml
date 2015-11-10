@@ -65,7 +65,7 @@
         android:id="@+id/history_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="6"
         android:orientation="vertical"
         android:background="@color/white" >
 
@@ -91,6 +91,7 @@
                 android:drawableTop="@drawable/history_instructions_selector"
                 android:gravity="center"
                 android:text="控制记录"
+                android:drawablePadding="-6dp"
                 android:textColor="@drawable/history_button_text_color"
                 android:textSize="@dimen/text_small" />
 
@@ -104,6 +105,7 @@
                 android:drawableTop="@drawable/history_greenhose_selector"
                 android:gravity="center"
                 android:text="温室信息记录"
+                android:drawablePadding="-6dp"
                 android:textColor="@drawable/history_button_text_color"
                 android:textSize="@dimen/text_small" />
 
@@ -115,6 +117,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/history_alarm_selector"
                 android:gravity="center"
+                android:drawablePadding="-6dp"
                 android:text="报警记录"
                 android:textColor="@drawable/history_button_text_color"
                 android:textSize="@dimen/text_small" />

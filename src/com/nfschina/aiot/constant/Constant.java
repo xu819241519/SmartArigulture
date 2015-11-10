@@ -4,6 +4,9 @@
 package com.nfschina.aiot.constant;
 
 import java.util.List;
+import java.util.Map;
+
+import com.nfschina.aiot.entity.GreenHouseEntity;
 
 import android.R.string;
 import android.content.res.Resources.Theme;
@@ -122,10 +125,10 @@ public class Constant {
 	public static int HOME_PICS = 3;
 
 	// 表明装填
-	public static int TEMPERATURE = 0;
-	public static int CARBONDIOXIDE = 1;
+	public static int TEMPERATURE = 3;
+	public static int CARBONDIOXIDE = 0;
 	public static int HUMIDITY = 2;
-	public static int SUNSHINE = 3;
+	public static int ILLUMINANCE = 1;
 
 	// fragment标签
 	public static String NEWS_CONTENT = "news_content";
@@ -137,12 +140,15 @@ public class Constant {
 	public static String CURRENT_PASSWORD = null;
 
 	// 临时数据
-	public static List<Integer> GreenHouseName = null;
+	public static List<GreenHouseEntity> GreenHouseName = null;
 	// 测试数据
 	public static String[] TestListItem = { "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance",
 			"Ackawi", "Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
 			"Allgauer Emmentaler", "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
 			"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
 			"Allgauer Emmentaler" };
+	
+	// 与intent数据传输有关
+	public static String INTENT_EXTRA_HISTORY_HOUSE_ID = "GreenHouseID";
 
 }

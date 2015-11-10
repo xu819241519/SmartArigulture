@@ -2,29 +2,34 @@ package com.nfschina.aiot.entity;
 
 import java.sql.Timestamp;
 
+import com.nfschina.aiot.constant.Constant;
+
 /**
  * 光照实体
+ * 
  * @author xu
  *
  */
 
-public class IlluminanceEntity {
+public class IlluminanceEntity extends EnvironmentParameterEntity {
 
-	//光照实体的属性
+	// 光照实体的属性
 	private int mData;
-	private Timestamp mTimestamp;
-	public int getmData() {
+	private String mTime;
+
+	public int getData() {
 		return mData;
 	}
-	public Timestamp getmTimestamp() {
-		return mTimestamp;
+
+	public String getTime() {
+		return mTime;
 	}
-	public IlluminanceEntity(int mData, Timestamp mTimestamp) {
+
+	public IlluminanceEntity(int mData, String time) {
 		super();
 		this.mData = mData;
-		this.mTimestamp = mTimestamp;
+		this.mTime = time;
+		setKind(Constant.ILLUMINANCE);
 	}
-	
-	
 
 }

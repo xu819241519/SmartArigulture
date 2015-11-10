@@ -8,6 +8,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nfschina.aiot.R;
+import com.nfschina.aiot.activity.History;
 import com.nfschina.aiot.adapter.AlarmAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
@@ -40,6 +41,8 @@ public class AlarmHistory extends Fragment {
 	private ListView mListView;
 	private View mView;
 
+	// 当前温室ID
+	private String GreenHouseID;
 	// 当前页码
 	private int mPage = 0;
 	// 一页的数量
@@ -65,6 +68,7 @@ public class AlarmHistory extends Fragment {
 	 */
 	private void initUIControls() {
 		mPullRefreshListView = (PullToRefreshListView) mView.findViewById(R.id.alarm_list);
+		GreenHouseID = ((History) getActivity()).getGreenHouseID();
 		mPullRefreshListView.setMode(com.handmark.pulltorefresh.library.PullToRefreshBase.Mode.BOTH);
 		mPullRefreshListView.setScrollingWhileRefreshingEnabled(true);
 		mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -75,7 +79,7 @@ public class AlarmHistory extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				//new GetDataTask().execute(true);
+				new GetDataTask().execute(true);
 			}
 
 			@Override
@@ -84,12 +88,12 @@ public class AlarmHistory extends Fragment {
 						DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
-				//new GetDataTask().execute(false);
+				new GetDataTask().execute(false);
 			}
 
 		});
 		mPullRefreshListView.setOnPullEventListener(ConstantFun.getSoundListener(getActivity()));
-		
+
 		mListView = mPullRefreshListView.getRefreshableView();
 		mAlarmAdapter = new AlarmAdapter();
 		mListView.setAdapter(mAlarmAdapter);
@@ -123,12 +127,12 @@ public class AlarmHistory extends Fragment {
 			if (params[0]) {
 				mPage = 0;
 				mAlarmAdapter.clearData();
-				mAlarmAdapter.addData(AccessDataBase.getAlarmHistoryData(mPage, mSize));
+				mAlarmAdapter.addData(AccessDataBase.getAlarmHistoryData(mPage, mSize, GreenHouseID));
 				result = true;
 			}
 			// 上拉
 			else {
-				List<AlarmEntity> list = AccessDataBase.getAlarmHistoryData(mPage + 1, mSize);
+				List<AlarmEntity> list = AccessDataBase.getAlarmHistoryData(mPage + 1, mSize, GreenHouseID);
 				if (list != null && list.size() != 0) {
 					mPage++;
 					mAlarmAdapter.addData(list);
@@ -149,8 +153,9 @@ public class AlarmHistory extends Fragment {
 				Toast.makeText(getActivity(), Constant.END_OF_LIST, Toast.LENGTH_SHORT).show();
 			}
 			mPullRefreshListView.onRefreshComplete();
-			if(!hasPullUpData)
-				mPullRefreshListView.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
+			if (!hasPullUpData)
+				mPullRefreshListView
+						.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
 
 		}
 	}

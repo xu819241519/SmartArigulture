@@ -6,10 +6,12 @@ import com.nfschina.aiot.constant.Constant;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -51,12 +53,15 @@ public class AllGreenAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		holder.getmTextView().setText(Integer.toString(Constant.GreenHouseName.get(position)));
-		holder.getmTextView().setOnClickListener(new View.OnClickListener() {
+		holder.getmTextView().setText(Constant.GreenHouseName.get(position).getName());
+		LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.greenhouse_item);
+		final int pos = position;
+		layout.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(mActivity,History.class);
+				intent.putExtra(Constant.INTENT_EXTRA_HISTORY_HOUSE_ID, Constant.GreenHouseName.get(pos).getID());
 				mActivity.startActivity(intent);
 			}
 		});

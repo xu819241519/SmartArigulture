@@ -67,17 +67,17 @@ public class AlarmAdapter extends BaseAdapter {
 		}
 
 		holder.getContent().setText(mList.get(position).getContent());
-		holder.getGreenHouse().setText(Integer.toString(mList.get(position).getGreenHouseID()));
+		holder.getGreenHouse().setText(mList.get(position).getGreenHouseID());
 		holder.getID().setText(Integer.toString(mList.get(position).getID()));
 		holder.getLevel().setText(mList.get(position).getLevel());
 		holder.getStatus().setText(mList.get(position).getState());
-		holder.getTime().setText(ConstantFun.formatTimeString(mList.get(position).getTime(),true));
+		holder.getTime().setText(ConstantFun.formatTimeString(mList.get(position).getTime(), true));
 
-//		if (position % 2 == 0) {
-//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-//		} else {
-//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-//		}
+		// if (position % 2 == 0) {
+		// convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+		// } else {
+		// convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+		// }
 		return convertView;
 	}
 
@@ -152,7 +152,7 @@ public class AlarmAdapter extends BaseAdapter {
 	 * @return 成功添加返回true，否则false
 	 */
 	public boolean addData(List<AlarmEntity> alarmEntities) {
-		if (mList != null) {
+		if (mList != null && alarmEntities != null && alarmEntities.size() != 0) {
 			return mList.addAll(alarmEntities);
 		} else
 			return false;
