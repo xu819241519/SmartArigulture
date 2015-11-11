@@ -11,18 +11,24 @@ import com.nfschina.aiot.entity.NewsListEntity;
 
 /**
  * 新闻列表提取规则类
- * @author xu
- * 通过jsoup，获取指定网站中的新闻列表
+ * 
+ * @author xu 通过jsoup，获取指定网站中的新闻列表
  */
 
-public class NewsListParseUtil {
+public class NewsListParseFarmerCom extends NewsListParser {
+
+	// 新闻url
+	private String BaseURL = "http://www.farmer.com.cn/xwpd/jjsn/";
 
 	/**
 	 * 获取新闻列表的页数
-	 * @param document 通过网络获得的指定新闻网站的document对象
+	 * 
+	 * @param document
+	 *            通过网络获得的指定新闻网站的document对象
 	 * @return 新闻列表的页数
 	 */
-	public static int getPageCount(Document document) {
+	@Override
+	public int getPageCount(Document document) {
 		int result = 0;
 		if (document != null) {
 			Elements elements = document.getElementsByClass("pages");
@@ -39,20 +45,23 @@ public class NewsListParseUtil {
 
 	/**
 	 * 提取新闻列表，返回新闻列表的实体
-	 * @param document 新闻列表所在网站的document对象
+	 * 
+	 * @param document
+	 *            新闻列表所在网站的document对象
 	 * @return 新闻列表的实体
 	 */
-	public static List<NewsListEntity> getNewsListEntity(Document document) {
+	@Override
+	public List<NewsListEntity> getNewsListEntities(Document document) {
 		List<NewsListEntity> result = null;
-		if(document != null){
+		if (document != null) {
 			Elements elements = document.getElementsByClass("list-list-li");
-			for(Element element : elements){
+			for (Element element : elements) {
 				Element titleElement = element.getElementsByClass("yui3-u").get(0);
 				Element timeElement = element.getElementsByClass("yui3-u").get(1);
 				String title = titleElement.text();
 				String time = timeElement.text();
 				String url = titleElement.getElementsByClass("vvqqq").get(0).absUrl("href");
-				if(result == null){
+				if (result == null) {
 					result = new ArrayList<NewsListEntity>();
 				}
 				NewsListEntity newsListEntity = new NewsListEntity();
@@ -61,9 +70,21 @@ public class NewsListParseUtil {
 				newsListEntity.setURL(url);
 				result.add(newsListEntity);
 			}
-			
+
 		}
 		return result;
+	}
+
+	@Override
+	public String getURL(int page) {
+		if (page <= 0) {
+			return BaseURL;
+		} else if (page == 1) {
+			return BaseURL + "index.htm";
+		} else if (page > 1) {
+			return BaseURL + "index_" + page + ".htm";
+		}
+		return null;
 	}
 
 }

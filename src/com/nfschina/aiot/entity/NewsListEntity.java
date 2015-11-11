@@ -1,6 +1,6 @@
 package com.nfschina.aiot.entity;
 
-public class NewsListEntity {
+public class NewsListEntity extends NewsEntity {
 
 	// 新闻标题
 	private String Title;

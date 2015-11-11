@@ -1,31 +1,17 @@
 package com.nfschina.aiot.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import com.nfschina.aiot.entity.NewsContentEntity;
-import com.nfschina.aiot.entity.NewsListEntity;
 import com.nfschina.aiot.fragment.NewsList;
 
-import android.R.anim;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.graphics.pdf.PdfDocument.Page;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 public class NewsListGetUtil {
 
-	// 新闻网站URL
-	private String NEWS_URL = "http://www.farmer.com.cn/xwpd/jjsn/";
 	// 新闻页数
 	public int PAGE_COUNT = -1;
 	// jsoup的document，存放html解析文档
@@ -48,6 +34,9 @@ public class NewsListGetUtil {
 	// newslist 的 fragment
 	private NewsList mNewsList;
 
+	// 解析器
+	private NewsListParser mParser;
+
 	/**
 	 * 获取新闻实体
 	 * 
@@ -64,19 +53,14 @@ public class NewsListGetUtil {
 		if (PAGE_COUNT < 0) {
 			mCurrentState = STATE_GET_PAGE_COUNT;
 			showDialog(true);
-			new GetHtmlDocument().execute(NEWS_URL + "index.htm");
+			new GetHtmlDocument().execute(mParser.getURL(0));
 			return;
 		} else {
 			if (page >= PAGE_COUNT) {
 				showDialog(false);
 				return;
 			} else {
-				String url = NEWS_URL;
-				if (page == 1)
-					url += "index.htm";
-				else if(page != 0){
-					url += "index_" + mRequirePage + ".htm";
-				}
+				String url = mParser.getURL(page);
 				mCurrentState = STATE_GET_LIST;
 				showDialog(true);
 				new NewsListGetUtil.GetHtmlDocument().execute(url);
@@ -89,10 +73,12 @@ public class NewsListGetUtil {
 	/**
 	 * 构造函数
 	 * 
-	 * @param newsList 表明使用此类的NewsList
+	 * @param newsList
+	 *            表明使用此类的NewsList
 	 */
-	public NewsListGetUtil(NewsList newsList) {
+	public NewsListGetUtil(NewsList newsList, NewsListParser parser) {
 		mNewsList = newsList;
+		mParser = parser;
 	}
 
 	/**
@@ -100,11 +86,11 @@ public class NewsListGetUtil {
 	 */
 	private void DealDocumentData() {
 		if (mCurrentState == STATE_GET_PAGE_COUNT) {
-			PAGE_COUNT = NewsListParseUtil.getPageCount(DOCUMENT);
+			PAGE_COUNT = mParser.getPageCount(DOCUMENT);
 			updateNewsList(mRequirePage);
 		} else if (mCurrentState == STATE_GET_LIST) {
 			mCurrentState = STATE_GET_LIST_COMPLETE;
-			mNewsList.updateAdapter(NewsListParseUtil.getNewsListEntity(DOCUMENT));
+			mNewsList.updateAdapter(mParser.getNewsListEntities(DOCUMENT));
 			showDialog(false);
 		}
 	}
@@ -141,7 +127,35 @@ public class NewsListGetUtil {
 		protected Document doInBackground(String... params) {
 			Document document = null;
 			try {
-				document = Jsoup.connect(params[0]).get();
+				// HttpGet httpGet = new HttpGet(params[0]);
+				// httpGet.addHeader("User-Agent",
+				// "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36
+				// (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
+				// httpGet.addHeader("Cookie",
+				// "Hm_lvt_82cae308c81856487b36410ef6593067=1441763722,1441769414;
+				// vid=C6C18D504D200001649C3CC07B506700;
+				// __FTabceffgh=2015-10-15-9-35-18; __NRUabceffgh=1444872918942;
+				// __RECabceffgh=1; __RTabceffgh=2015-10-16-10-6-16;
+				// wafenterurl=/; wafverify=71f8ef0da3409a5c8c1dba10ae820dfe;
+				// PFT_COOKIE_RF=-;
+				// PFT_c7635a737118e31da04549e708b25757=C6D580C724000001E1C247C3C3501603;
+				// RF_mapc7635a737118e31da04549e708b25757=0*-;
+				// judge=C6D580C724000001E1C247C3C3501603; PFT_SJKD=10;
+				// wafcookie=371fc03d095dc6042008918620942cee;
+				// __utma=107656469.1801252722.1447124499.1447124499.1447124499.1;
+				// __utmc=107656469;
+				// __utmz=107656469.1447124499.1.1.utmcsr=baidu|utmccn=(organic)|utmcmd=organic");
+				// HttpResponse response = new
+				// DefaultHttpClient().execute(httpGet);
+				// HttpEntity httpEntity = response.getEntity();
+				// document =
+				// Jsoup.parse(EntityUtils.toString(httpEntity,"gb2312"));
+				Connection connection = Jsoup.connect(params[0]);
+				connection.header("User-Agent",
+						"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36");
+				connection.header("Cookie",
+						"Hm_lvt_82cae308c81856487b36410ef6593067=1441763722,1441769414; vid=C6C18D504D200001649C3CC07B506700; __FTabceffgh=2015-10-15-9-35-18; __NRUabceffgh=1444872918942; __RECabceffgh=1; __RTabceffgh=2015-10-16-10-6-16; wafenterurl=/; wafverify=71f8ef0da3409a5c8c1dba10ae820dfe; PFT_COOKIE_RF=-; PFT_c7635a737118e31da04549e708b25757=C6D580C724000001E1C247C3C3501603; RF_mapc7635a737118e31da04549e708b25757=0*-; judge=C6D580C724000001E1C247C3C3501603; PFT_SJKD=10; wafcookie=371fc03d095dc6042008918620942cee; __utma=107656469.1801252722.1447124499.1447124499.1447124499.1; __utmc=107656469; __utmz=107656469.1447124499.1.1.utmcsr=baidu|utmccn=(organic)|utmcmd=organic");
+				document = connection.get();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -10,6 +10,8 @@ import com.nfschina.aiot.adapter.NewsAdapter;
 import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.entity.NewsListEntity;
 import com.nfschina.aiot.util.NewsListGetUtil;
+import com.nfschina.aiot.util.NewsListParseFarmerCom;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -93,7 +95,7 @@ public class NewsList extends Fragment {
 
 		mListView = mPullRefleshListView.getRefreshableView();
 		mNewsAdapter = new NewsAdapter();
-		mNewsGetUtil = new NewsListGetUtil(this);
+		mNewsGetUtil = new NewsListGetUtil(this,new NewsListParseFarmerCom());
 		mNewsGetUtil.updateNewsList(mPage);
 		mListView.setAdapter(mNewsAdapter);
 		

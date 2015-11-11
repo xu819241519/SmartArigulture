@@ -4,6 +4,7 @@ import com.nfschina.aiot.R;
 import com.nfschina.aiot.entity.NewsContentEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
 import com.nfschina.aiot.util.NewsContentGetUtil;
+import com.nfschina.aiot.util.NewsContentParseFarmerCom;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,7 +48,7 @@ public class NewsContent extends Fragment {
 		super.onStart();
 		initUIControls();
 		
-		NewsContentGetUtil newsContentGetUtil = new NewsContentGetUtil(this, mNewsListEntity.getURL());
+		NewsContentGetUtil newsContentGetUtil = new NewsContentGetUtil(this, new NewsContentParseFarmerCom(mNewsListEntity.getURL()));
 		newsContentGetUtil.getNewsContent();
 	}
 

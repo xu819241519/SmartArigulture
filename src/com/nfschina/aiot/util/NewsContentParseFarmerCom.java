@@ -15,7 +15,14 @@ import android.text.Html;
  * @author xu 通过jsoup，提取指定新闻网站中的新闻正文
  */
 
-public class NewsContentParseUtil {
+public class NewsContentParseFarmerCom extends NewsContentParser{
+	
+	// 新闻网址
+	private String URL;
+	
+	public NewsContentParseFarmerCom(String url) {
+		URL = url;
+	}
 
 	/**
 	 * 获取新闻一共有多少页
@@ -24,7 +31,8 @@ public class NewsContentParseUtil {
 	 *            通过网络获得指定网址的document对象
 	 * @return 新闻的页数
 	 */
-	public static int getPageCount(Document document) {
+	@Override
+	public int getPageCount(Document document) {
 		int result = 1;
 		if (document != null) {
 			Elements elements = document.getElementsByClass("pages");
@@ -46,7 +54,8 @@ public class NewsContentParseUtil {
 	 *            新闻所有页面的document
 	 * @return 新闻正文实体
 	 */
-	public static NewsContentEntity getNewsContentEntity(List<Document> documents) {
+	@Override
+	public NewsContentEntity getNewsContentEntity(List<Document> documents) {
 		NewsContentEntity result = null;
 		if (documents != null && documents.size() != 0) {
 			// 获取新闻标题
@@ -75,6 +84,17 @@ public class NewsContentParseUtil {
 			result.setTime(time);
 			result.setContent(Html.fromHtml(content));
 			result.setSource(source);
+		}
+		return result;
+	}
+
+	@Override
+	public String getURL(int page) {
+		String result = null;
+		if (page == 0)
+			result = URL;
+		else {
+			result = URL.substring(0, URL.lastIndexOf(".htm")) + "_" + page + ".htm";
 		}
 		return result;
 	}
