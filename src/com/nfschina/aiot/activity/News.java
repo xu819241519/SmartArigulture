@@ -6,6 +6,9 @@ import com.nfschina.aiot.entity.NewsContentEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
 import com.nfschina.aiot.fragment.NewsContent;
 import com.nfschina.aiot.fragment.NewsList;
+import com.nfschina.aiot.util.FarmerComParserFactory;
+import com.nfschina.aiot.util.ParserFactory;
+import com.nfschina.aiot.util.VillageComParserFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +21,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-
 /**
- * 新闻页面
- * 显示新闻列表和新闻详情。新闻详情使用fragment显示
+ * 新闻页面 显示新闻列表和新闻详情。新闻详情使用fragment显示
+ * 
  * @author xu
  *
  */
@@ -30,20 +32,27 @@ public class News extends FragmentActivity implements OnClickListener {
 
 	// 返回按钮
 	private ImageButton mBack;
-	//主页按钮
+	// 主页按钮
 	private ImageButton mHome;
-	
+
 	private FragmentManager mFragmentManager;
-	//新闻列表
+	// 新闻列表
 	private NewsList mNewsList;
-	//新闻正文
+	// 新闻正文
 	private NewsContent mNewsContent;
+	// 新闻解析器
+	private ParserFactory mParserFactory;
+
+	// 获取新闻解析器
+	public ParserFactory getParserFactory() {
+		return mParserFactory;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
-		
+
 		InitUIControls();
 		setListener();
 	}
@@ -54,11 +63,11 @@ public class News extends FragmentActivity implements OnClickListener {
 	private void InitUIControls() {
 		mBack = (ImageButton) findViewById(R.id.news_back);
 		mHome = (ImageButton) findViewById(R.id.news_gohome);
-		
+		mParserFactory = new VillageComParserFactory();
 		mFragmentManager = getSupportFragmentManager();
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		mNewsList = new NewsList();
-		ft.add(R.id.news_fragment,mNewsList, Constant.NEWS_LIST);
+		ft.add(R.id.news_fragment, mNewsList, Constant.NEWS_LIST);
 		ft.commit();
 	}
 
@@ -75,36 +84,36 @@ public class News extends FragmentActivity implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
-		
-		if (v.getId() == R.id.news_back){
+
+		if (v.getId() == R.id.news_back) {
 			onBackPressed();
 		}
-			
-		else if(v.getId() == R.id.news_gohome){
-			Intent intent = new Intent(this,Home.class);
+
+		else if (v.getId() == R.id.news_gohome) {
+			Intent intent = new Intent(this, Home.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			finish();
 		}
 	}
-	
+
 	/**
 	 * 进入新闻详细页面
 	 */
-	public void goNewsContent(NewsListEntity newsListEntity){
+	public void goNewsContent(NewsListEntity newsListEntity) {
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		ft.hide(mNewsList);
 		mNewsContent = new NewsContent(newsListEntity);
-		ft.add(R.id.news_fragment,mNewsContent,Constant.NEWS_CONTENT);
+		ft.add(R.id.news_fragment, mNewsContent, Constant.NEWS_CONTENT);
 		ft.addToBackStack(null);
-		//ft.replace(R.id.news_fragment, , Constant.NEWS_CONTENT);
-		//ft.show(mNewsContent);
+		// ft.replace(R.id.news_fragment, , Constant.NEWS_CONTENT);
+		// ft.show(mNewsContent);
 		ft.commit();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		if(mFragmentManager.getBackStackEntryCount() == 0)
+		if (mFragmentManager.getBackStackEntryCount() == 0)
 			super.onBackPressed();
 		else {
 			FragmentTransaction ft = mFragmentManager.beginTransaction();
@@ -113,6 +122,6 @@ public class News extends FragmentActivity implements OnClickListener {
 			ft.show(mNewsList);
 			ft.commit();
 		}
-		
+
 	}
 }

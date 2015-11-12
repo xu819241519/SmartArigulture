@@ -31,8 +31,8 @@ public class NewsListGetUtil {
 	// 要获取第几页
 	private int mRequirePage;
 
-	// newslist 的 fragment
-	private NewsList mNewsList;
+	// 监听器
+	private NewsListGetListener mListener;
 
 	// 解析器
 	private NewsListParser mParser;
@@ -45,24 +45,28 @@ public class NewsListGetUtil {
 	 */
 	public void updateNewsList(int page) {
 		if (page < 0) {
-			showDialog(false);
+			//showDialog(false);
+			mListener.updateNewsList(null);
 			return;
 		}
 
 		mRequirePage = page;
 		if (PAGE_COUNT < 0) {
 			mCurrentState = STATE_GET_PAGE_COUNT;
-			showDialog(true);
+			//showDialog(true);
+			mListener.startGetNewsList();
 			new GetHtmlDocument().execute(mParser.getURL(0));
 			return;
 		} else {
 			if (page >= PAGE_COUNT) {
-				showDialog(false);
+				//showDialog(false);
+				mListener.updateNewsList(null);
 				return;
 			} else {
 				String url = mParser.getURL(page);
 				mCurrentState = STATE_GET_LIST;
-				showDialog(true);
+				//showDialog(true);
+				mListener.startGetNewsList();
 				new NewsListGetUtil.GetHtmlDocument().execute(url);
 
 			}
@@ -76,8 +80,8 @@ public class NewsListGetUtil {
 	 * @param newsList
 	 *            表明使用此类的NewsList
 	 */
-	public NewsListGetUtil(NewsList newsList, NewsListParser parser) {
-		mNewsList = newsList;
+	public NewsListGetUtil(NewsListGetListener listener, NewsListParser parser) {
+		mListener = listener;
 		mParser = parser;
 	}
 
@@ -90,28 +94,9 @@ public class NewsListGetUtil {
 			updateNewsList(mRequirePage);
 		} else if (mCurrentState == STATE_GET_LIST) {
 			mCurrentState = STATE_GET_LIST_COMPLETE;
-			mNewsList.updateAdapter(mParser.getNewsListEntities(DOCUMENT));
-			showDialog(false);
-		}
-	}
-
-	/**
-	 * 显示等待对话框
-	 * 
-	 * @param show
-	 *            表明显示还是关闭
-	 */
-	private void showDialog(boolean show) {
-		if (show) {
-			if (mDialog == null) {
-				mDialog = new ProgressDialog(mNewsList.getActivity());
-				mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-				mDialog.setMessage("正在获取数据...");
-				mDialog.show();
-			}
-		} else if (mDialog != null) {
-			mDialog.cancel();
-			mDialog = null;
+			mListener.updateNewsList(mParser.getNewsListEntities(DOCUMENT));
+			//showDialog(false);
+			
 		}
 	}
 

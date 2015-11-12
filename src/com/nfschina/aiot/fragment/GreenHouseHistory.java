@@ -223,6 +223,8 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		// In most cased you can call data model methods in
 		// builder-pattern-like manner.
 		Line line = new Line(values).setColor(Color.WHITE).setCubic(true);
+		line.setPointRadius(2);
+		line.setStrokeWidth(1);
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
 
@@ -233,6 +235,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		axisX.setHasTiltedLabels(true);
 		axisX.setTextColor(Color.WHITE);
 		axisX.setName("时间");
+		axisX.setTextSize(10);
 		axisX.setHasLines(false);
 
 		axisX.setMaxLabelChars(3);
@@ -251,6 +254,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			axisY.setName("二氧化碳浓度");
 		else if (kind == Constant.ILLUMINANCE)
 			axisY.setName("光照");
+		axisY.setTextSize(10);
 		data.setAxisYLeft(axisY);
 
 		mChart.setLineChartData(data);

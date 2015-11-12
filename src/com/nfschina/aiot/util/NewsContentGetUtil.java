@@ -8,23 +8,24 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.nfschina.aiot.fragment.NewsContent;
-
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+/**
+ * 新闻正文获取工具类
+ * 通过传入一个新闻fragment和分析器初始化此类，调用startGetNewsContent
+ * @author xu
+ *
+ */
 public class NewsContentGetUtil {
 
 	// 新闻正文的fragment
-	private NewsContent mContent;
+	private NewsContentGetListener mListener;
 	// 新闻页数
 	private int PAGE_COUNT = -1;
 	// jsoup的document，存放获取页数的html解析文档
 	private Document mDocumentC;
 	// jsoup的document，存放所有新闻页的html解析文档
 	private List<Document> mDocuments;
-	// 提示对话框
-	private ProgressDialog mDialog = null;
 
 	// 当前状态
 	private int mCurrentState = STATE_GET_CONTENT;
@@ -41,8 +42,13 @@ public class NewsContentGetUtil {
 	// 解析器
 	private NewsContentParser mParser;
 
-	public NewsContentGetUtil(NewsContent newsContent, NewsContentParser parser) {
-		mContent = newsContent;
+	/**
+	 * 新闻正文获取工具类构造函数，需要借助分析器来分析获取URL，新闻正文页数，新闻正文文本
+	 * @param newsContent 新闻fragment
+	 * @param parser 新闻正文分析器
+	 */
+	public NewsContentGetUtil(NewsContentGetListener listener, NewsContentParser parser) {
+		mListener = listener;
 		mDocuments = new ArrayList<Document>();
 		mParser = parser;
 	}
@@ -50,7 +56,7 @@ public class NewsContentGetUtil {
 	/**
 	 * 获取新闻正文
 	 */
-	public void getNewsContent() {
+	public void startGetNewsContent() {
 		mRequirePage = 0;
 		updateNewsContent(mRequirePage);
 	}
@@ -66,17 +72,17 @@ public class NewsContentGetUtil {
 		mRequirePage = page;
 		if (PAGE_COUNT < 0 && mCurrentState != STATE_GET_CONTENT_COMPLETE) {
 			mCurrentState = STATE_GET_PAGE_COUNT;
-			showDialog(true);
+			mListener.startGetNewsContent();
 			new GetHtmlDocument().execute(mParser.getURL(0));
 		} else if (PAGE_COUNT >= 0 && mCurrentState == STATE_GET_CONTENT) {
 			if (page >= PAGE_COUNT) {
-				showDialog(false);
+				mListener.updateNewsContent(null);
 				return;
 			} else {
 				String url = mParser.getURL(mRequirePage);
 
 				mCurrentState = STATE_GET_CONTENT;
-				showDialog(true);
+				mListener.startGetNewsContent();
 				new GetHtmlDocument().execute(url);
 			}
 
@@ -95,32 +101,11 @@ public class NewsContentGetUtil {
 			mRequirePage++;
 			if (mRequirePage >= PAGE_COUNT) {
 				mCurrentState = STATE_GET_CONTENT_COMPLETE;
-				mContent.displayContent(mParser.getNewsContentEntity(mDocuments));
-				showDialog(false);
+				mListener.updateNewsContent(mParser.getNewsContentEntity(mDocuments));
 			} else {
 				updateNewsContent(mRequirePage);
 			}
 
-		}
-	}
-
-	/**
-	 * 显示等待对话框
-	 * 
-	 * @param show
-	 *            表明显示还是关闭
-	 */
-	private void showDialog(boolean show) {
-		if (show) {
-			if (mDialog == null) {
-				mDialog = new ProgressDialog(mContent.getActivity());
-				mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-				mDialog.setMessage("正在获取数据...");
-				mDialog.show();
-			}
-		} else if (mDialog != null) {
-			mDialog.cancel();
-			mDialog = null;
 		}
 	}
 

@@ -10,7 +10,8 @@ import com.nfschina.aiot.entity.NewsContentEntity;
 import android.text.Html;
 
 /**
- * 新闻正文提取规则工具类
+ * 新闻正文分析器，提供新闻正文的页数，给出每一页对应的URL，通过解析html源码构造新闻正文实体并返回
+ * 爬取中国农业新闻网站（http://www.farmer.com.cn/）
  * 
  * @author xu 通过jsoup，提取指定新闻网站中的新闻正文
  */

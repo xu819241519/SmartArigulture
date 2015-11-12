@@ -10,7 +10,8 @@ import org.jsoup.select.Elements;
 import com.nfschina.aiot.entity.NewsListEntity;
 
 /**
- * 新闻列表提取规则类
+ * 新闻列表分析器 ，提供新闻列表的页数，获取每一页对应的网址（URL），通过解析html源码构造新闻列表实体并返回
+ * 爬取中国农业新闻网站（http://www.farmer.com.cn/）
  * 
  * @author xu 通过jsoup，获取指定网站中的新闻列表
  */
@@ -78,10 +79,8 @@ public class NewsListParseFarmerCom extends NewsListParser {
 	@Override
 	public String getURL(int page) {
 		if (page <= 0) {
-			return BaseURL;
-		} else if (page == 1) {
 			return BaseURL + "index.htm";
-		} else if (page > 1) {
+		} else if (page > 0) {
 			return BaseURL + "index_" + page + ".htm";
 		}
 		return null;
