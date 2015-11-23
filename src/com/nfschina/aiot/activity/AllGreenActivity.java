@@ -3,7 +3,6 @@ package com.nfschina.aiot.activity;
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.adapter.AllGreenAdapter;
 import com.nfschina.aiot.constant.Constant;
-import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;
 
 import android.app.Activity;
@@ -14,7 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 显示所有有权限的大棚，选择大棚进入，查看历史记录
@@ -74,9 +73,20 @@ public class AllGreenActivity extends Activity implements OnClickListener {
 		
 		@Override
 		protected void onPostExecute(Void result) {
+			
+			if(Constant.GreenHouseName == null || Constant.GreenHouseName.size() == 0){
+				closeSelf();
+				return ;
+			}
 			//设置适配器
 			mGridView.setAdapter(new AllGreenAdapter(AllGreenActivity.this));
+			
 		}
+	}
+	
+	public void closeSelf() {
+		Toast.makeText(this, "没有任何温室可管理，请联系管理员", Toast.LENGTH_SHORT).show();
+		finish();
 	}
 
 

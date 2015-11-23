@@ -9,13 +9,13 @@ package com.nfschina.aiot.util;
 public class VillageComParserFactory implements ParserFactory {
 
 	@Override
-	public NewsContentParser getNewsContentParser(String url) {
+	public NewsParser getNewsContentParser(String url) {
 
 		return new NewsContentParserVillageCom(url);
 	}
 
 	@Override
-	public NewsListParser getNewsListParser() {
+	public NewsParser getNewsListParser() {
 		return new NewsListParserVillageCom();
 	}
 

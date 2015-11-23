@@ -106,7 +106,7 @@ public class AlarmEntity {
 			result = "已处理";
 			break;
 		case 2:
-			result = "易忽略";
+			result = "已忽略";
 			break;
 		default:
 			break;

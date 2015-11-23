@@ -1,23 +1,13 @@
 package com.nfschina.aiot.activity;
 
-import java.util.List;
 
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
-import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;
 import com.nfschina.aiot.db.SharePerencesHelper;
-import com.nfschina.aiot.util.NewsListGetUtil;
-
-import android.R.anim;
-import android.R.integer;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.AvoidXfermode.Mode;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -231,6 +221,11 @@ public class Login extends Activity implements OnClickListener {
 		if (resultCode == Constant.REG_SUCCESS) {
 			String username = data.getStringExtra(Constant.REG_RETURN);
 			mUserIDEditText.setText(username);
+			SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, false);
+			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
+			mPasswordEditText.setText("");
+			mRememberCheckBox.setChecked(false);
+			mAutoLoginCheckBox.setChecked(false);
 		}
 	}
 

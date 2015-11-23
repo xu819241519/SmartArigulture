@@ -127,7 +127,9 @@ public class AlarmHistory extends Fragment {
 			if (params[0]) {
 				mPage = 0;
 				mAlarmAdapter.clearData();
-				mAlarmAdapter.addData(AccessDataBase.getAlarmHistoryData(mPage, mSize, GreenHouseID));
+				List<AlarmEntity> data = AccessDataBase.getAlarmHistoryData(mPage, mSize, GreenHouseID);
+				if(data != null && data.size() > 0)
+					mAlarmAdapter.addData(data);
 				result = true;
 			}
 			// иою╜

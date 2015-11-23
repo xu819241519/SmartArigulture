@@ -1,5 +1,6 @@
 package com.nfschina.aiot.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -8,13 +9,10 @@ import com.nfschina.aiot.R;
 import com.nfschina.aiot.activity.News;
 import com.nfschina.aiot.adapter.NewsAdapter;
 import com.nfschina.aiot.constant.ConstantFun;
+import com.nfschina.aiot.entity.NewsEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
-import com.nfschina.aiot.util.FarmerComParserFactory;
-import com.nfschina.aiot.util.NewsListGetListener;
-import com.nfschina.aiot.util.NewsListGetUtil;
-import com.nfschina.aiot.util.NewsListParseFarmerCom;
-import com.nfschina.aiot.util.NewsListParserVillageCom;
-import com.nfschina.aiot.util.ParserFactory;
+import com.nfschina.aiot.util.NewsGetListener;
+import com.nfschina.aiot.util.NewsGetUtil;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -34,7 +32,7 @@ import android.text.format.DateUtils;
  *
  */
 
-public class NewsList extends Fragment implements NewsListGetListener {
+public class NewsList extends Fragment implements NewsGetListener {
 
 	// 下拉刷新控件
 	private PullToRefreshListView mPullRefleshListView;
@@ -45,7 +43,7 @@ public class NewsList extends Fragment implements NewsListGetListener {
 	private int mPage;
 
 	// 联网获取新闻的工具类
-	private NewsListGetUtil mNewsGetUtil;
+	private NewsGetUtil mNewsGetUtil;
 
 	// 适配器
 	private NewsAdapter mNewsAdapter;
@@ -84,7 +82,7 @@ public class NewsList extends Fragment implements NewsListGetListener {
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 				mPage = 0;
-				mNewsGetUtil.updateNewsList(mPage);
+				mNewsGetUtil.updateNews(mPage);
 			}
 
 			@Override
@@ -94,7 +92,7 @@ public class NewsList extends Fragment implements NewsListGetListener {
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 				mPage++;
-				mNewsGetUtil.updateNewsList(mPage);
+				mNewsGetUtil.updateNews(mPage);
 			}
 
 		});
@@ -103,8 +101,8 @@ public class NewsList extends Fragment implements NewsListGetListener {
 		
 		mListView = mPullRefleshListView.getRefreshableView();
 		mNewsAdapter = new NewsAdapter();
-		mNewsGetUtil = new NewsListGetUtil(this, ((News)getActivity()).getParserFactory().getNewsListParser());
-		mNewsGetUtil.updateNewsList(mPage);
+		mNewsGetUtil = new NewsGetUtil(this, ((News)getActivity()).getParserFactory().getNewsListParser(),NewsGetUtil.NEWS_LIST);
+		mNewsGetUtil.updateNews(mPage);
 		mListView.setAdapter(mNewsAdapter);
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -119,7 +117,7 @@ public class NewsList extends Fragment implements NewsListGetListener {
 	}
 
 	@Override
-	public void startGetNewsList() {
+	public void startGetNews() {
 		if (mDialog == null) {
 			mDialog = new ProgressDialog(getActivity());
 			mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -129,16 +127,19 @@ public class NewsList extends Fragment implements NewsListGetListener {
 	}
 
 	@Override
-	public void updateNewsList(List<NewsListEntity> newsListEntities) {
+	public void updateNews(List<NewsEntity> newsEntities) {
 
 		if (mDialog != null) {
 			mDialog.cancel();
 			mDialog = null;
 		}
-		if (newsListEntities != null) {
+		if (newsEntities != null && newsEntities.size() > 0) {
+			List<NewsListEntity> newsListEntities = new ArrayList<NewsListEntity>();
+			for(int i = 0; i < newsEntities.size(); ++i)
+				newsListEntities.add((NewsListEntity) newsEntities.get(i));
 			mNewsAdapter.addData(newsListEntities);
 			mPullRefleshListView.onRefreshComplete();
-			if (newsListEntities == null || newsListEntities.size() == 0) {
+			if (newsEntities == null || newsEntities.size() == 0) {
 				mPullRefleshListView
 						.setOnLastItemVisibleListener(ConstantFun.getLastItemVisibleListener(getActivity()));
 			}

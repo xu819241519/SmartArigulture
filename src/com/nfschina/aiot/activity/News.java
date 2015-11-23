@@ -6,7 +6,6 @@ import com.nfschina.aiot.entity.NewsContentEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
 import com.nfschina.aiot.fragment.NewsContent;
 import com.nfschina.aiot.fragment.NewsList;
-import com.nfschina.aiot.util.FarmerComParserFactory;
 import com.nfschina.aiot.util.ParserFactory;
 import com.nfschina.aiot.util.VillageComParserFactory;
 

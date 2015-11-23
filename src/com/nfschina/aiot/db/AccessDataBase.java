@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mysql.jdbc.CallableStatement;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.entity.AlarmEntity;
@@ -49,14 +51,14 @@ public class AccessDataBase {
 	 * 
 	 * @return statement
 	 */
-	private static Statement getStatement() {
-		Statement statement = null;
+	private static PreparedStatement getPreparedStatement(String sql) {
+		PreparedStatement statement = null;
 		mResultCode = Constant.SERVER_CONNECT_FAILED;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			DriverManager.setLoginTimeout(Constant.TIME_OUT);
 			mConn = DriverManager.getConnection(mUrl);
-			statement = (Statement) mConn.createStatement();
+			statement = (PreparedStatement) mConn.prepareStatement(sql);
 		} catch (ClassNotFoundException e) {
 			mResultCode = Constant.SERVER_UNKNOWN_FAILED;
 			e.printStackTrace();
@@ -80,14 +82,14 @@ public class AccessDataBase {
 	public static int connectLogin(String name, String pswd) throws Exception {
 
 		mResultCode = Constant.SERVER_CONNECT_FAILED;
-
-		Statement stmt = getStatement();
+		String sql = "select * from sys_user where USER_ID=? and USER_PASSWORD=?";
+		PreparedStatement stmt = getPreparedStatement(sql);
 		if (stmt != null) {
-
-			String sql = "select * from sys_user where USER_ID='" + name + "' and USER_PASSWORD='" + pswd + "'";
+			stmt.setString(1, name);
+			stmt.setString(2, pswd);
 			ResultSet rs = null;
 			try {
-				rs = stmt.executeQuery(sql);
+				rs = stmt.executeQuery();
 				if (rs != null && rs.next()) {
 					mResultCode = Constant.SERVER_LOGIN_SUCCESS;
 				} else {
@@ -119,25 +121,33 @@ public class AccessDataBase {
 	 */
 	public static int connectRegister(String id, String pswd) {
 		mResultCode = Constant.SERVER_CONNECT_FAILED;
-		Statement stmt = getStatement();
+		String sql = "select * from sys_user where USER_ID=?";
+		PreparedStatement stmt = getPreparedStatement(sql);
 		if (stmt != null) {
-			String sql = "select * from sys_user where USER_ID='" + id + "'";
 			try {
-				ResultSet rs = stmt.executeQuery(sql);
+				stmt.setString(1, id);
+				ResultSet rs = stmt.executeQuery();
 				if (rs != null && rs.next()) {
 					mResultCode = Constant.SERVER_REGISTER_EXIST;
 					rs.close();
 
 				} else {
+					if (rs != null)
+						rs.close();
+					stmt.close();
+					closeConnection();
 					Date date = new Date();
 					DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String time = format.format(date);
-					sql = "insert into sys_user (USER_ID,USER_PASSWORD,ADD_TIME) values('" + id + "','" + pswd + "','"
-							+ time + "')";
-					int rows = stmt.executeUpdate(sql);
-					if (rows > 0)
+					sql = "insert into sys_user (USER_ID,USER_PASSWORD,ADD_TIME) values(?,?,?)";
+					stmt = getPreparedStatement(sql);
+					stmt.setString(1, id);
+					stmt.setString(2, pswd);
+					stmt.setString(3, time);
+					int rows = stmt.executeUpdate();
+					if (rows > 0) {
 						mResultCode = Constant.SERVER_REGISTER_SUCCESS;
-					else
+					} else
 						mResultCode = Constant.SERVER_REGISTER_FAILED;
 				}
 
@@ -172,22 +182,27 @@ public class AccessDataBase {
 	public static int connectChangePassword(String id, String oldPassword, String newPassword) {
 
 		mResultCode = Constant.SERVER_CONNECT_FAILED;
-
-		Statement stmt = getStatement();
+		String sql = "select * from sys_user where USER_ID= ? and USER_PASSWORD= ?";
+		PreparedStatement stmt = getPreparedStatement(sql);
 		if (stmt != null) {
-
-			String sql = "select * from sys_user where USER_ID='" + id + "' and USER_PASSWORD='" + oldPassword + "'";
 			ResultSet rs = null;
 			try {
-				rs = stmt.executeQuery(sql);
+				stmt.setString(1, id);
+				stmt.setString(2, oldPassword);
+				rs = stmt.executeQuery();
 				if (rs != null && rs.next()) {
-					sql = "update sys_user set USER_PASSWORD='" + newPassword + "' where USER_ID='" + id + "'";
-					int row = stmt.executeUpdate(sql);
+					rs.close();
+					stmt.close();
+					closeConnection();
+					sql = "update sys_user set USER_PASSWORD= ? where USER_ID= ?";
+					stmt = getPreparedStatement(sql);
+					stmt.setString(1, newPassword);
+					stmt.setString(2, id);
+					int row = stmt.executeUpdate();
 					if (row == 1) {
 						mResultCode = Constant.SERVER_CHANGE_PASSWORD_SUCCESS;
 						Constant.CURRENT_PASSWORD = newPassword;
 					}
-					rs.close();
 				} else {
 					mResultCode = Constant.SERVER_CHANGE_PASSWORD_FAILED;
 					if (rs != null)
@@ -240,40 +255,72 @@ public class AccessDataBase {
 	 */
 	public static List<AlarmEntity> getAlarmHistoryData(int page, int size, String GreenHouseID) {
 		List<AlarmEntity> result = null;
-		Statement statement = getStatement();
-		if (statement != null) {
-
-			String sql = "select * from warningtb where greenhouseid='" + GreenHouseID + "' limit " + page * size + ","
-					+ size;
-			ResultSet rs = null;
-			try {
-				rs = statement.executeQuery(sql);
-				if (rs != null && rs.next()) {
-
-					AlarmEntity alarmEntity = new AlarmEntity(rs.getInt(1), rs.getString(2), rs.getFloat(4),
-							rs.getInt(5), rs.getFloat(6), rs.getInt(7), rs.getString(8), rs.getInt(9));
-					if (result == null)
-						result = new ArrayList<AlarmEntity>();
-					result.add(alarmEntity);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (rs != null)
-						rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				try {
-					statement.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				closeConnection();
+		Connection conn = null;
+		java.sql.CallableStatement comm = null;
+		ResultSet ds = null;
+		String commStr = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			DriverManager.setLoginTimeout(Constant.TIME_OUT);
+			conn = DriverManager.getConnection(mUrl);
+			commStr = "call getAllGreenHouseInfo(?,?,?)";
+			comm = conn.prepareCall(commStr);
+			comm.setString(1, "0000");
+			comm.setInt(2, 0);
+			comm.setInt(3, 10);
+			comm.execute();
+			ds = comm.getResultSet();
+			while (ds.next()) {
+				System.out.println(ds.getString(1));
 			}
+			comm.getMoreResults();
+			ds = comm.getResultSet();
+			while(ds.next()){
+				System.out.println(ds.getString(1));
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		closeConnection();
+
+		// String sql = "select * from warningtb where greenhouseid= ? limit
+		// ?,?";
+		// PreparedStatement statement = getPreparedStatement(sql);
+		// if (statement != null) {
+		// ResultSet rs = null;
+		// try {
+		// statement.setString(1, GreenHouseID);
+		// statement.setInt(2, page * size);
+		// statement.setInt(3, size);
+		// rs = statement.executeQuery();
+		// while (rs != null && rs.next()) {
+		// AlarmEntity alarmEntity = new AlarmEntity(rs.getInt(1),
+		// rs.getString(2), rs.getFloat(4),
+		// rs.getInt(5), rs.getFloat(6), rs.getInt(7), rs.getString(8),
+		// rs.getInt(9));
+		// if (result == null)
+		// result = new ArrayList<AlarmEntity>();
+		// result.add(alarmEntity);
+		// }
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// } finally {
+		// try {
+		// if (rs != null)
+		// rs.close();
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
+		// try {
+		// statement.close();
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
+		// closeConnection();
+		// }
+		// }
+		// closeConnection();
 		return result;
 	}
 
@@ -288,13 +335,15 @@ public class AccessDataBase {
 	 */
 	public static List<InstructionEntity> getInstructionHistoryData(int page, int size, String greenHouseID) {
 		List<InstructionEntity> result = null;
-		Statement statement = getStatement();
+		String sql = "select * from instructiontb where greenhouseid= ? limit ?,?";
+		PreparedStatement statement = getPreparedStatement(sql);
 		if (statement != null) {
-			String sql = "select * from instructiontb where greenhouseid='" + greenHouseID + "' limit " + page * size
-					+ "," + size;
 			ResultSet rs = null;
 			try {
-				rs = statement.executeQuery(sql);
+				statement.setString(1, greenHouseID);
+				statement.setInt(2, page * size);
+				statement.setInt(3, size);
+				rs = statement.executeQuery();
 				while (rs != null && rs.next()) {
 					InstructionEntity instructionEntity = new InstructionEntity(rs.getInt(1), rs.getString(2),
 							rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
@@ -331,20 +380,22 @@ public class AccessDataBase {
 	 */
 	public static List<GreenHouseEntity> getGreenHouseName() {
 		List<GreenHouseEntity> result = null;
-		Statement statement = getStatement();
+		String sql = "select * from sys_user where USER_ID= ? and USER_PASSWORD= ?";
+		PreparedStatement statement = getPreparedStatement(sql);
 		if (statement != null) {
-
-			String sql = "select * from sys_user where USER_ID='" + Constant.CURRENT_USER + "' and USER_PASSWORD='"
-					+ Constant.CURRENT_PASSWORD + "'";
-
 			ResultSet rs = null;
 			try {
-				rs = statement.executeQuery(sql);
-				if (rs != null && rs.next()) {
+				statement.setString(1, Constant.CURRENT_USER);
+				statement.setString(2, Constant.CURRENT_PASSWORD);
+				rs = statement.executeQuery();
+				while (rs != null && rs.next()) {
 					rs.close();
-					sql = "select GreenHouseId,GreenHouseName from greenhouseinfotb where GreenHouseId in (select HOUSE_ID from greenhouse_user where USER_ID='"
-							+ Constant.CURRENT_USER + "')";
-					rs = statement.executeQuery(sql);
+					statement.close();
+					closeConnection();
+					sql = "select GreenHouseId,GreenHouseName from greenhouseinfotb where GreenHouseId in (select HOUSE_ID from greenhouse_user where USER_ID=?)";
+					statement = getPreparedStatement(sql);
+					statement.setString(1, Constant.CURRENT_USER);
+					rs = statement.executeQuery();
 					while (rs != null && rs.next()) {
 						if (result == null)
 							result = new ArrayList<GreenHouseEntity>();
@@ -385,12 +436,13 @@ public class AccessDataBase {
 	 */
 	public static List<EnvironmentParameterEntity> getCarbonDioxideData(String greenHouseID) {
 		List<EnvironmentParameterEntity> result = null;
-		Statement statement = getStatement();
+		String sql = "select co2,recordtime from environmentparatb where greenhouseid=? limit 2000";
+		PreparedStatement statement = getPreparedStatement(sql);
 		if (statement != null) {
-			String sql = "select co2,recordtime from environmentparatb where greenhouseid='" + greenHouseID + "'";
 			ResultSet rs = null;
 			try {
-				rs = statement.executeQuery(sql);
+				statement.setString(1, greenHouseID);
+				rs = statement.executeQuery();
 				while (rs != null && rs.next()) {
 					if (result == null) {
 						result = new ArrayList<EnvironmentParameterEntity>();
@@ -428,12 +480,13 @@ public class AccessDataBase {
 	 */
 	public static List<EnvironmentParameterEntity> getHumidityData(String greenHouseID) {
 		List<EnvironmentParameterEntity> result = null;
-		Statement statement = getStatement();
+		String sql = "select humidity,recordtime from environmentparatb where greenhouseid=? limit 2000";
+		PreparedStatement statement = getPreparedStatement(sql);
 		if (statement != null) {
-			String sql = "select humidity,recordtime from environmentparatb where greenhouseid='" + greenHouseID + "'";
 			ResultSet rs = null;
 			try {
-				rs = statement.executeQuery(sql);
+				statement.setString(1, greenHouseID);
+				rs = statement.executeQuery();
 				while (rs != null && rs.next()) {
 					if (result == null) {
 						result = new ArrayList<EnvironmentParameterEntity>();
@@ -471,13 +524,13 @@ public class AccessDataBase {
 	 */
 	public static List<EnvironmentParameterEntity> getIlluminanceData(String greenHouseID) {
 		List<EnvironmentParameterEntity> result = null;
-		Statement statement = getStatement();
+		String sql = "select illuminance,recordtime from environmentparatb where greenhouseid=? limit 2000";
+		PreparedStatement statement = getPreparedStatement(sql);
 		if (statement != null) {
-			String sql = "select illuminance,recordtime from environmentparatb where greenhouseid='" + greenHouseID
-					+ "'";
 			ResultSet rs = null;
 			try {
-				rs = statement.executeQuery(sql);
+				statement.setString(1, greenHouseID);
+				rs = statement.executeQuery();
 				while (rs != null && rs.next()) {
 					if (result == null) {
 						result = new ArrayList<EnvironmentParameterEntity>();
@@ -515,13 +568,13 @@ public class AccessDataBase {
 	 */
 	public static List<EnvironmentParameterEntity> getTemperatureData(String greenHouseID) {
 		List<EnvironmentParameterEntity> result = null;
-		Statement statement = getStatement();
+		String sql = "select temperature,recordtime from environmentparatb where greenhouseid=? limit 2000";
+		PreparedStatement statement = getPreparedStatement(sql);
 		if (statement != null) {
-			String sql = "select temperature,recordtime from environmentparatb where greenhouseid='" + greenHouseID
-					+ "'";
 			ResultSet rs = null;
 			try {
-				rs = statement.executeQuery(sql);
+				statement.setString(1, greenHouseID);
+				rs = statement.executeQuery();
 				while (rs != null && rs.next()) {
 					if (result == null) {
 						result = new ArrayList<EnvironmentParameterEntity>();

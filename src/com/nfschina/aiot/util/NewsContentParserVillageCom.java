@@ -1,24 +1,29 @@
 package com.nfschina.aiot.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.nfschina.aiot.entity.NewsContentEntity;
+import com.nfschina.aiot.entity.NewsEntity;
+import com.nfschina.aiot.fragment.NewsContent;
 
 import android.text.Html;
 
 /**
  * 新闻正文分析器，提供新闻正文的页数，给出每一页对应的URL，通过解析html源码构造新闻正文实体并返回
  * 爬取中国农村网（http://www.nongcun5.com/news/）
+ * 
  * @author xu
  *
  */
-public class NewsContentParserVillageCom extends NewsContentParser {
+public class NewsContentParserVillageCom extends NewsParser {
 
 	private String Url;
 
@@ -34,12 +39,12 @@ public class NewsContentParserVillageCom extends NewsContentParser {
 
 	@Override
 	public int getPageCount(Document document) {
-
 		return 1;
 	}
 
 	@Override
-	public NewsContentEntity getNewsContentEntity(List<Document> documents) {
+	public List<NewsEntity> getNewsEntities(List<Document> documents) {
+		List<NewsEntity> newsContentEntities = new ArrayList<NewsEntity>();
 		NewsContentEntity newsContentEntity = new NewsContentEntity();
 		Document document = documents.get(0);
 		newsContentEntity.setTitle(document.select("#title").text());
@@ -71,7 +76,18 @@ public class NewsContentParserVillageCom extends NewsContentParser {
 
 		newsContentEntity.setContent(Html.fromHtml(content));
 
-		return newsContentEntity;
+		newsContentEntities.add(newsContentEntity);
+
+		return newsContentEntities;
 	}
 
+	@Override
+	public Connection addHeader(Connection connection) {
+		return connection;
+	}
+
+	@Override
+	public int getPrePageCount() {
+		return 1;
+	}
 }

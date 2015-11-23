@@ -1,13 +1,15 @@
 package com.nfschina.aiot.fragment;
 
+import java.util.List;
+
 import com.nfschina.aiot.R;
 import com.nfschina.aiot.activity.News;
 import com.nfschina.aiot.entity.NewsContentEntity;
+import com.nfschina.aiot.entity.NewsEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
-import com.nfschina.aiot.util.NewsContentGetListener;
-import com.nfschina.aiot.util.NewsContentGetUtil;
-import com.nfschina.aiot.util.NewsContentParseFarmerCom;
 import com.nfschina.aiot.util.NewsContentParserVillageCom;
+import com.nfschina.aiot.util.NewsGetListener;
+import com.nfschina.aiot.util.NewsGetUtil;
 
 import android.app.ProgressDialog;
 import android.drm.ProcessedData;
@@ -27,7 +29,7 @@ import android.widget.TextView;
  *
  */
 
-public class NewsContent extends Fragment implements NewsContentGetListener {
+public class NewsContent extends Fragment implements NewsGetListener {
 
 	// БъЬт
 	private TextView mTitle;
@@ -52,9 +54,9 @@ public class NewsContent extends Fragment implements NewsContentGetListener {
 		super.onStart();
 		initUIControls();
 
-		NewsContentGetUtil newsContentGetUtil = new NewsContentGetUtil(this,
-				((News)getActivity()).getParserFactory().getNewsContentParser(mNewsListEntity.getURL()));
-		newsContentGetUtil.startGetNewsContent();
+		NewsGetUtil newsGetUtil = new NewsGetUtil(this,
+				((News) getActivity()).getParserFactory().getNewsContentParser(mNewsListEntity.getURL()),NewsGetUtil.NEWS_CONTENT);
+		newsGetUtil.updateNews(0);
 	}
 
 	/**
@@ -67,7 +69,7 @@ public class NewsContent extends Fragment implements NewsContentGetListener {
 	}
 
 	@Override
-	public void startGetNewsContent() {
+	public void startGetNews() {
 
 		if (mDialog == null) {
 			mDialog = new ProgressDialog(getActivity());
@@ -79,15 +81,18 @@ public class NewsContent extends Fragment implements NewsContentGetListener {
 	}
 
 	@Override
-	public void updateNewsContent(NewsContentEntity newsContentEntity) {
+	public void updateNews(List<NewsEntity> newsEntities) {
 		if (mDialog != null) {
 			mDialog.cancel();
 			mDialog = null;
 		}
-		if (newsContentEntity != null) {
-			mTitle.setText(newsContentEntity.getTitle());
-			mContent.setText(newsContentEntity.getContext());
-			mContent.setMovementMethod(ScrollingMovementMethod.getInstance());
+		if (newsEntities != null && newsEntities.size() > 0) {
+			NewsContentEntity newsContentEntity = (NewsContentEntity) newsEntities.get(0);
+			if (newsContentEntity != null) {
+				mTitle.setText(newsContentEntity.getTitle());
+				mContent.setText(newsContentEntity.getContext());
+				mContent.setMovementMethod(ScrollingMovementMethod.getInstance());
+			}
 		}
 	}
 }

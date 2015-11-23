@@ -3,10 +3,12 @@ package com.nfschina.aiot.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.nfschina.aiot.entity.NewsEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
 
 /**
@@ -15,7 +17,7 @@ import com.nfschina.aiot.entity.NewsListEntity;
  * @author xu
  *
  */
-public class NewsListParserVillageCom extends NewsListParser {
+public class NewsListParserVillageCom extends NewsParser  {
 
 	private String BaseURL = "http://www.nongcun5.com/news/4/";
 	
@@ -39,20 +41,26 @@ public class NewsListParserVillageCom extends NewsListParser {
 	}
 
 	@Override
-	public List<NewsListEntity> getNewsListEntities(Document document) {
-		List<NewsListEntity> result = null;
-		Elements elements = document.getElementsByClass("catlist_li");
+	public List<NewsEntity> getNewsEntities(List<Document> documents) {
+		List<NewsEntity> result = null;
+		Elements elements = documents.get(0).getElementsByClass("catlist_li");
 		for(Element e : elements){
 			NewsListEntity newsListEntity = new NewsListEntity();
 			newsListEntity.setTitle(e.select("a[href]").text());
 			newsListEntity.setTime(e.select("span").text());
 			newsListEntity.setURL(e.select("a[href]").attr("href"));
 			if(result == null){
-				result = new ArrayList<NewsListEntity>();
+				result = new ArrayList<NewsEntity>();
 			}
 			result.add(newsListEntity);
 		}
 		return result;
+	}
+
+	@Override
+	public Connection addHeader(Connection connection) {
+		
+		return connection;
 	}
 
 }

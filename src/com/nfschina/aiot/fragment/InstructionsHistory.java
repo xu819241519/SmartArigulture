@@ -38,7 +38,7 @@ public class InstructionsHistory extends Fragment {
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
 	private View mView;
-	
+
 	// Œ¬ “ID
 	private String GreenHouseID;
 
@@ -126,7 +126,9 @@ public class InstructionsHistory extends Fragment {
 			if (params[0]) {
 				mPage = 0;
 				mInstructionsAdapter.clearData();
-				mInstructionsAdapter.addData(AccessDataBase.getInstructionHistoryData(mPage, mSize, GreenHouseID));
+				List<InstructionEntity> data = AccessDataBase.getInstructionHistoryData(mPage, mSize, GreenHouseID);
+				if (data != null && data.size() > 0)
+					mInstructionsAdapter.addData(data);
 				result = true;
 			} else {
 				List<InstructionEntity> list = AccessDataBase.getInstructionHistoryData(mPage + 1, mSize, GreenHouseID);

@@ -102,7 +102,7 @@ public class Constant {
 	// 登录名或密码错误
 	public static String LOGIN_FAILED_INFO = "登录名或密码错误";
 	// 更改密码失败
-	public static String CHANGE_PASSWORD_FAILED = "更改密码失败";
+	public static String CHANGE_PASSWORD_FAILED = "原密码不正确！更改密码失败";
 	// 更改密码成功
 	public static String CHANGE_PASSWORD_SUCCESS = "更改密码成功";
 	// 注册失败

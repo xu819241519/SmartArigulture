@@ -23,12 +23,15 @@ import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
+import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -60,6 +63,9 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 
 	private View mView;
 
+	// 下拉刷新组件
+	private SwipeRefreshLayout mRefreshLayout;
+
 	// 当前游标
 	private ImageView mCursor;
 	// 当前温室ID
@@ -70,6 +76,8 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 
 	// 折线图
 	private LineChartView mChart;
+	// 报表数据
+	private LineChartData mLineChartData;
 
 	// 等待对话框
 	private ProgressDialog mDialog;
@@ -77,6 +85,15 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mView = inflater.inflate(R.layout.greenhouse_history, null);
+		mRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.history_swiperefresh);
+		mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				changeCharts(mCurrentItem);
+
+			}
+		});
 		return mView;
 	}
 
@@ -148,6 +165,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 	 *            要显示的实体种类
 	 */
 	public void changeCharts(int kind) {
+
 		new GetDataTask().execute(kind);
 	}
 
@@ -181,6 +199,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			Toast.makeText(getActivity(), Constant.UNDEF, Toast.LENGTH_SHORT).show();
 			break;
 		}
+		// showDialog(true);
 		changeCharts(mCurrentItem);
 
 		TranslateAnimation translateAnimation = new TranslateAnimation(lastItem * para.width, mCurrentItem * para.width,
@@ -189,6 +208,25 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		translateAnimation.setFillAfter(true);
 		mCursor.startAnimation(translateAnimation);
 
+	}
+
+	/**
+	 * 转换显示x坐标的时间
+	 * 
+	 * @param time
+	 *            时间字符串
+	 * @return 要显示的时间字符串
+	 */
+	private String convertTime(String time) {
+		String result = "";
+		time = time.substring(6);
+		result += time.substring(0, 2);
+		result += "日";
+		result += time.substring(2, 4);
+		result += ":";
+		result += time.substring(4, 6);
+
+		return result;
 	}
 
 	/**
@@ -204,32 +242,38 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			if (kind == Constant.CARBONDIOXIDE) {
 				CarbonDioxideEntity carbonDioxideEntity = (CarbonDioxideEntity) entities.get(i);
 				values.add(new PointValue(i, carbonDioxideEntity.getData()));
-				axisValues.add(new AxisValue(i).setLabel(carbonDioxideEntity.getTime()));
+				axisValues.add(new AxisValue(i).setLabel(convertTime(carbonDioxideEntity.getTime())));
 			} else if (kind == Constant.TEMPERATURE) {
 				TemperatureEntity temperatureEntity = (TemperatureEntity) entities.get(i);
 				values.add(new PointValue(i, temperatureEntity.getData()));
-				axisValues.add(new AxisValue(i).setLabel(temperatureEntity.getTime()));
+				axisValues.add(new AxisValue(i).setLabel(convertTime(temperatureEntity.getTime())));
 			} else if (kind == Constant.HUMIDITY) {
 				HumidityEntity humidityEntity = (HumidityEntity) entities.get(i);
-				values.add(new PointValue(i,humidityEntity.getData()));
-				axisValues.add(new AxisValue(i).setLabel(humidityEntity.getTime()));
+				values.add(new PointValue(i, humidityEntity.getData()));
+				axisValues.add(new AxisValue(i).setLabel(convertTime(humidityEntity.getTime())));
 			} else if (kind == Constant.ILLUMINANCE) {
 				IlluminanceEntity illuminanceEntity = (IlluminanceEntity) entities.get(i);
 				values.add(new PointValue(i, illuminanceEntity.getData()));
-				axisValues.add(new AxisValue(i).setLabel(illuminanceEntity.getTime()));
+				axisValues.add(new AxisValue(i).setLabel(convertTime(illuminanceEntity.getTime())));
 			}
 		}
 
 		// In most cased you can call data model methods in
 		// builder-pattern-like manner.
 		Line line = new Line(values).setColor(Color.WHITE).setCubic(true);
-		line.setPointRadius(2);
+		line.setPointRadius(1);
 		line.setStrokeWidth(1);
+		//line.setHasPoints(false);
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
 
-		LineChartData data = new LineChartData();
-		data.setLines(lines);
+		boolean bFirst = false;
+		if (mLineChartData == null) {
+			bFirst = true;
+			mLineChartData = new LineChartData();
+		}
+
+		mLineChartData.setLines(lines);
 		// 坐标轴
 		Axis axisX = new Axis(); // X轴
 		axisX.setHasTiltedLabels(true);
@@ -241,7 +285,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		axisX.setMaxLabelChars(3);
 		axisX.setValues(axisValues);
 
-		data.setAxisXBottom(axisX);
+		mLineChartData.setAxisXBottom(axisX);
 
 		Axis axisY = new Axis(); // Y轴
 		axisY.setTextColor(Color.WHITE);
@@ -255,11 +299,15 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		else if (kind == Constant.ILLUMINANCE)
 			axisY.setName("光照");
 		axisY.setTextSize(10);
-		data.setAxisYLeft(axisY);
-
-		mChart.setLineChartData(data);
+		mLineChartData.setAxisYLeft(axisY);
+		if(bFirst)
+			mChart.setLineChartData(mLineChartData);
+		else {
+			mChart.startDataAnimation();
+		}
 		mChart.setVisibility(View.VISIBLE);
 		showDialog(false);
+		mRefreshLayout.setRefreshing(false);
 	}
 
 	/**
@@ -290,6 +338,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 				updateDisplay(result, entity.getKind());
 			} else {
 				showDialog(false);
+				mRefreshLayout.setRefreshing(false);
 				Toast.makeText(getActivity(), "未获取到数据更新", Toast.LENGTH_SHORT).show();
 			}
 		}
