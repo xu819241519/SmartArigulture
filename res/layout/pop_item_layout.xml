@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/popup_bg_info"
+	android:orientation="horizontal"
+	android:padding="0dp">
+
+	<TextView
+		android:id="@+id/pop_ignore_tv"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:gravity="center_horizontal"
+		android:text="暂时忽略"
+		android:layout_marginTop="8dp"
+		android:textSize="@dimen/text_normal"
+		android:textColor="@android:color/white" />
+
+	<View
+		android:layout_width="1dp"
+		android:layout_height="fill_parent"
+		android:layout_marginBottom="15dp"
+		android:layout_marginTop="10dp"
+		android:background="@color/white" />
+	<TextView
+		android:id="@+id/pop_handler_tv"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:gravity="center_horizontal"
+		android:layout_marginTop="8dp"
+		android:textSize="@dimen/text_normal"
+		android:text="立刻处理"
+		android:textColor="@android:color/white" />
+
+</LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/fragment_bg"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/nav_bg">
+		<TextView
+			android:id="@+id/core_monitor_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/back"
+			android:gravity="center_vertical"
+			android:padding="@dimen/normal_space"
+			android:textColor="@color/white"
+			android:textSize="@dimen/text_normal" />
+
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:padding="@dimen/normal_space"
+			android:text="实时监控"
+			android:textColor="@color/white"
+			android:textSize="@dimen/text_larger" />
+		<ImageButton
+			android:id="@+id/monitor_gohome"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="@dimen/normal_space"
+			android:layout_centerVertical="true"
+			android:background="@color/nav_bg"
+			android:src="@drawable/home" />
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/environment_gridview"
+		android:orientation="horizontal">
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:src="@drawable/greenhouse" />
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingLeft="@dimen/little_space">
+
+			<TextView
+				android:id="@+id/core_monitor_tv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:paddingBottom="@dimen/normal_space"
+				android:paddingTop="@dimen/normal_space"
+				android:text="温室一"
+				android:textColor="@color/gray_dark"
+				android:textSize="@dimen/text_big" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="种植农作物：草莓，苹果"
+				android:textColor="#b6b5b5"
+				android:textSize="@dimen/text_small" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingTop="@dimen/little_space"
+				android:text="当前状态：良好"
+				android:textColor="#b6b5b5"
+				android:textSize="@dimen/text_small" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<com.handmark.pulltorefresh.library.PullToRefreshGridView
+		android:id="@+id/environment_list_gv"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:layout_marginTop="@dimen/normal_space"
+		android:horizontalSpacing="1dp"
+		android:listSelector="@null"
+		android:numColumns="2"
+		android:scrollbars="none"
+		android:verticalSpacing="1dp">
+	</com.handmark.pulltorefresh.library.PullToRefreshGridView>
+
+</LinearLayout>

@@ -3,7 +3,6 @@ package com.nfschina.aiot.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nfschina.aiot.R;
 import com.nfschina.aiot.adapter.GenelFragmentAdapter;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.fragment.AlarmHistory;
@@ -85,6 +84,7 @@ public class History extends FragmentActivity
 
 		// …Ë÷√  ≈‰∆˜
 		mViewPager.setAdapter(mAdapter);
+		mViewPager.setOffscreenPageLimit(3);
 		mViewPager.setCurrentItem(1);
 		mCurrentItem = 0;
 

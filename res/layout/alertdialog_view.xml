@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/blend_dialog_frame"
+	android:orientation="vertical">
+	<TextView
+		android:id="@+id/ad_title_tv"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="left|center_vertical"
+		android:padding="16dp"
+		android:text="标题内容"
+		android:textColor="@color/green_dark"
+		android:textSize="20sp"
+		android:textStyle="normal" />
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="2dp"
+		android:background="@color/green_dark" />
+	<LinearLayout
+		android:id="@+id/blend_dialog_preview"
+		android:layout_width="match_parent"
+		android:layout_height="290dip"
+		android:background="@null"
+		android:gravity="center">
+
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:indeterminateDrawable="@drawable/blend_holo_progressbar_circle" />
+	</LinearLayout>
+	<RelativeLayout
+		android:id="@+id/ad_item_rl"
+		android:layout_width="match_parent"
+		android:layout_height="47dp"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/ad_item_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:minHeight="47dp"
+			android:text="全选"
+			android:paddingBottom="@dimen/little_space"
+			android:paddingLeft="@dimen/big_space"
+			android:paddingRight="@dimen/normal_space"
+			android:paddingTop="@dimen/little_space"
+			android:singleLine="true"
+			android:textColor="@color/orange"
+			android:textSize="@dimen/text_normal" />
+
+		<CheckBox
+			android:id="@+id/ad_item_allchoose"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="@dimen/big_space"
+			android:button="@drawable/ad_checkbox_selector" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/blend_item_divider_color"
+			android:layout_alignParentBottom="true" />
+
+	</RelativeLayout>
+
+	<ListView
+		android:id="@+id/blend_dialog_nextview"
+		android:layout_width="match_parent"
+		android:layout_height="242dip"
+		android:cacheColorHint="#0000"
+		android:divider="@color/blend_item_divider_color"
+		android:dividerHeight="0.5dip"
+		android:fadingEdge="none"
+		android:listSelector="@android:color/transparent"
+		android:visibility="gone" />
+	<View
+		android:id="@+id/blend_dialog_divider"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/blend_item_divider_color" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:orientation="horizontal">
+		<Button
+			android:id="@+id/dialog_cancle_btn"
+			android:layout_width="0dp"
+			android:layout_height="48dp"
+			android:layout_weight="1"
+			android:background="@drawable/ad_view_bg_default"
+			android:gravity="center"
+			android:text="取消"
+			android:textColor="@color/green_dark"
+			android:textSize="@dimen/text_small" />
+		<View
+			android:layout_width="1dip"
+			android:layout_height="48dp"
+			android:background="@color/blend_item_divider_color"
+			android:layout_gravity="center_horizontal" />
+		<Button
+			android:id="@+id/dialog_sure_btn"
+			android:layout_width="0dp"
+			android:layout_height="48dp"
+			android:layout_weight="1"
+			android:background="@drawable/ad_view_surebtn_default"
+			android:gravity="center"
+			android:text="确定"
+			android:textColor="@color/white"
+			android:textSize="@dimen/text_small" />
+	</LinearLayout>
+</LinearLayout>

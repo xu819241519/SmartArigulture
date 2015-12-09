@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:background="@color/white"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+		<ImageView
+			android:layout_width="55dp"
+			android:layout_height="55dp"
+			android:layout_gravity="center_vertical|left"
+			android:layout_marginRight="@dimen/little_space"
+			android:scaleX="1"
+			android:scaleY="1"
+			android:padding="2dp"
+			android:src="@drawable/tasks_green" />
+
+		<TextView
+			android:id="@+id/alltask_greenhouse"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textColor="@color/gray_dark"
+			android:layout_gravity="center_vertical|left"
+			android:textSize="@dimen/text_larger"
+			android:padding="@dimen/little_space"
+			android:text="温室：" />
+		<TextView
+			android:id="@+id/isFirstClick_alltask"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="true"
+			android:visibility="gone" />
+		<ToggleButton
+			android:id="@+id/task_item_switch"
+			android:layout_width="80dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|right"
+			android:background="@android:color/transparent"
+			android:button="@drawable/toggle_btn"
+			android:checked="false"
+			android:scaleX="0.9"
+			android:scaleY="0.9"
+			android:textOff=""
+			android:textOn="" />
+
+		<ImageView
+			android:id="@+id/alltask_item_upordown_iv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|right"
+			android:layout_marginRight="@dimen/little_space"
+			android:scaleX="0.8"
+			android:scaleY="0.8"
+			android:src="@drawable/click_down" />
+	</LinearLayout>
+	<LinearLayout
+		android:id="@+id/alltask_item_ll"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:background="@color/green_dark" />
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/gray_dark"
+				android:textSize="@dimen/text_normal"
+				android:paddingLeft="@dimen/normal_space"
+				android:paddingTop="@dimen/little_space"
+				android:text="执行内容：" />
+			<TextView
+				android:id="@+id/alltask_content"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/orange"
+				android:textSize="@dimen/text_normal"
+				android:text="执行内容：" />
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/gray_dark"
+				android:textSize="@dimen/text_normal"
+				android:paddingLeft="@dimen/normal_space"
+				android:paddingTop="@dimen/little_space"
+				android:text="执行周期：" />
+			<TextView
+				android:id="@+id/alltask_period"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/orange"
+				android:textSize="@dimen/text_normal"
+				android:text="执行周期：" />
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/gray_dark"
+				android:textSize="@dimen/text_normal"
+				android:paddingLeft="@dimen/normal_space"
+				android:paddingTop="@dimen/little_space"
+				android:text="执行时间：" />
+			<TextView
+				android:id="@+id/alltask_exetime"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/orange"
+				android:textSize="@dimen/text_normal"
+				android:text="执行时间：" />
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/gray_dark"
+				android:textSize="@dimen/text_normal"
+				android:paddingLeft="@dimen/normal_space"
+				android:paddingTop="@dimen/little_space"
+				android:text="创建人：" />
+			<TextView
+				android:id="@+id/alltask_user"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/orange"
+				android:textSize="@dimen/text_normal"
+				android:text="创建人：" />
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/gray_dark"
+				android:textSize="@dimen/text_normal"
+				android:paddingLeft="@dimen/normal_space"
+				android:paddingTop="@dimen/little_space"
+				android:text="创建时间：" />
+			<TextView
+				android:id="@+id/alltask_createtime"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/orange"
+				android:textSize="@dimen/text_normal"
+				android:text="创建时间：" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

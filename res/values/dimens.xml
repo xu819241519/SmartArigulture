@@ -16,6 +16,8 @@
 	<dimen name="text_larger">20sp</dimen>
 	<dimen name="text_normal">18sp</dimen>
 	<dimen name="text_small">16sp</dimen>
+	<dimen name="text_smaller">14sp</dimen>
+	<dimen name="text_smallest">12sp</dimen>
 	<dimen name="text_top_small">14sp</dimen>
 
 </resources>

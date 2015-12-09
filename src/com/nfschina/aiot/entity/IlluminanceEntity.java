@@ -1,7 +1,5 @@
 package com.nfschina.aiot.entity;
 
-import java.sql.Timestamp;
-
 import com.nfschina.aiot.constant.Constant;
 
 /**

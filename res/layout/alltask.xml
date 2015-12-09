@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:background="@color/fragment_bg"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/nav_bg">
+		<TextView
+			android:id="@+id/alltask_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:drawableLeft="@drawable/back"
+			android:layout_centerVertical="true"
+			android:padding="@dimen/normal_space" />
+
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:padding="@dimen/normal_space"
+			android:text="所有任务"
+			android:textColor="@color/white"
+			android:textSize="@dimen/text_larger" />
+	</RelativeLayout>
+
+	<com.handmark.pulltorefresh.library.PullToRefreshListView
+		android:id="@+id/alltask_lv"
+		android:layout_width="match_parent"
+		android:layout_height="fill_parent"
+		android:divider="@color/fragment_bg"
+		android:scrollbars="none"
+		android:dividerHeight="5dp">
+	</com.handmark.pulltorefresh.library.PullToRefreshListView>
+</LinearLayout>

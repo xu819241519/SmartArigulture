@@ -1,17 +1,14 @@
 package com.nfschina.aiot.adapter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import com.nfschina.aiot.R;
-import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.activity.R;
 import com.nfschina.aiot.constant.ConstantFun;
-import com.nfschina.aiot.entity.AlarmEntity;
 import com.nfschina.aiot.entity.InstructionEntity;
 
-import android.R.raw;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -29,6 +26,8 @@ public class InstructionsAdapter extends BaseAdapter {
 
 	// 指令记录的list
 	private List<InstructionEntity> mList;
+	// 比较规则
+	private Comparator<InstructionEntity> mComparator;
 
 	public InstructionsAdapter() {
 		super();
@@ -60,9 +59,10 @@ public class InstructionsAdapter extends BaseAdapter {
 			holder.setID((TextView) convertView.findViewById(R.id.instructions_history_id));
 			holder.setSendTime((TextView) convertView.findViewById(R.id.instructions_history_sendtime));
 			holder.setPerformTime((TextView) convertView.findViewById(R.id.instructions_history_performtime));
-			holder.setUser((TextView) convertView.findViewById(R.id.instructions_history_user));
-			holder.setGreenHouse((TextView) convertView.findViewById(R.id.instructions_history_greenhouse));
 			holder.setContent((TextView) convertView.findViewById(R.id.instructions_history_content));
+			holder.setGreenHouse((TextView) convertView.findViewById(R.id.instructions_history_greenhouse));
+			holder.setUser((TextView) convertView.findViewById(R.id.instructions_history_user));
+			holder.setRunPeriod((TextView) convertView.findViewById(R.id.instructions_history_runperiod));
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder) convertView.getTag();
@@ -70,17 +70,18 @@ public class InstructionsAdapter extends BaseAdapter {
 		if (holder != null) {
 			holder.getID().setText(Integer.toString(mList.get(position).getID()));
 			holder.getGreenHouse().setText(mList.get(position).getGreenHouseID());
-			holder.getContent().setText(mList.get(position).getContent());
-			holder.getPerformTime().setText(ConstantFun.formatTimeString(mList.get(position).getRunTime(),true));
-			holder.getSendTime().setText(ConstantFun.formatTimeString(mList.get(position).getSendTime(),false));
 			holder.getUser().setText(mList.get(position).getUserID());
+			holder.getContent().setText(mList.get(position).getContent());
+			holder.getPerformTime().setText(ConstantFun.formatTimeString(mList.get(position).getRunTime(), true));
+			holder.getSendTime().setText(ConstantFun.formatTimeString(mList.get(position).getSendTime(), false));
+			holder.getRunPeriod().setText(mList.get(position).getRunPeriod());
 		}
 
-//		if (position % 2 == 0) {
-//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-//		} else {
-//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-//		}
+		// if (position % 2 == 0) {
+		// convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+		// } else {
+		// convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+		// }
 
 		return convertView;
 	}
@@ -98,6 +99,8 @@ public class InstructionsAdapter extends BaseAdapter {
 		private TextView mGreenHouse;
 		// 指令内容
 		private TextView mContent;
+		// 执行周期
+		private TextView mRunPeriod;
 
 		public TextView getID() {
 			return mID;
@@ -146,6 +149,15 @@ public class InstructionsAdapter extends BaseAdapter {
 		public void setContent(TextView mContent) {
 			this.mContent = mContent;
 		}
+
+		public TextView getRunPeriod() {
+			return mRunPeriod;
+		}
+
+		public void setRunPeriod(TextView RunPeriod) {
+			this.mRunPeriod = RunPeriod;
+		}
+
 	}
 
 	/**
@@ -157,7 +169,13 @@ public class InstructionsAdapter extends BaseAdapter {
 	 */
 	public boolean addData(List<InstructionEntity> alarmEntities) {
 		if (mList != null) {
-			return mList.addAll(alarmEntities);
+			if (mList.addAll(alarmEntities)) {
+				if (mComparator != null) {
+					Collections.sort(mList, mComparator);
+				}
+				return true;
+			} else
+				return false;
 		} else
 			return false;
 	}
@@ -173,6 +191,18 @@ public class InstructionsAdapter extends BaseAdapter {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 对数据进行排序
+	 * 
+	 * @param comparator
+	 *            排序规则
+	 */
+	public void sortData(Comparator<InstructionEntity> comparator) {
+		Collections.sort(mList, comparator);
+		mComparator = comparator;
+		notifyDataSetChanged();
 	}
 
 }

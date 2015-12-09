@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="@color/white">
+
+	<!-- <com.jcwl.jdshop.ui.PullUpDownListView android:id="@+id/listView" android:layout_width="fill_parent" 
+		android:layout_height="fill_parent" android:background="@color/activity_bg" android:divider="@android:color/transparent" 
+		android:dividerHeight="0dp" android:fadingEdge="none" android:listSelector="@android:color/transparent" 
+		/> -->
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:padding="@dimen/normal_space"
+		android:orientation="horizontal">
+		<TextView
+			android:id="@+id/toptype"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_larger"
+			android:text="二氧化碳"
+			android:textColor="@color/gray_dark" />
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_larger"
+			android:text="阀值"
+			android:textColor="@color/gray_dark" />
+	</LinearLayout>
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:background="@color/gray_lighter" />
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="输入最大值"
+			android:layout_marginTop="@dimen/little_space"
+			android:gravity="left"
+			android:textSize="@dimen/text_smaller"
+			android:textColor="@color/gray_dark"
+			android:paddingLeft="@dimen/normal_space" />
+
+		<EditText
+			android:id="@+id/threshold_max_et"
+			android:layout_marginTop="@dimen/little_space"
+			android:layout_marginLeft="@dimen/normal_space"
+			android:layout_marginRight="@dimen/normal_space"
+			android:layout_marginBottom="@dimen/little_space"
+			android:padding="@dimen/normal_space"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:background="@drawable/edittext_selector"
+			android:textSize="@dimen/text_smallest"
+			android:enabled="false"
+			android:textColorHint="@color/gray_light" />
+		<TextView
+			android:id="@+id/threshold_max_recommend"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="（加上推荐值）"
+			android:gravity="right"
+			android:textSize="@dimen/text_smallest"
+			android:textColor="@color/gray"
+			android:paddingRight="@dimen/normal_space" />
+
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="输入最小值"
+			android:layout_marginTop="@dimen/little_space"
+			android:gravity="left"
+			android:textSize="@dimen/text_smaller"
+			android:textColor="@color/gray_dark"
+			android:paddingLeft="@dimen/normal_space" />
+
+		<EditText
+			android:id="@+id/threshold_min_et"
+			android:layout_marginTop="@dimen/little_space"
+			android:layout_marginLeft="@dimen/normal_space"
+			android:layout_marginRight="@dimen/normal_space"
+			android:layout_marginBottom="@dimen/little_space"
+			android:padding="@dimen/normal_space"
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:background="@drawable/edittext_selector"
+			android:enabled="false"
+			android:textSize="@dimen/text_smallest"
+			android:textColorHint="@color/gray_light" />
+		<TextView
+			android:id="@+id/threshold_min_recommend"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="（加上推荐值）"
+			android:gravity="right"
+			android:textSize="@dimen/text_smallest"
+			android:textColor="@color/gray"
+			android:paddingRight="@dimen/normal_space" />
+	</LinearLayout>
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:background="@color/gray_lighter" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/big_space"
+		android:padding="@dimen/normal_space"
+		android:orientation="vertical">
+		<Button
+			android:id="@+id/threshold_btn_reset"
+			android:layout_width="match_parent"
+			android:layout_height="50dp"
+			android:text="修改"
+			android:textSize="@dimen/text_small"
+			android:textColor="@color/green"
+			android:background="@drawable/white_btn_selector" />
+		<Button
+			android:layout_marginTop="@dimen/big_space"
+			android:id="@+id/threshold_btn_sure"
+			android:layout_width="match_parent"
+			android:layout_height="50dp"
+			android:text="保存"
+			android:enabled="false"
+			android:textSize="@dimen/text_small"
+			android:textColor="@color/white"
+			android:background="@drawable/blue_gray_btn_selector" />
+	</LinearLayout>
+
+
+
+</LinearLayout>

@@ -3,20 +3,20 @@
      android:orientation="vertical"    
      android:layout_width="fill_parent"  
      android:layout_height="fill_parent"  
-     android:background="@drawable/loginbk">
+     android:background="@drawable/loadbk">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/guide_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24.0dp"
+        android:layout_marginBottom="6.0dp"
         android:orientation="horizontal" >
         
         <ImageView
@@ -43,14 +43,6 @@
             android:padding="15.0dip"
             android:src="@drawable/dot" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:clickable="true"
-            android:padding="15.0dip"
-            android:src="@drawable/dot" />
-        
         
     </LinearLayout>
 

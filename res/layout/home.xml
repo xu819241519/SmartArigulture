@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.nfschina.aiot.activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.nfschina.aiot">
-
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,9 +14,9 @@
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="499dp"
+            android:visibility="visible"
             app:auto_cycle="true"
             app:pager_animation="Default"
-            android:visibility="visible"
             app:pager_animation_span="1100" />
 
         <android.support.v4.view.ViewPager
@@ -24,13 +24,13 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp" >
         </android.support.v4.view.ViewPager>
-
     </RelativeLayout>
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/home_spliter_image"></LinearLayout>
+        android:background="@color/home_spliter_image" >
+    </LinearLayout>
 
     <include
         android:layout_width="match_parent"

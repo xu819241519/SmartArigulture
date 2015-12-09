@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.jsoup.nodes.Document;
 
+import com.nfschina.aiot.listener.NewsGetListener;
+
 public class NewsGetUtil {
 	// 新闻页数
 	public int PAGE_COUNT = -1;
@@ -94,30 +96,30 @@ public class NewsGetUtil {
 	public void DealDocumentData(Document document) {
 		if (mCurrentState == STATE_GET_PAGE_COUNT) {
 			PAGE_COUNT = mParser.getPageCount(document);
-			updateNews(mRequirePage);
-		} else if (mCurrentState == STATE_GET_DATA) {
-			// 若请求的是新闻列表
-			if (mType == NewsGetUtil.NEWS_LIST) {
-				mCurrentState = STATE_GET_DATA_COMPLETE;
-				List<Document> docs = new ArrayList<Document>();
-				docs.add(document);
-				mListener.updateNews(mParser.getNewsEntities(docs));
-			}
-			// 若请求的是新闻正文
-			else if (mType == NewsGetUtil.NEWS_CONTENT) {
-				if (Documents == null) {
-					Documents = new ArrayList<Document>();
-				}
-				Documents.add(document);
-				mRequirePage++;
-				if (mRequirePage >= PAGE_COUNT) {
-					mCurrentState = STATE_GET_DATA_COMPLETE;
-					mListener.updateNews(mParser.getNewsEntities(Documents));
-				} else {
-					updateNews(mRequirePage);
-				}
-			}
 
+			// updateNews(mRequirePage);
 		}
+		// 若请求的是新闻列表
+		if (mType == NewsGetUtil.NEWS_LIST) {
+			mCurrentState = STATE_GET_DATA_COMPLETE;
+			List<Document> docs = new ArrayList<Document>();
+			docs.add(document);
+			mListener.updateNews(mParser.getNewsEntities(docs));
+		}
+		// 若请求的是新闻正文
+		else if (mType == NewsGetUtil.NEWS_CONTENT) {
+			if (Documents == null) {
+				Documents = new ArrayList<Document>();
+			}
+			Documents.add(document);
+			mRequirePage++;
+			if (mRequirePage >= PAGE_COUNT) {
+				mCurrentState = STATE_GET_DATA_COMPLETE;
+				mListener.updateNews(mParser.getNewsEntities(Documents));
+			} else {
+				updateNews(mRequirePage);
+			}
+		}
+
 	}
 }

@@ -11,7 +11,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/big_space"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/login_logo" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:id="@+id/login_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/very_big_space"
+        android:layout_marginBottom="@dimen/big_space"
         android:layout_marginLeft="@dimen/normal_space"
         android:layout_marginRight="@dimen/normal_space"
         android:background="#ffecf1f0"
@@ -70,7 +70,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="@dimen/normal_space"
+            android:layout_marginTop="@dimen/big_space"
             android:background="@drawable/userinfo_shape"
             android:orientation="horizontal" >
 
@@ -94,28 +94,28 @@
                 android:id="@+id/edit_password"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/normal_space"
+                android:layout_marginLeft="@dimen/normal_space"
                 android:layout_marginRight="@dimen/normal_space"
                 android:background="@null"
                 android:ems="20"
                 android:hint="@string/hint_password"
-                android:layout_marginLeft="@dimen/normal_space"
                 android:inputType="textPassword"
-                android:layout_gravity="center_vertical"
                 android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/little_space"
+            android:layout_marginTop="@dimen/normal_space"
             android:orientation="horizontal" >
 
             <CheckBox
                 android:id="@+id/cb_rember_pswd"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="@dimen/normal_space"
+                android:layout_marginLeft="@dimen/very_big_space"
                 android:layout_weight="1"
                 android:button="@drawable/login_check_selector"
                 android:text="@string/rember_password" />
@@ -124,7 +124,7 @@
                 android:id="@+id/cb_auto_login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/normal_space"
+                android:layout_marginRight="@dimen/little_space"
                 android:layout_weight="1"
                 android:button="@drawable/login_check_selector"
                 android:text="@string/auto_login" />
@@ -139,27 +139,26 @@
             <Button
                 android:id="@+id/bt_login"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:background="@drawable/login_btn_selector"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/login"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_larger"
-                android:textStyle="bold" />
+                android:textSize="@dimen/text_larger" />
 
             <Button
                 android:id="@+id/bt_register"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="@dimen/big_space"
-                android:background="@drawable/login_btn_selector"
+                android:background="@drawable/login_btn_selector2"
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/register"
-                android:textColor="@color/white"
+                android:textColor="@drawable/bt_register_selector"
                 android:textSize="@dimen/text_larger"
-                android:textStyle="bold" />
+                 />
         </LinearLayout>
     </LinearLayout>
 

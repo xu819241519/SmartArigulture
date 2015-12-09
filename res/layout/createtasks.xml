@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/fragment_bg"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/nav_bg"
+		android:orientation="horizontal"
+
+		android:padding="@dimen/normal_space">
+		<ImageView
+			android:id="@+id/createtask_back_iv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/back"
+			android:layout_centerVertical="true" />
+
+		<RadioGroup
+			android:id="@+id/createtask_rg"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/createtask_rg"
+			android:layout_centerInParent="true"
+			android:padding="1dp"
+			android:orientation="horizontal">
+
+			<RadioButton
+				android:id="@+id/task_realtime_rb"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/createrttask_rg_rb"
+				android:button="@null"
+				android:gravity="right"
+				android:checked="true"
+				android:paddingTop="@dimen/little_space"
+				android:paddingBottom="@dimen/little_space"
+				android:paddingRight="@dimen/little_space"
+				android:paddingLeft="@dimen/normal_space"
+				android:text="实时任务"
+				android:textColor="@drawable/createtask_rg_text" />
+
+			<RadioButton
+				android:id="@+id/task_timed_rb"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@drawable/createtdtask_rg_rb"
+				android:button="@null"
+				android:gravity="left"
+				android:paddingTop="@dimen/little_space"
+				android:paddingBottom="@dimen/little_space"
+				android:paddingLeft="@dimen/little_space"
+				android:paddingRight="@dimen/normal_space"
+				android:text="定时任务"
+				android:textColor="@drawable/createtask_rg_text" />
+		</RadioGroup>
+	</RelativeLayout>
+
+	<FrameLayout
+		android:id="@+id/createtask_content_fl"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1" />
+
+</LinearLayout>

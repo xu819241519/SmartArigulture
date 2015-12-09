@@ -3,8 +3,7 @@ package com.nfschina.aiot.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nfschina.aiot.R;
-import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.activity.R;
 import com.nfschina.aiot.entity.NewsListEntity;
 
 import android.view.View;
@@ -26,7 +25,7 @@ public class NewsAdapter extends BaseAdapter {
 	public NewsAdapter() {
 		mNewsListEntity = new ArrayList<NewsListEntity>();
 	}
-	
+
 	@Override
 	public int getCount() {
 		return mNewsListEntity.size();
@@ -58,13 +57,17 @@ public class NewsAdapter extends BaseAdapter {
 
 			holder.getTime().setText(mNewsListEntity.get(position).getTime());
 			holder.getTitle().setText(mNewsListEntity.get(position).getTitle());
+			//System.out.println(mNewsListEntity.get(position).getTitle() + "-------->" + mNewsListEntity.get(position).getTitle().length() );
+			if(mNewsListEntity.get(position).getTitle().length() > 30){
+				holder.getTitle().setText(mNewsListEntity.get(position).getTitle().substring(0,30) + "......");
+			}
 		}
 
-//		if (position % 2 == 0) {
-//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
-//		} else {
-//			convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
-//		}
+		// if (position % 2 == 0) {
+		// convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_1));
+		// } else {
+		// convertView.setBackgroundColor(parent.getResources().getColor(R.color.table_back_2));
+		// }
 		return convertView;
 	}
 
@@ -90,14 +93,30 @@ public class NewsAdapter extends BaseAdapter {
 			this.mTime = mTime;
 		}
 	}
-	
+
 	/**
 	 * 添加新闻列表项
-	 * @param newsListEntities 新闻列表项
+	 * 
+	 * @param newsListEntities
+	 *            新闻列表项
 	 */
-	public void addData(List<NewsListEntity> newsListEntities){
+	public void addData(List<NewsListEntity> newsListEntities) {
 		mNewsListEntity.addAll(newsListEntities);
 		notifyDataSetChanged();
 	}
-	
+
+	/**
+	 * 删除新闻列表项
+	 * 
+	 */
+	public void deleteItem(NewsListEntity newsListEntity) {
+		for (int i = 0; i < mNewsListEntity.size(); ++i) {
+			NewsListEntity entity = mNewsListEntity.get(i);
+			if (entity.getTitle().equals(newsListEntity.getTitle())) {
+				mNewsListEntity.remove(i);
+				notifyDataSetChanged();
+				break;
+			}
+		}
+	}
 }

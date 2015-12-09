@@ -12,13 +12,14 @@
     <RelativeLayout
         android:id="@+id/history_nav"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:background="@color/nav_bg" >
 
 		<ImageButton
 		    android:id="@+id/history_back"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
+		    android:layout_marginLeft="@dimen/normal_space"
 			android:background="@drawable/back"
 			android:layout_centerVertical="true"
 		    android:layout_alignParentLeft="true" />
@@ -28,15 +29,17 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:padding="@dimen/normal_space"
             android:text="@string/history_title"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_top_big" />
+            android:textSize="@dimen/text_larger" />
         
         <ImageButton 
             android:id="@+id/history_gohome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/home"
+            android:layout_marginRight="@dimen/normal_space"
             android:background="@color/nav_bg"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>
@@ -46,7 +49,7 @@
         android:id="@+id/history_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="1"
         android:orientation="vertical" >
 
         <android.support.v4.view.ViewPager
@@ -64,63 +67,59 @@
     <LinearLayout
         android:id="@+id/history_bottom"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/white" >
 
-        <LinearLayout 
-            android:layout_width="match_parent"
-            android:layout_height="5dp"></LinearLayout>
         
         <RadioGroup
             android:id="@+id/history_group"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/radio_history_instructions"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:button="@null"
                 android:checked="false"
                 android:drawableTop="@drawable/history_instructions_selector"
                 android:gravity="center"
+                android:paddingTop="@dimen/little_space"
                 android:text="控制记录"
-                android:drawablePadding="-6dp"
                 android:textColor="@drawable/history_button_text_color"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_smaller" />
 
             <RadioButton
                 android:id="@+id/radio_history_greenhouse"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:button="@null"
                 android:checked="true"
+                android:paddingTop="@dimen/little_space"
                 android:drawableTop="@drawable/history_greenhose_selector"
                 android:gravity="center"
                 android:text="温室信息记录"
-                android:drawablePadding="-6dp"
                 android:textColor="@drawable/history_button_text_color"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_smaller" />
 
             <RadioButton
                 android:id="@+id/radio_history_alarm"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:button="@null"
+                android:paddingTop="@dimen/little_space"
                 android:drawableTop="@drawable/history_alarm_selector"
                 android:gravity="center"
-                android:drawablePadding="-6dp"
                 android:text="报警记录"
                 android:textColor="@drawable/history_button_text_color"
-                android:textSize="@dimen/text_small" />
+                android:textSize="@dimen/text_smaller" />
         </RadioGroup>
     </LinearLayout>
 

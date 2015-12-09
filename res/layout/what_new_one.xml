@@ -11,6 +11,6 @@
         android:adjustViewBounds="false"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:background="@drawable/guide_1" />
+        android:background="@drawable/guide_one" />
 
 </RelativeLayout>

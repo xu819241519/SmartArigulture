@@ -1,10 +1,5 @@
 package com.nfschina.aiot.activity;
 
-import com.nfschina.aiot.R;
-import com.nfschina.aiot.constant.Constant;
-import com.nfschina.aiot.constant.ConstantFun;
-import com.nfschina.aiot.db.SharePerencesHelper;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +7,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.db.SharePerencesHelper;
 
 
 /**
@@ -89,6 +86,7 @@ public class Others extends Activity implements OnClickListener{
 			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
 			intent = new Intent(this,Login.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+			stopService(Home.intent);
 			break;
 		//·µ»Ø
 		case R.id.others_back:

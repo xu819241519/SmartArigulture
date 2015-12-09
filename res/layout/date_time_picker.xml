@@ -1,0 +1,112 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:gravity="center">
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="#ffffff"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+		<com.nfschina.aiot.view.PickerView
+			android:id="@+id/year_pv"
+			android:layout_width="80dp"
+			android:layout_height="160dp" />
+
+		<TextView
+			android:id="@+id/year_tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="年"
+			android:textColor="#ffaa33"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+
+		<com.nfschina.aiot.view.PickerView
+			android:id="@+id/month_pv"
+			android:layout_width="80dp"
+			android:layout_height="160dp" />
+
+		<TextView
+			android:id="@+id/month_tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="月"
+			android:textColor="#ffaa33"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+
+		<com.nfschina.aiot.view.PickerView
+			android:id="@+id/day_pv"
+			android:layout_width="80dp"
+			android:layout_height="160dp" />
+
+		<TextView
+			android:id="@+id/day_tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="日"
+			android:textColor="#ffaa33"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+	</LinearLayout>
+
+	<View
+		android:background="#ffaa33"
+		android:layout_width="fill_parent"
+		android:layout_height="4dp" />
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="#ffffff"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+		<com.nfschina.aiot.view.PickerView
+			android:id="@+id/hour_pv"
+			android:layout_width="80dp"
+			android:layout_height="160dp" />
+
+		<TextView
+			android:id="@+id/hour_tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="时"
+			android:textColor="#ffaa33"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+
+		<com.nfschina.aiot.view.PickerView
+			android:id="@+id/minute_pv"
+			android:layout_width="80dp"
+			android:layout_height="160dp" />
+
+		<TextView
+			android:id="@+id/minute_tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="分"
+			android:textColor="#ffaa33"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+
+		<com.nfschina.aiot.view.PickerView
+			android:id="@+id/second_pv"
+			android:layout_width="80dp"
+			android:layout_height="160dp" />
+
+		<TextView
+			android:id="@+id/second_tv"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="秒"
+			android:textColor="#ffaa33"
+			android:textSize="24sp"
+			android:textStyle="bold" />
+	</LinearLayout>
+
+</LinearLayout>

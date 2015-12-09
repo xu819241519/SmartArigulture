@@ -13,7 +13,7 @@
     <RelativeLayout
         android:id="@+id/news_nav"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:background="@color/nav_bg" >
 
         <ImageButton
@@ -21,17 +21,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/normal_space"
             android:layout_centerVertical="true"
             android:background="@drawable/back" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/news_title"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_top_big" />
+            android:textSize="@dimen/text_larger"
+            android:padding="@dimen/normal_space" />
 
         <ImageButton
             android:id="@+id/news_gohome"
@@ -39,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/normal_space"
             android:background="@color/nav_bg"
             android:src="@drawable/home" />
     </RelativeLayout>

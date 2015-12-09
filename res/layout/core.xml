@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<android.support.v4.view.ViewPager
+		android:id="@+id/viewpager"
+		android:layout_width="fill_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:background="@color/transparent" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:background="@color/gray_lighter" />
+
+	<RadioGroup
+		android:id="@+id/core_tabs_rg"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:orientation="horizontal">
+
+		<RadioButton
+			android:id="@+id/core_tabs_monitor"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:button="@null"
+			android:paddingTop="@dimen/little_space"
+			android:drawableTop="@drawable/core_tabs_monitor_selector"
+			android:gravity="center"
+			android:paddingLeft="0dp"
+			android:text="实时监控"
+			android:textColor="@drawable/core_tabs_text_color" />
+
+
+		<RadioButton
+			android:id="@+id/core_tabs_info"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:button="@null"
+			android:paddingTop="@dimen/little_space"
+			android:drawableTop="@drawable/core_tabs_info_selector"
+			android:paddingLeft="0dp"
+			android:gravity="center"
+			android:text="报警信息"
+			android:textColor="@drawable/core_tabs_text_color" />
+		<RadioButton
+			android:id="@+id/core_tabs_threshold"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:button="@null"
+			android:paddingTop="@dimen/little_space"
+			android:drawableTop="@drawable/core_tabs_threshold_selector"
+			android:gravity="center"
+			android:paddingLeft="0dp"
+			android:text="阀值设置"
+			android:textColor="@drawable/core_tabs_text_color" />
+
+		<RadioButton
+			android:id="@+id/core_tabs_remotectrl"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:button="@null"
+			android:paddingTop="@dimen/little_space"
+			android:drawableTop="@drawable/core_tabs_remotectrl_selector"
+			android:gravity="center"
+			android:paddingLeft="0dp"
+			android:text="远程控制"
+			android:textColor="@drawable/core_tabs_text_color" />
+	</RadioGroup>
+
+</LinearLayout>

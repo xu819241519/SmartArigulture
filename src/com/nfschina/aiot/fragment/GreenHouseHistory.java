@@ -1,12 +1,10 @@
 package com.nfschina.aiot.fragment;
 
 import java.util.ArrayList;
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.List;
 
-import com.nfschina.aiot.R;
-import com.nfschina.aiot.R.color;
 import com.nfschina.aiot.activity.History;
+import com.nfschina.aiot.activity.R;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.AccessDataBase;
 import com.nfschina.aiot.entity.CarbonDioxideEntity;
@@ -15,23 +13,18 @@ import com.nfschina.aiot.entity.HumidityEntity;
 import com.nfschina.aiot.entity.IlluminanceEntity;
 import com.nfschina.aiot.entity.TemperatureEntity;
 
-import android.R.integer;
-import android.app.ActionBar.LayoutParams;
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
-import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -200,7 +193,11 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			break;
 		}
 		// showDialog(true);
-		changeCharts(mCurrentItem);
+		if (lastItem != mCurrentItem) {
+			showDialog(true);
+			changeCharts(mCurrentItem);
+
+		}
 
 		TranslateAnimation translateAnimation = new TranslateAnimation(lastItem * para.width, mCurrentItem * para.width,
 				0, 0);
@@ -263,7 +260,8 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 		Line line = new Line(values).setColor(Color.WHITE).setCubic(true);
 		line.setPointRadius(1);
 		line.setStrokeWidth(1);
-		//line.setHasPoints(false);
+		// line.setHasPoints(false);
+		//line.setHasLines(false);
 		List<Line> lines = new ArrayList<Line>();
 		lines.add(line);
 
@@ -300,7 +298,7 @@ public class GreenHouseHistory extends Fragment implements OnClickListener {
 			axisY.setName("π‚’’");
 		axisY.setTextSize(10);
 		mLineChartData.setAxisYLeft(axisY);
-		if(bFirst)
+		if (bFirst)
 			mChart.setLineChartData(mLineChartData);
 		else {
 			mChart.startDataAnimation();

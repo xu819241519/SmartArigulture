@@ -1,42 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nfschina.aiot"
-    android:versionCode="1"
-    android:installLocation="preferExternal"
-    android:versionName="1.0" >
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.nfschina.aiot.activity"
+	android:versionCode="1"
+	android:versionName="1.0">
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-sdk
+		android:minSdkVersion="8"
+		android:targetSdkVersion="19" />
+	<uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar" >
-        <activity
-            android:name="com.nfschina.aiot.activity.Splash"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+	<application
+		android:allowBackup="true"
+		android:icon="@drawable/ic_launcher"
+		android:label="@string/app_name"
+		android:theme="@android:style/Theme.Light.NoTitleBar">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.nfschina.aiot.activity.Guide" >
-        </activity>
-        <activity android:name="com.nfschina.aiot.activity.Login" >
-        </activity>
-        <activity android:name="com.nfschina.aiot.activity.Home"></activity>
-        <activity android:name="com.nfschina.aiot.activity.Register"></activity>
-        <activity android:name="com.nfschina.aiot.activity.AllGreenActivity"></activity>
-        <activity android:name="com.nfschina.aiot.activity.History"></activity>
-        <activity android:name="com.nfschina.aiot.activity.News"></activity>
-        <activity android:name="com.nfschina.aiot.activity.Others"></activity>
-        <activity android:name="com.nfschina.aiot.activity.About"></activity>
-        <activity android:name="com.nfschina.aiot.activity.ChangePassword"></activity>
-    </application>
+		<activity
+			android:name="com.nfschina.aiot.activity.Splash"
+			android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name="com.nfschina.aiot.activity.Guide">
+		</activity>
+		<activity android:name="com.nfschina.aiot.activity.Login">
+		</activity>
+		<activity 
+		    android:name="com.nfschina.aiot.activity.Home"
+		    android:screenOrientation="portrait"></activity>
+		<activity android:name="com.nfschina.aiot.activity.Register"></activity>
+		<activity android:name="com.nfschina.aiot.activity.AllGreenActivity"></activity>
+		<activity 
+		    android:name="com.nfschina.aiot.activity.History"
+		    android:screenOrientation="portrait"></activity>
+		<activity 
+		    android:name="com.nfschina.aiot.activity.News"
+		    android:screenOrientation="portrait"></activity>
+		<activity android:name="com.nfschina.aiot.activity.Others"></activity>
+		<activity android:name="com.nfschina.aiot.activity.About"></activity>
+		<activity android:name="com.nfschina.aiot.activity.ChangePassword"></activity>
+
+
+
+
+		<activity android:name="com.nfschina.aiot.activity.AllGreenHouseActivity">
+		</activity>
+		<activity android:name="com.nfschina.aiot.activity.MainActivity">
+		</activity>
+		<activity android:name="com.nfschina.aiot.activity.CoreActivity">
+		</activity>
+		<activity android:name="com.nfschina.aiot.activity.CreateTaskActivity">
+		</activity>
+		<activity android:name="com.nfschina.aiot.activity.AllTaskActivity">
+		</activity>
+
+
+		<service android:name="com.nfschina.aiot.socket.SocketService"></service>
+		<receiver android:name="com.nfschina.aiot.broadcastreceiver.MyReceiver">
+			<intent-filter>
+				<action android:name="BC" />
+			</intent-filter>
+		</receiver>
+		<receiver android:name="com.nfschina.aiot.broadcastreceiver.NotificationClickReceiver"></receiver>
+	</application>
 
 </manifest>

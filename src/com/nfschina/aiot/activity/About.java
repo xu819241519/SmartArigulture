@@ -1,7 +1,5 @@
 package com.nfschina.aiot.activity;
 
-import com.nfschina.aiot.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -12,4 +10,5 @@ public class About extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
 	}
+	
 }

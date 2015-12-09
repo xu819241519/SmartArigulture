@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white">
+
+	<TextView
+		android:id="@+id/device_item_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/big_space"
+		android:text="天窗"
+		android:textColor="@color/gray_dark"
+		android:textSize="@dimen/text_larger" />
+
+	<ToggleButton
+		android:id="@+id/device_item_switch"
+		android:layout_width="100dp"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:background="@android:color/transparent"
+		android:button="@drawable/toggle_btn"
+		android:checked="false"
+		android:textOff=""
+		android:textOn="" />
+
+</RelativeLayout>

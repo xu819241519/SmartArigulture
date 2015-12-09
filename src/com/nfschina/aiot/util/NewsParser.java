@@ -47,11 +47,13 @@ public abstract class NewsParser {
 	public abstract List<NewsEntity> getNewsEntities(List<Document> documents);
 
 	/**
-	 * 添加http get 头信息
+	 * 添加http get 头信息，当需要添加一些头部信息时，重写该函数
 	 * 
 	 * @param connection
 	 * @return
 	 */
-	public abstract Connection addHeader(Connection connection);
+	public Connection addHeader(Connection connection) {
+		return connection;
+	}
 
 }

@@ -1,31 +1,30 @@
 package com.nfschina.aiot.entity;
 
-import java.sql.Timestamp;
-
 /**
  * 指令实体
+ * 
  * @author xu
  *
  */
 public class InstructionEntity {
 
-	//指令ID
+	// 指令ID
 	private int ID;
-	//指令正文
+	// 指令正文
 	private String Content;
-	//指令发送时间
+	// 指令发送时间
 	private String SendTime;
-	//指令执行时间
+	// 指令执行时间
 	private String RunTime;
-	//温室ID
+	// 温室ID
 	private String GreenHouseID;
-	//发送指令用户
+	// 发送指令用户
 	private String UserID;
-	
-
+	// 运行周期
+	private String RunPeriod;
 
 	public InstructionEntity(int iD, String content, String sendTime, String runTime, String greenHouseID,
-			String userID) {
+			String userID, String runperiod) {
 		super();
 		ID = iD;
 		Content = content;
@@ -33,6 +32,7 @@ public class InstructionEntity {
 		RunTime = runTime;
 		GreenHouseID = greenHouseID;
 		UserID = userID;
+		RunPeriod = runperiod;
 	}
 
 	public int getID() {
@@ -44,6 +44,7 @@ public class InstructionEntity {
 	}
 
 	public String getContent() {
+
 		return Content;
 	}
 
@@ -82,6 +83,13 @@ public class InstructionEntity {
 	public void setUserID(String userID) {
 		UserID = userID;
 	}
-	
+
+	public String getRunPeriod() {
+		return RunPeriod;
+	}
+
+	public void setRunPeriod(String runPeriod) {
+		RunPeriod = runPeriod;
+	}
 
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:shape="oval">
+
+	<!-- 填充的颜色 -->
+	<solid android:color="#50000000" />
+	<size
+		android:width="50dp"
+		android:height="50dp" />
+	<stroke
+		android:width="5dp"
+		android:color="@color/transparent" />
+
+</shape>

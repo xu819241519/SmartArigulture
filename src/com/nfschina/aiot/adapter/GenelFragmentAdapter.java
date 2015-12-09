@@ -1,6 +1,7 @@
 package com.nfschina.aiot.adapter;
 
 import java.util.List;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 

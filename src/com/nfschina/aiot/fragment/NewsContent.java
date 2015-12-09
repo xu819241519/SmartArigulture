@@ -2,20 +2,19 @@ package com.nfschina.aiot.fragment;
 
 import java.util.List;
 
-import com.nfschina.aiot.R;
 import com.nfschina.aiot.activity.News;
+import com.nfschina.aiot.activity.R;
 import com.nfschina.aiot.entity.NewsContentEntity;
 import com.nfschina.aiot.entity.NewsEntity;
 import com.nfschina.aiot.entity.NewsListEntity;
-import com.nfschina.aiot.util.NewsContentParserVillageCom;
-import com.nfschina.aiot.util.NewsGetListener;
+import com.nfschina.aiot.listener.NewsGetListener;
+import com.nfschina.aiot.listener.NewsListDeleteItemListener;
 import com.nfschina.aiot.util.NewsGetUtil;
 
 import android.app.ProgressDialog;
-import android.drm.ProcessedData;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +33,22 @@ public class NewsContent extends Fragment implements NewsGetListener {
 	// 标题
 	private TextView mTitle;
 	private TextView mContent;
+	private TextView mTime;
+	private TextView mSource;
+	private TextView mSummary;
 	private View mView;
 	private ProgressDialog mDialog;
 
+	// 是否已经有缓存数据
+	private boolean cacheData = false;
+
 	private NewsListEntity mNewsListEntity;
 
-	public NewsContent(NewsListEntity newsListEntity) {
+	private NewsListDeleteItemListener mListener;
+
+	public NewsContent(NewsListEntity newsListEntity, NewsListDeleteItemListener listener) {
 		mNewsListEntity = newsListEntity;
+		mListener = listener;
 	}
 
 	@Override
@@ -54,9 +62,13 @@ public class NewsContent extends Fragment implements NewsGetListener {
 		super.onStart();
 		initUIControls();
 
-		NewsGetUtil newsGetUtil = new NewsGetUtil(this,
-				((News) getActivity()).getParserFactory().getNewsContentParser(mNewsListEntity.getURL()),NewsGetUtil.NEWS_CONTENT);
-		newsGetUtil.updateNews(0);
+		if (!cacheData) {
+
+			NewsGetUtil newsGetUtil = new NewsGetUtil(this,
+					((News) getActivity()).getParserFactory().getNewsContentParser(mNewsListEntity.getURL()),
+					NewsGetUtil.NEWS_CONTENT);
+			newsGetUtil.updateNews(0);
+		}
 	}
 
 	/**
@@ -65,6 +77,9 @@ public class NewsContent extends Fragment implements NewsGetListener {
 	private void initUIControls() {
 		mTitle = (TextView) mView.findViewById(R.id.news_content_title);
 		mContent = (TextView) mView.findViewById(R.id.news_content_content);
+		mSource = (TextView) mView.findViewById(R.id.news_content_source);
+		mTime = (TextView) mView.findViewById(R.id.news_content_time);
+		mSummary = (TextView) mView.findViewById(R.id.news_content_summary);
 
 	}
 
@@ -92,7 +107,18 @@ public class NewsContent extends Fragment implements NewsGetListener {
 				mTitle.setText(newsContentEntity.getTitle());
 				mContent.setText(newsContentEntity.getContext());
 				mContent.setMovementMethod(ScrollingMovementMethod.getInstance());
+				mSource.setText(newsContentEntity.getSource());
+				mTime.setText(newsContentEntity.getTime());
+				CharSequence summary = newsContentEntity.getSummary();
+				if (summary != null && !summary.equals("")) {
+					mSummary.setText(summary);
+					mSummary.setVisibility(View.VISIBLE);
+				}
 			}
+		} else {
+			mTitle.setText("暂无内容");
+			mListener.deleteNewsListItem(mNewsListEntity);
 		}
+		cacheData = true;
 	}
 }

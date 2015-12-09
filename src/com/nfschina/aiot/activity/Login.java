@@ -1,10 +1,10 @@
 package com.nfschina.aiot.activity;
 
-
-import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.AccessDataBase;
 import com.nfschina.aiot.db.SharePerencesHelper;
+import com.nfschina.aiot.view.MyProgressDialog;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -47,7 +47,7 @@ public class Login extends Activity implements OnClickListener {
 	// 是否自动登录
 	private boolean mAutoLogin;
 	// 提示对话框
-	private ProgressDialog mProgressDialog;
+	private MyProgressDialog mProgressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class Login extends Activity implements OnClickListener {
 	 * 初始化编辑框
 	 */
 	public void initEditViews() {
-		if(Constant.CURRENT_USER != null){
+		if (Constant.CURRENT_USER != null) {
 			mUserIDEditText.setText(Constant.CURRENT_USER);
 		}
 		mRemember = SharePerencesHelper.getBoolean(this, Constant.IS_REMEMBER_PWD, false);
@@ -196,15 +196,15 @@ public class Login extends Activity implements OnClickListener {
 	/**
 	 * 显示提示对话框
 	 */
-	public void showAlertDialog(){
-		if(mProgressDialog == null){
-			mProgressDialog = new ProgressDialog(this);
+	public void showAlertDialog() {
+		if (mProgressDialog == null) {
+			mProgressDialog = new MyProgressDialog(this);
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 			mProgressDialog.setMessage("正在登录...");
 			mProgressDialog.show();
 		}
 	}
-	
+
 	/**
 	 * 关闭提示对话框
 	 */
@@ -219,6 +219,7 @@ public class Login extends Activity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Constant.REG_SUCCESS) {
+			Toast.makeText(this, "注册成功，请登录！", Toast.LENGTH_SHORT).show();
 			String username = data.getStringExtra(Constant.REG_RETURN);
 			mUserIDEditText.setText(username);
 			SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, false);
@@ -226,6 +227,7 @@ public class Login extends Activity implements OnClickListener {
 			mPasswordEditText.setText("");
 			mRememberCheckBox.setChecked(false);
 			mAutoLoginCheckBox.setChecked(false);
+
 		}
 	}
 
@@ -237,9 +239,13 @@ public class Login extends Activity implements OnClickListener {
 			SharePerencesHelper.putString(this, Constant.USER_ID, mUserID);
 			SharePerencesHelper.putString(this, Constant.PWD, mPassword);
 			SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, true);
+		} else {
+			SharePerencesHelper.putBoolean(this, Constant.IS_REMEMBER_PWD, false);
 		}
 		if (mAutoLogin) {
 			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, true);
+		} else {
+			SharePerencesHelper.putBoolean(this, Constant.IS_AUTO_LOGIN, false);
 		}
 	}
 
@@ -283,7 +289,7 @@ public class Login extends Activity implements OnClickListener {
 				startActivity(intent);
 				Constant.CURRENT_USER = mUserID;
 				Constant.CURRENT_PASSWORD = mPassword;
-				//finishAlertDialog();
+				// finishAlertDialog();
 				mActivity.finish();
 			} else if (result == Constant.SERVER_SQL_FAILED) {
 				Toast.makeText(mActivity, Constant.SQL_FAILED_INFO, Toast.LENGTH_SHORT).show();

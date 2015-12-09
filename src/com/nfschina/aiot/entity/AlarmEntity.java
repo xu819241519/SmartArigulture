@@ -13,25 +13,23 @@ public class AlarmEntity {
 	private int ID;
 	// 温室ID
 	private String GreenHouseID;
-	// 报警正文
-	private String Content;
 	// 报警时间
 	private String Time;
 	// 报警状态
-	private int State;
+	private String State;
 	// 等级
 	private String Level;
 	// 二氧化碳超出值
-	private int CO2;
+	private String CO2;
 	// 温度超出值
-	private float Temperature;
+	private String Temperature;
 	// 湿度超出值
-	private float Humidity;
+	private String Humidity;
 	// 光照超出值
-	private int Illuminance;
+	private String Illuminance;
 
-	public AlarmEntity(int iD, String greenHouseID, float temperature, int co2, float humidity, int illuminance,
-			String time, int state) {
+	public AlarmEntity(int iD, String greenHouseID, String temperature, String co2, String humidity, String illuminance,
+			String time, String state, String level) {
 		ID = iD;
 		GreenHouseID = greenHouseID;
 		Time = time;
@@ -40,7 +38,7 @@ public class AlarmEntity {
 		Humidity = humidity;
 		illuminance = Illuminance;
 		CO2 = co2;
-		Level = "";
+		Level = level;
 	}
 
 	public int getID() {
@@ -61,30 +59,16 @@ public class AlarmEntity {
 
 	public String getContent() {
 		String result = "";
-		if (Temperature > 0) {
-			result += "温度超上限" + Temperature + "度" + "\n";
-		} else if (Temperature < 0) {
-			result += "温度超下限" + (-Temperature) + "度" + "\n";
-		}
-
-		if (Humidity > 0) {
-			result += "湿度超上限" + Humidity + "\n";
-		} else if (Humidity < 0) {
-			result += "湿度超下限" + (-Humidity) + "\n";
-		}
-
-		if (CO2 > 0) {
-			result += "CO2超上限" + CO2 + "\n";
-		} else if (CO2 < 0) {
-			result += "C02超下限" + (-CO2) + "\n";
-		}
-
-		if (Illuminance > 0) {
-			result += "光照超上限" + Illuminance + "\n";
-		} else if (Illuminance < 0) {
-			result += "光照超下限" + (-Illuminance) + "\n";
-		}
-
+		if (CO2 != null && !CO2.equals(""))
+			result += CO2 + "\n";
+		if (Illuminance != null && !Illuminance.equals(""))
+			result += Illuminance + "\n";
+		if (Temperature != null && !Temperature.equals(""))
+			result += Temperature + "\n";
+		if (Humidity != null && !Humidity.equals(""))
+			result += Humidity + "\n";
+		if (result.indexOf("\n") != -1)
+			result = result.substring(0, result.lastIndexOf("\n"));
 		return result;
 	}
 
@@ -97,29 +81,15 @@ public class AlarmEntity {
 	}
 
 	public String getState() {
-		String result = "";
-		switch (State) {
-		case 0:
-			result = "未处理";
-			break;
-		case 1:
-			result = "已处理";
-			break;
-		case 2:
-			result = "已忽略";
-			break;
-		default:
-			break;
-		}
-		return result;
+		return State;
 	}
 
-	public void setState(int state) {
+	public void setState(String state) {
 		State = state;
 	}
 
 	public String getLevel() {
-		return "待定";
+		return Level;
 	}
 
 	public void setLevel(String level) {

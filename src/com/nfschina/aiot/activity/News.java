@@ -1,24 +1,23 @@
 package com.nfschina.aiot.activity;
 
-import com.nfschina.aiot.R;
-import com.nfschina.aiot.constant.Constant;
-import com.nfschina.aiot.entity.NewsContentEntity;
-import com.nfschina.aiot.entity.NewsListEntity;
-import com.nfschina.aiot.fragment.NewsContent;
-import com.nfschina.aiot.fragment.NewsList;
-import com.nfschina.aiot.util.ParserFactory;
-import com.nfschina.aiot.util.VillageComParserFactory;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.TextView;
+
+import com.nfschina.aiot.constant.Constant;
+import com.nfschina.aiot.crash.SavedInstanceState;
+import com.nfschina.aiot.db.SharePerencesHelper;
+import com.nfschina.aiot.entity.NewsListEntity;
+import com.nfschina.aiot.fragment.NewsContent;
+import com.nfschina.aiot.fragment.NewsList;
+import com.nfschina.aiot.util.NewsFactory;
+import com.nfschina.aiot.util.VillageComNewsFactory;
+import com.nfschina.aiot.util.XinnongNewsFactory;
 
 /**
  * 新闻页面 显示新闻列表和新闻详情。新闻详情使用fragment显示
@@ -40,10 +39,10 @@ public class News extends FragmentActivity implements OnClickListener {
 	// 新闻正文
 	private NewsContent mNewsContent;
 	// 新闻解析器
-	private ParserFactory mParserFactory;
+	private NewsFactory mParserFactory;
 
 	// 获取新闻解析器
-	public ParserFactory getParserFactory() {
+	public NewsFactory getParserFactory() {
 		return mParserFactory;
 	}
 
@@ -62,7 +61,12 @@ public class News extends FragmentActivity implements OnClickListener {
 	private void InitUIControls() {
 		mBack = (ImageButton) findViewById(R.id.news_back);
 		mHome = (ImageButton) findViewById(R.id.news_gohome);
-		mParserFactory = new VillageComParserFactory();
+		int factoryID = SharePerencesHelper.getInt(this, Constant.FACTORY_ID, 1);
+		if (factoryID == 1)
+			mParserFactory = new VillageComNewsFactory();
+		else if (factoryID == 2)
+			mParserFactory = new XinnongNewsFactory();
+
 		mFragmentManager = getSupportFragmentManager();
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		mNewsList = new NewsList();
@@ -102,7 +106,7 @@ public class News extends FragmentActivity implements OnClickListener {
 	public void goNewsContent(NewsListEntity newsListEntity) {
 		FragmentTransaction ft = mFragmentManager.beginTransaction();
 		ft.hide(mNewsList);
-		mNewsContent = new NewsContent(newsListEntity);
+		mNewsContent = new NewsContent(newsListEntity, mNewsList);
 		ft.add(R.id.news_fragment, mNewsContent, Constant.NEWS_CONTENT);
 		ft.addToBackStack(null);
 		// ft.replace(R.id.news_fragment, , Constant.NEWS_CONTENT);
@@ -122,5 +126,17 @@ public class News extends FragmentActivity implements OnClickListener {
 			ft.commit();
 		}
 
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		SavedInstanceState.saveState(outState);
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		SavedInstanceState.restoreState(savedInstanceState);
 	}
 }

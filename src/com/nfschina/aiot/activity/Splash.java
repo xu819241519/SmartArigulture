@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-import com.nfschina.aiot.R;
+
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.db.SharePerencesHelper;
 

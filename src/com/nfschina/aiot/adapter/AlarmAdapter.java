@@ -1,17 +1,14 @@
 package com.nfschina.aiot.adapter;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import com.nfschina.aiot.R;
+import com.nfschina.aiot.activity.R;
 import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.entity.AlarmEntity;
 
-import android.R.integer;
-import android.provider.ContactsContract.Contacts.Data;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,6 +25,8 @@ public class AlarmAdapter extends BaseAdapter {
 
 	// 报警记录实体的list
 	private List<AlarmEntity> mList;
+	// 排序规则
+	private Comparator<AlarmEntity> mComparator = null;
 
 	public AlarmAdapter() {
 		super();
@@ -153,7 +152,14 @@ public class AlarmAdapter extends BaseAdapter {
 	 */
 	public boolean addData(List<AlarmEntity> alarmEntities) {
 		if (mList != null && alarmEntities != null && alarmEntities.size() != 0) {
-			return mList.addAll(alarmEntities);
+			if (mList.addAll(alarmEntities)) {
+				if (mComparator != null) {
+					Collections.sort(mList, mComparator);
+				}
+				return true;
+			} else {
+				return false;
+			}
 		} else
 			return false;
 	}
@@ -169,5 +175,17 @@ public class AlarmAdapter extends BaseAdapter {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 对数据进行排序
+	 * 
+	 * @param comparator
+	 *            排序规则
+	 */
+	public void sortData(Comparator<AlarmEntity> comparator) {
+		Collections.sort(mList, comparator);
+		mComparator = comparator;
+		notifyDataSetChanged();
 	}
 }

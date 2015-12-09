@@ -2,12 +2,10 @@ package com.nfschina.aiot.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.nfschina.aiot.R;
 import com.nfschina.aiot.adapter.FragmentAdapter;
-import com.nfschina.aiot.fragment.Guide_1;
-import com.nfschina.aiot.fragment.Guide_2;
-import com.nfschina.aiot.fragment.Guide_3;
-import com.nfschina.aiot.fragment.Guide_4;
+import com.nfschina.aiot.fragment.Guide_One;
+import com.nfschina.aiot.fragment.Guide_Two;
+import com.nfschina.aiot.fragment.Guide_Three;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -52,10 +50,9 @@ public class Guide extends FragmentActivity implements OnPageChangeListener {
 	 */
 	private void initFragments() {
 		mFragments = new ArrayList<Fragment>();
-		mFragments.add(new Guide_1());
-		mFragments.add(new Guide_2());
-		mFragments.add(new Guide_3());
-		mFragments.add(new Guide_4());
+		mFragments.add(new Guide_One());
+		mFragments.add(new Guide_Two());
+		mFragments.add(new Guide_Three());
 		
 		mAdapter = new FragmentAdapter(getSupportFragmentManager(),mFragments, this);
 

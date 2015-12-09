@@ -2,6 +2,47 @@
 <resources>
 
 	<color name="transparent">#00000000</color>
+	<color name="nav_bg">#3BA327</color>
+	<color name="green_dark">#288b54</color>
+	<color name="green">#3BA327</color>
+	<color name="green_light">#99288b54</color>
+	<color name="white">#ffffff</color>
+	<color name="tranwhite">#90ffffff</color>
+	<color name="black">#000000</color>
+	<color name="black_light">#50000000</color>
+	<color name="black_99">#99000000</color>
+	<color name="gray_light">#cccccc</color>
+	<color name="gray_lighter">#30cccccc</color>
+	<color name="gray_lightest">#10cccccc</color>
+	<color name="gray_dark">#666666</color>
+	<color name="gray">#999999</color>
+	<color name="gray_darker">#333333</color>
+	<color name="fragment_bg">#ECF1F0</color>
+	<color name="line">#EAEAEA</color>
+	<color name="red_dark">#660902</color>
+	<color name="blue_dark">#018ADC</color>
+	<color name="blue_light">#99018ADC</color>
+	<color name="blue_lighter">#30018ADC</color>
+	<color name="ad_theme_color">#0081d5</color>
+	<color name="ad_theme_color_light">#990081d5</color>
+	<color name="orange">#FE7A0E</color>
+	<color name="orange_other">#CC7901</color>
+	<color name="orange_light">#50CC7901</color>
+	<color name="blue_btn_nor">#0080D5</color>
+	<color name="blue_btn_press">#0099FA</color>
+
+	<!-- 字体颜色，选中 -->
+	<color name="tabs_textcolor_true">#3BA126</color>
+	<!-- 字体颜色，没选中 -->
+	<color name="tabs_textcolor_false">#999999</color>
+	<color name="lightgray">#F7F7F7</color>
+	<color name="lightblack">#696969</color>
+	<color name="blend_item_theme_color">#ff005092</color>
+	<color name="blend_item_divider_color">#ffededed</color>
+	<color name="blend_item_pressed_color_transparent">#19000000</color>
+	<color name="blend_item_theme_color_black">#ff393d43</color>
+
+	<color name="transparent">#00000000</color>
 	<color name="nav_bg_topline">#ff31c514</color>
 	<color name="nav_bg">#ff3ba327</color>
 	<color name="green_dark">#288b54</color>

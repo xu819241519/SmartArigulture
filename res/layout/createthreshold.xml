@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/fragment_bg"
+	android:orientation="vertical">
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/nav_bg">
+
+		<ImageButton
+			android:id="@+id/threshold_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_marginLeft="@dimen/normal_space"
+			android:layout_centerVertical="true"
+			android:background="@drawable/back" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="新建阀值"
+			android:textColor="@color/white"
+			android:padding="@dimen/normal_space"
+			android:textSize="@dimen/text_larger" />
+
+		<ImageButton
+			android:id="@+id/threshold_gohome"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="@dimen/normal_space"
+			android:layout_centerVertical="true"
+			android:background="@color/nav_bg"
+			android:src="@drawable/home" />
+	</RelativeLayout>
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:background="@color/gray_lighter" />
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="horizontal">
+
+		<ScrollView
+			android:id="@+id/create_threshold_sv"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:fadingEdge="none"
+			android:scrollbars="none"
+			android:layout_weight="3">
+
+			<LinearLayout
+				android:id="@+id/create_threshold_sv_ll"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal"
+				android:orientation="vertical" />
+		</ScrollView>
+
+
+		<com.nfschina.aiot.view.NoScrollViewPager
+			android:id="@+id/create_threshold_vp"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:background="@color/white" />
+
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:background="@color/white"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<Button
+			android:id="@+id/threshold_save_btn"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@color/white"
+			android:text="保存阀值"
+			android:layout_margin="@dimen/little_space"
+			android:padding="@dimen/normal_space"
+			android:background="@drawable/blue_btn_selector" />
+	</LinearLayout>
+
+</LinearLayout>

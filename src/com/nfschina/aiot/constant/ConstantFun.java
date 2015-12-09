@@ -4,11 +4,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
-import com.nfschina.aiot.R;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.Html;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -31,9 +32,9 @@ public class ConstantFun {
 	 */
 	public static SoundPullEventListener<ListView> getSoundListener(Activity activity) {
 		SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(activity);
-		soundListener.addSoundEvent(State.PULL_TO_REFRESH, R.raw.pull_event);
-		soundListener.addSoundEvent(State.RESET, R.raw.reset_sound);
-		soundListener.addSoundEvent(State.REFRESHING, R.raw.refreshing_sound);
+//		soundListener.addSoundEvent(State.PULL_TO_REFRESH, R.raw.pull_event);
+//		soundListener.addSoundEvent(State.RESET, R.raw.reset_sound);
+//		soundListener.addSoundEvent(State.REFRESHING, R.raw.refreshing_sound);
 		return soundListener;
 	}
 
@@ -129,6 +130,28 @@ public class ConstantFun {
 			result += "</font>";
 		}
 		return Html.fromHtml(result);
+	}
+
+	public static boolean netStateAvailable(Activity activity) {
+
+		boolean result = false;
+
+		Context context = activity.getApplicationContext();
+		ConnectivityManager connectivityManager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] networkInfos = connectivityManager.getAllNetworkInfo();
+		for (int i = 0; i < networkInfos.length; ++i) {
+			if (networkInfos[i].getState() == NetworkInfo.State.CONNECTED) {
+				result = true;
+				break;
+			}
+		}
+
+		if (!result) {
+			Toast.makeText(context, Constant.NET_STATE_DISABLE, Toast.LENGTH_SHORT).show();
+		}
+
+		return result;
 	}
 
 }

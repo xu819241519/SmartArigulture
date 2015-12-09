@@ -1,94 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:background="@color/title_back"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ID"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" >
-        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/title_back"
+            android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/alarm_history_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="2.3"
-            android:gravity="center"
-            android:text="时间"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" >
-        </TextView>
+            <TextView
+                android:id="@+id/alarm_history_title_id"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="ID"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:clickable="true" >
+            </TextView>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="温室"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" >
-        </TextView>
+            <TextView
+                android:id="@+id/alarm_history_title_time"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="时间"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:clickable="true" >
+            </TextView>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="等级"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" >
-        </TextView>
+            <TextView
+                android:id="@+id/alarm_history_title_greenhouse"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="温室"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:clickable="true" >
+            </TextView>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="内容"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" >
-        </TextView>
+            <TextView
+                android:id="@+id/alarm_history_title_level"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="等级"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:clickable="true" >
+            </TextView>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:text="状态"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_small" >
-        </TextView>
+            <TextView
+                android:id="@+id/alarm_history_title_content"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="内容"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:clickable="true" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/alarm_history_title_state"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="状态"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:clickable="true" >
+            </TextView>
+        </LinearLayout>
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/alarm_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@color/divider"
+            android:dividerHeight="1dp"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true" />
     </LinearLayout>
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/alarm_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:cacheColorHint="@color/transparent"
-        android:divider="@color/divider"
-        android:dividerHeight="1dp"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="false"
-        android:footerDividersEnabled="false"
-        android:headerDividersEnabled="false"
-        android:smoothScrollbar="true" />
-
-</LinearLayout>
+</HorizontalScrollView>

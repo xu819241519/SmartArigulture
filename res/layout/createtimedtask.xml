@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:scrollbars="none">
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/fragment_bg"
+		android:orientation="vertical">
+		<RelativeLayout
+			android:id="@+id/timedtask_greenhouse_rl"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:text="选择温室"
+				android:textSize="@dimen/text_normal" />
+			<TextView
+				android:id="@+id/timedtask_gh_selected"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/greenhouse_selected"
+				android:textSize="@dimen/text_small"
+				android:textColor="@color/green_light" />
+			<com.nfschina.aiot.view.MyGridView
+				android:id="@+id/show_house_selected_timed"
+				android:layout_width="240dp"
+				android:layout_height="wrap_content"
+				android:verticalSpacing="1dp"
+				android:horizontalSpacing="1dp"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="27dp"
+				android:numColumns="3"
+				android:listSelector="@null"
+				android:scrollbars="none"></com.nfschina.aiot.view.MyGridView>
+
+			<ImageView
+				android:id="@+id/timedtask_choosehouse_iv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/choose_iv"
+				android:layout_centerVertical="true"
+				android:layout_alignParentRight="true"
+				android:padding="@dimen/normal_space" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<LinearLayout
+			android:id="@+id/timed_tasktype_ll"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:gravity="center_vertical"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="选择次数"
+				android:textSize="@dimen/text_normal" />
+
+			<RadioGroup
+				android:id="@+id/timedtask_tasktype_rg"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="2"
+				android:orientation="horizontal">
+
+				<RadioButton
+					android:id="@+id/timedtask_onetime_rb"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:button="@null"
+					android:checked="true"
+					android:drawableLeft="@drawable/radiobutton_selector"
+					android:paddingLeft="0dp"
+					android:text="执行一次"
+					android:textColor="@color/gray_dark" />
+
+				<RadioButton
+					android:id="@+id/timedtask_everyday_rb"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:button="@null"
+					android:drawableLeft="@drawable/radiobutton_selector"
+					android:paddingLeft="0dp"
+					android:text="每天一次"
+					android:textColor="@color/gray_dark" />
+			</RadioGroup>
+		</LinearLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<RelativeLayout
+			android:id="@+id/timedtask_time_rl"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:text="执行时间"
+				android:textSize="@dimen/text_normal" />
+			<TextView
+				android:id="@+id/timedtask_time_selected"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/time_selected"
+				android:textSize="@dimen/text_small"
+				android:textColor="@color/green_light" />
+			<TextView
+				android:id="@+id/timedtask_time"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:padding="4dp"
+				android:textSize="@dimen/text_small"
+				android:textColor="@color/green_light"
+				android:background="@drawable/showselected_shape"
+				android:visibility="gone" />
+			<ImageView
+				android:id="@+id/timedtask_choosetime_iv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/choose_iv"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:padding="@dimen/normal_space" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<RelativeLayout
+			android:id="@+id/timedtask_device_rl"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:text="选择设备"
+				android:textSize="@dimen/text_normal" />
+			<TextView
+				android:id="@+id/timedtask_device_selected"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/device_selected"
+				android:textSize="@dimen/text_small"
+				android:textColor="@color/green_light" />
+			<com.nfschina.aiot.view.MyGridView
+				android:id="@+id/show_device_selected_timed"
+				android:layout_width="240dp"
+				android:layout_height="wrap_content"
+				android:verticalSpacing="1dp"
+				android:horizontalSpacing="1dp"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="27dp"
+				android:numColumns="3"
+				android:listSelector="@null"
+				android:scrollbars="none"></com.nfschina.aiot.view.MyGridView>
+
+			<ImageView
+				android:id="@+id/timedtask_choosedevice_iv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/choose_iv"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:padding="@dimen/normal_space" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<LinearLayout
+			android:id="@+id/timedtask_taskdo_ll"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:gravity="center_vertical"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="选择操作:"
+				android:textSize="@dimen/text_normal" />
+
+			<RadioGroup
+				android:id="@+id/timedtask_taskdo_rg"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="2"
+				android:orientation="horizontal">
+
+				<RadioButton
+					android:id="@+id/timedtask_on_rb"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:button="@null"
+					android:checked="true"
+					android:drawableLeft="@drawable/radiobutton_selector"
+					android:paddingLeft="0dp"
+					android:text="打开"
+					android:textColor="@color/gray_dark" />
+
+				<RadioButton
+					android:id="@+id/timedtask_off_rb"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:button="@null"
+					android:drawableLeft="@drawable/radiobutton_selector"
+					android:paddingLeft="0dp"
+					android:text="关闭"
+					android:textColor="@color/gray_dark" />
+			</RadioGroup>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingTop="@dimen/normal_space"
+			android:paddingBottom="@dimen/normal_space">
+			<Button
+				android:id="@+id/task_save_btn"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/orange_btn_selector"
+				android:padding="@dimen/normal_space"
+				android:layout_margin="@dimen/little_space"
+				android:text="保存任务"
+				android:textColor="@color/white"
+				android:enabled="false"
+				android:textSize="@dimen/text_normal" />
+		</LinearLayout>
+	</LinearLayout>
+</ScrollView>

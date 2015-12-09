@@ -1,6 +1,5 @@
 package com.nfschina.aiot.activity;
 
-import com.nfschina.aiot.R;
 import com.nfschina.aiot.constant.Constant;
 import com.nfschina.aiot.constant.ConstantFun;
 import com.nfschina.aiot.db.AccessDataBase;

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:scrollbars="none"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/fragment_bg"
+		android:orientation="vertical">
+
+		<RelativeLayout
+			android:id="@+id/realtimetask_greenhouse_rl"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:text="选择温室"
+				android:textColor="@color/gray_darker"
+				android:textSize="@dimen/text_normal" />
+			<TextView
+				android:id="@+id/realtimetask_gh_selected"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/greenhouse_selected"
+				android:textSize="@dimen/text_small"
+				android:textColor="@color/green_light" />
+			<com.nfschina.aiot.view.MyGridView
+				android:id="@+id/show_house_selected"
+				android:layout_width="240dp"
+				android:layout_height="wrap_content"
+				android:verticalSpacing="1dp"
+				android:horizontalSpacing="1dp"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="27dp"
+				android:numColumns="3"
+				android:listSelector="@null"
+				android:scrollbars="none"></com.nfschina.aiot.view.MyGridView>
+
+			<ImageView
+				android:id="@+id/realtimetask_choosehouse_iv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/choose_iv"
+				android:layout_centerVertical="true"
+				android:layout_alignParentRight="true"
+				android:padding="@dimen/normal_space" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<RelativeLayout
+			android:id="@+id/realtimetask_device_rl"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:text="选择设备  "
+				android:textColor="@color/gray_darker"
+				android:textSize="@dimen/text_normal" />
+			<TextView
+				android:id="@+id/realtimetask_device_selected"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/device_selected"
+				android:textSize="@dimen/text_small"
+				android:textColor="@color/green_light" />
+			<com.nfschina.aiot.view.MyGridView
+				android:id="@+id/show_device_selected"
+				android:layout_width="240dp"
+				android:layout_height="wrap_content"
+				android:verticalSpacing="1dp"
+				android:horizontalSpacing="1dp"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="27dp"
+				android:numColumns="3"
+				android:listSelector="@null"
+				android:scrollbars="none"></com.nfschina.aiot.view.MyGridView>
+
+			<ImageView
+				android:id="@+id/realtimetask_choosedevice_iv"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/choose_iv"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:padding="@dimen/normal_space" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="1dp" />
+
+		<LinearLayout
+			android:id="@+id/createtask_taskdo_ll"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:gravity="center_vertical"
+			android:paddingTop="@dimen/big_space"
+			android:paddingBottom="@dimen/big_space"
+			android:paddingLeft="@dimen/normal_space">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="选择操作"
+				android:textColor="@color/gray_darker"
+				android:textSize="@dimen/text_normal" />
+
+			<RadioGroup
+				android:id="@+id/createtask_taskdo_rg"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="2"
+				android:orientation="horizontal">
+
+				<RadioButton
+					android:id="@+id/createtask_on_rb"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:button="@null"
+					android:checked="true"
+					android:drawableLeft="@drawable/radiobutton_selector"
+					android:paddingLeft="0dp"
+					android:text="打开"
+					android:textColor="@color/gray_dark" />
+
+				<RadioButton
+					android:id="@+id/createtask_off_rb"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:button="@null"
+					android:drawableLeft="@drawable/radiobutton_selector"
+					android:paddingLeft="0dp"
+					android:text="关闭"
+					android:textColor="@color/gray_dark" />
+			</RadioGroup>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingTop="@dimen/normal_space"
+			android:paddingBottom="@dimen/normal_space">
+
+			<Button
+				android:id="@+id/task_do_btn"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@drawable/orange_btn_selector"
+				android:layout_margin="@dimen/little_space"
+				android:padding="@dimen/normal_space"
+				android:text="执行任务"
+				android:enabled="false"
+				android:textColor="@color/white"
+				android:textSize="@dimen/text_normal" />
+		</LinearLayout>
+
+	</LinearLayout>
+</ScrollView>
